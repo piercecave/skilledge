@@ -30,24 +30,24 @@ and illustrates how we will build the application over the next 16 weeks.
 
 <!-- ![Ethan](/assets/ethan.PNG) -->
 <img src="/assets/ethan.PNG" alt="Ethan" width="200px"/>
-Ethan Toth<br/>
-Data Analyst and Project Management<br/>
-ethan.toth.al@gmail.com<br/>
+<b>Ethan Toth</b><br/>
+<i>Data Analyst and Project Management</i><br/>
+ethan.toth.al@gmail.com<br/><br/><br/>
 
 <!-- ![Matthew](/assets/matthew.JPG) -->
 <img src="/assets/matthew.JPG" alt="Matthew" width="200px"/>
-Matthew Cho<br/>
-Data Analyst and Full-Stack Developer<br/>
-jcho95@uw.edu<br/>
+<b>Matthew Cho</b><br/>
+<i>Data Analyst and Full-Stack Developer</i><br/>
+jcho95@uw.edu<br/><br/><br/>
 
 <!-- ![Roy](/assets/roy.jpg) -->
 <img src="/assets/roy.jpg" alt="Roy" width="200px"/>
-Roy Mosby<br/>
-Data Analyst and Front-End Developer<br/>
-mosbyroy@uw.edu<br/>
+<b>Roy Mosby</b><br/>
+<i>Data Analyst and Front-End Developer</i><br/>
+mosbyroy@uw.edu<br/><br/><br/>
 
 <!-- ![Pierce](/assets/pierce.png) -->
 <img src="/assets/pierce.png" alt="Pierce" width="200px"/>
-Pierce Cave<br/>
-Full-Stack Developer<br/>
-pcave@uw.edu<br/>
+<b>Pierce Cave</b><br/>
+<i>Full-Stack Developer</i><br/>
+pcave@uw.edu<br/><br/><br/>
