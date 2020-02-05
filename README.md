@@ -30,24 +30,24 @@ and illustrates how we will build the application over the next 16 weeks.
 
 <!-- ![Ethan](/assets/ethan.PNG) -->
 <img src="/assets/ethan.PNG" alt="Ethan" width="200px"/>
-Ethan Toth
-Data Analyst and Project Management
-ethan.toth.al@gmail.com
+Ethan Toth<br/>
+Data Analyst and Project Management<br/>
+ethan.toth.al@gmail.com<br/>
 
 <!-- ![Matthew](/assets/matthew.JPG) -->
 <img src="/assets/matthew.JPG" alt="Matthew" width="200px"/>
-Matthew Cho
-Data Analyst and Full-Stack Developer
-jcho95@uw.edu
+Matthew Cho<br/>
+Data Analyst and Full-Stack Developer<br/>
+jcho95@uw.edu<br/>
 
 <!-- ![Roy](/assets/roy.jpg) -->
 <img src="/assets/roy.jpg" alt="Roy" width="200px"/>
-Roy Mosby
-Data Analyst and Front-End Developer
-mosbyroy@uw.edu
+Roy Mosby<br/>
+Data Analyst and Front-End Developer<br/>
+mosbyroy@uw.edu<br/>
 
 <!-- ![Pierce](/assets/pierce.png) -->
 <img src="/assets/pierce.png" alt="Pierce" width="200px"/>
-Pierce Cave
-Full-Stack Developer
-pcave@uw.edu
+Pierce Cave<br/>
+Full-Stack Developer<br/>
+pcave@uw.edu<br/>
