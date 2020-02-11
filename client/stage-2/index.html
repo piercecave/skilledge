@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head profile="http://www.w3.org/2005/10/profile">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Ethan Toth">
+    <meta name="description" content="Need a place to climb for the weekend? We'll plan the perfect trip for you providing a location, set of routes and a guarnteed good time">
+    <meta name="keywords" content="Climbing, Rock, Weekend, Trip, Sport, Plans, Bored, Outdoors, Hiking">
+
+    <title>RockTrip</title>
+
+    <!-- Link to Archivo font -->
+    <link href="https://fonts.googleapis.com/css?family=Archivo" rel="stylesheet">
+    <!-- Link to Hamburger Menu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Link to Car Icon -->
+    <link rel="icon" type="image/png" href="/imgs/mycar.png">
+
+    <!-- Link to bootstrap styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.css">
+    <link rel="stylesheet" href="css/stylesheet.css">
+</head>
+
+<body>
+    <header>
+    <div class="flex-container">
+        <div class="jumbotron">
+            <h1 class="display-3 header-page-1">Plan Your Trip</h1>
+        </div>
+        <nav>
+        <div id="menu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Plan Your Trip</a></li>
+                <li><a href="#">My Trips</a></li>
+                <li><a href="#">Community</a></li>
+            </ul>
+        </div>
+        </nav>
+    </div>
+    </header>
+
+
+    <main>
+        <h2 class="top-text">Simply fill out the inquiry form below and we'll get your trip planned for you!</h2>
+        <p class="top-text">Making it easier to find the perfect weekend trip to the mountains.</p>
+        
+        <!-- start of input form -->
+        <form>
+            <div class="form-group">
+                <label for="level">Level of Climbing</label>
+                <select class="form-control" id="dropDownMenuLevel">
+                    <option value="5.5-">5.5-</option>
+                    <option value="5.5 - 5.6">5.5 - 5.6</option>
+                    <option value="5.7 - 5.8">5.7 - 5.8</option>
+                    <option value="5.9 - 5.10a">5.9 - 5.10a</option>
+                    <option value="5.10b - 5.10c">5.10b - 5.10c</option>
+                    <option value="5.10d - 5.11a">5.10d - 5.11a</option>
+                    <option value="5.11b - 5.11c">5.11b - 5.11c</option>
+                    <option value="5.11d - 5.12a">5.11d - 5.12a</option>
+                    <option value="5.12b - 5.12c">5.12b - 5.12c</option>
+                    <option value="5.12d - 5.13a">5.12d - 5.13a</option>
+                    <option value="5.13+">5.13+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="locationStartPoint">Starting Location</label>
+                <input class="form-control" name="startLocation" placeholder="Seattle, WA" readonly>
+            </div>
+            <div class="form-group">
+                <label for="distanceFromMe">Distance (Miles)</label>
+                <select class="form-control" id="dropDownMenuDistance">
+                    <option value="0 - 50">50</option>
+                    <option value="50 - 100">100</option>
+                    <option value="100 - 200">200</option>
+                    <option value="200+">500</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="lengthOfTrip">Rating in Stars</label>
+                <select class="form-control" id="dropDownMenuDays">
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Star</option>
+                    <option value="3">3 Star</option>
+                    <option value="4">4 Star</option>
+                </select>
+            </div>
+            <div class="form-group"><label for="radioButtons">Sport or Traditional Climbing</label></div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="option1" name="climbing">
+                <label class="form-check-label" for="sportClimbing">Sport</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="option2" name="climbing">
+                <label class="form-check-label" for="tradClimbing">Traditional</label>
+            </div>
+            <div>
+                <button type="button" id="plannerButton">Plan my Trip</button>
+            </div>
+        </form>
+
+    </main>
+
+<div class="footer">
+    <footer>
+    <div>
+        <p>Contact me at <a href="mailto:ethan.toth.al@gmail.com">ethan.toth.al@gmail.com</a> or at <a href="tel:509-669-0188">509-669-0188</a>. &copy; 2019 Ethan Toth.</p>
+    </div>
+    </footer>
+</div>
+    <!-- jQuery Script -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Fetch Polyfill -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <!-- Personal JS file -->
+    <script src="js/script-code.js"></script>
+</body>
+</html>

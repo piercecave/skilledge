@@ -1,0 +1,32 @@
+html {
+    height: 100%;
+}
+
+.flex-contain {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 100%;
+}
+
+.col {
+    width: 32%;
+    border: 1px solid #777777;
+    border-radius: 7px;
+    background: #659DBD;
+    padding: 20px;
+    margin: 25px 25px;
+    flex-shrink: inherit;
+}
+
+.alignment {
+    padding-left: 0px;
+}
+
+@media (min-width: 768px) {
+    body {
+        background-image: url('../imgs/index2photo.jpg');
+        background-position: center;
+        background-size: cover;
+    }
+} 
