@@ -1,0 +1,23 @@
+
+body { 
+  margin: 0;
+  padding: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+main {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+} 
+
+#game_canvas {
+  bottom: 0px;
+  position: fixed;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  
+}
