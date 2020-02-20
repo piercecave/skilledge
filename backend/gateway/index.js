@@ -72,3 +72,4 @@ app.delete("/sessions", sessions.deleteExistingSession);
 
 http.createServer(app).listen(80);
 https.createServer(credentials, app).listen(443);
+console.log("up and running!");

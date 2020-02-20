@@ -8,7 +8,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="index.css">
   <script type="module" src="index.js"></script>
 </head>
@@ -16,46 +23,62 @@
 <body>
   <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">SKILLEDGE</a>
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="./sign_up/index.html">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./log_in/index.html">Log In</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./choose_skill/index.html">Choose Skill</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./set_up_habit/index.html">Set Up Habit</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./record/index.html">Record</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./calendar/index.html">Calendar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./charts/index.html">Charts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./../coaching/">Coaching</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./../gamifying/">Gamifying</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./../edit_habit/">Edit Habit</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./../edit_skill/">Edit Skill</a>
-      </li>
-    </ul>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler toggler-example border-0" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="./sign_up/index.html">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./log_in/index.html">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./choose_skill/index.html">Choose Skill</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./set_up_habit/index.html">Set Up Habit</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./record/index.html">Record</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./calendar/index.html">Calendar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./charts/index.html">Charts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./../coaching/">Coaching</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./../gamifying/">Gamifying</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./../edit_habit/">Edit Habit</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./../edit_skill/">Edit Skill</a>
+        </li>
+      </ul>
+      <!-- Links -->
+
+    </div>
+    <!-- Collapsible content -->
   </nav>
   <main>
     hi
