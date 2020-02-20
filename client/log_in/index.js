@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const BASE_URL = "https://pongapi.piercecave.com/sessions";
+  const BASE_URL = "https://api.skilledge.site/sessions";
 
   /**
    *  Functions that will be called once the window is loaded

@@ -44,6 +44,37 @@
     </ul>
   </nav>
   <main>
+    <h2>Record Your Progress!</h2>
+
+    <h5>Current Day (i.e. 2/20/2020)</h5>
+    <button id="submit" type="submit" class="btn btn-success">Yesterday</button>
+    <button id="submit" type="submit" class="btn btn-warning">Choose Day</button>
+    <button id="submit" type="submit" class="btn btn-success">Tomorrow</button><br><br>
+
+    <p>Did you <em>your skill</em> at <em>your time</em> at <em>your place</em> today?</p>
+
+    <button id="submit" type="submit" class="btn btn-primary">Complete</button>
+    <button id="submit" type="submit" class="btn btn-danger">Not today</button>
+
+    <br><br>
+    <h5>IF "COMPLETE"</h5>
+    <p>Good work! Check back in tomorrow!</p>
+
+    <br>
+    <h5>IF "FAILURE"</h5>
+    <p>That's alright! Tell us about the circumstances so we can help you get it done next time!</p>
+    <form style="margin-left: 2.5em;">
+      <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+      <label for="vehicle1"> I felt unmotivated.</label><br>
+      <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+      <label for="vehicle2"> I felt tired.</label><br>
+      <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+      <label for="vehicle3"> I was too busy.</label><br>
+      <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+      <label for="vehicle3"> Other:</label>
+      <input type="text" id="otherValue" name="other">
+    </form>
+
   </main>
 </body>
 
