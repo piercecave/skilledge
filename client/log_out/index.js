@@ -9,25 +9,16 @@
    */
 
   window.addEventListener("load", () => {
-    const button = id('submit');
+    const button = id('log_out');
     button.addEventListener('click', function (event) {
       event.preventDefault();
-      authenticate();
+      logOut();
     });
   });
 
-  const authenticate = () => {
-    const user = {
-      email: idValue('Email'),
-      password: idValue('Password'),
-    }
+  const logOut = () => {
     fetch(BASE_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': getAuthToken()
-      },
-      body: JSON.stringify(user),
+      method: 'DELETE',
       credentials: 'include'
     }).then(checkStatus)
       .then(redirect)
@@ -35,7 +26,7 @@
   }
 
   const redirect = () => {
-    window.location = "./../index.html";
+    window.location = "./../";
   }
 
   /**

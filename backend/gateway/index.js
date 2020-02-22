@@ -46,7 +46,10 @@ app.use(session({
   name: 'RedisSessionDB',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true },
+  cookie: { 
+    secure: true,
+    sameSite: "none"
+  },
   store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 }),
 }));
 

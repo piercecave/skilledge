@@ -28,6 +28,9 @@ document.getElementById("main_nav").innerHTML = `
         <a class="nav-link" href="./../log_in/">Log In</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="./../log_out/">Log Out</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="./../choose_skill/">Choose Skill</a>
       </li>
       <li class="nav-item">

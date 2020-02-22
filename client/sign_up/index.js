@@ -30,7 +30,8 @@
         'Content-Type': 'application/json',
         'Authorization': getAuthToken()
       },
-      body: JSON.stringify(newUser)
+      body: JSON.stringify(newUser),
+      credentials: 'include'
     }).then(checkStatus)
       .then(redirect)
       .catch(displayError)

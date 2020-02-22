@@ -1,11 +1,11 @@
 #!/bin/bash
-export DOCKERNAME=piercecave
+export DOCKERNAME=$(head -n 1 ./../../docker_username)
 
-docker build -t $DOCKERNAME/ponggateway ./
+docker build -t $DOCKERNAME/skilledgegateway ./
 echo "✅  Local Docker Builds Complete"
 
-docker push $DOCKERNAME/ponggateway
+docker push $DOCKERNAME/skilledgegateway
 echo "✅  Push Docker Containers to DockerHub"
 
-ssh -oStrictHostKeyChecking=no ec2-user@pongapi.piercecave.com 'bash -s' < update-gateway.sh $DOCKERNAME
+ssh -i ./../../shared_project_key_serverside.pem -oStrictHostKeyChecking=no ec2-user@api.skilledge.site 'bash -s' < update-gateway.sh $DOCKERNAME
 echo "🎊  Server Deployment Complete!"
