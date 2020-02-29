@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>User Sign Up</title>
+  <title>Habit Set Up</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -24,20 +24,67 @@
   <main>
     <h2>Learn how to <em>your skill</em> by practicing everyday!</h2>
 
-    <p>Choose your daily habit or create your own!</p>
+    <!-- <p>Choose your daily habit or create your own!</p>
     <ul>
       <li>ex 1 (i.e. climb for 1 hour)</li>
       <li>ex 1</li>
       <li>ex 1</li>
-    </ul>
+    </ul> -->
 
     <br>
-    <p><strong>When</strong> will you do <em>your habit</em>.</p>
-    <input type="text" placeholder="e.g. 3:00PM" required/>
+    <p>What <strong>action</strong> do you want to take?</p>
+    <input id="actionInput" type="text" placeholder="e.g. I will go rock climbing for 1 hour." required />
 
     <br><br>
-    <p><strong>Where</strong> will you do <em>your habit</em>.</p>
-    <input type="text" placeholder="Boulder Climbing Gym" required/>
+    <p><strong>What time</strong> will you do <em>your habit</em>?</p>
+    <input id="timeInput" type="text" placeholder="e.g. 3:00PM" required />
+
+    <br><br>
+    <p><strong>Where</strong> will you do <em>your habit</em>?</p>
+    <input id="locationInput" type="text" placeholder="Boulder Climbing Gym" required />
+
+    <br><br>
+    <p>What <strong>day</strong> will you <strong>start</strong> <em>your habit</em>?</p>
+    <input id="startDateInput" type="text" placeholder="Boulder Climbing Gym" required />
+
+    <br><br>
+    <p>What <strong>day</strong> will you <strong>end</strong> <em>your habit</em>?</p>
+    <input id="endDateInput" type="text" placeholder="Boulder Climbing Gym" required />
+
+    <br><br>
+    <p>What<strong> days of the week </strong> will you do <em>your habit</em>?</p>
+    <div id="checkboxesContainer">
+      <div>
+        <input type="checkbox" id="sundayCheckbox" name="sunday" value="Sunday">
+        <label for="sundayCheckbox">Sunday</label>
+      </div>
+      <div>
+        <input type="checkbox" id="mondayCheckbox" name="monday" value="Monday">
+        <label for="mondayCheckbox">Monday</label>
+      </div>
+      <div>
+        <input type="checkbox" id="tuesdayCheckbox" name="tuesday" value="Tuesday">
+        <label for="tuesdayCheckbox">Tuesday</label>
+      </div>
+      <div>
+        <input type="checkbox" id="wednesdayCheckbox" name="wednesday" value="Wednesday">
+        <label for="wednesdayCheckbox">Wednesday</label>
+      </div>
+      <div>
+        <input type="checkbox" id="thursdayCheckbox" name="thursday" value="Thursday">
+        <label for="thursdayCheckbox">Thursday</label>
+      </div>
+      <div>
+        <input type="checkbox" id="fridayCheckbox" name="friday" value="Friday">
+        <label for="fridayCheckbox">Friday</label>
+      </div>
+      <div>
+        <input type="checkbox" id="saturdayCheckbox" name="saturday" value="Saturday">
+        <label for="saturdayCheckbox">Saturday</label>
+      </div>
+    </div>
+    <br><br>
+    <button id="addHabitSubmitButton" type="submit" class="btn btn-primary">Submit</button>
 
   </main>
 </body>

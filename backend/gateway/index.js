@@ -23,10 +23,13 @@ var forceSsl = require('express-force-ssl');
 
 const db = require("./middleware/db");
 const { checkIsLoggedIn } = require("./middleware/auth");
+const cors = require("./middleware/cors");
 
 const users = require("./handlers/users");
+const skills = require("./handlers/skills");
+const habits = require("./handlers/habits");
+const events = require("./handlers/events");
 const sessions = require("./handlers/sessions");
-const cors = require("./middleware/cors");
 
 const app = express();
 
@@ -68,11 +71,34 @@ async function handleHome(req, res) {
 
 app.get("/", checkIsLoggedIn, handleHome);
 
-// Handle creating a new user
+// creating a new user
 app.post("/users", users.createNewUser);
+// // getting all skills for a user
+// app.get("/users/skills", checkIsLoggedIn, users.getUserSkills);
+// adding a skill to a user
+app.post("/users/skills/:skillid", checkIsLoggedIn, users.addSkill);
+// // getting all habits for a user
+// app.get("/users/habits", checkIsLoggedIn, users.getUserHabits);
+// creating a habit for a specific skill for a specific user
+app.post("/users/skills/:skillid/habits", checkIsLoggedIn, skills.addHabit);
+// // getting all events for a user
+// app.get("/users/events", checkIsLoggedIn, users.getUserEvents);
+// // getting all events for a certain day for a user
+// app.get("/users/events/:date", checkIsLoggedIn, users.getUserEventsForDay);
+// // creating an event for a habit
+// app.post("/habits/:habitid/events", checkIsLoggedIn, habits.addEvent);
+// // reporting a result for an event
+// app.post("/events/:eventid/results", checkIsLoggedIn, events.setResult);
+// // adding a reason for an event's result
+// app.post("/events/:eventid/reasons", checkIsLoggedIn, events.addReason);
+
+// logging in and logging out
 app.post("/sessions", sessions.createNewSession);
 app.delete("/sessions", sessions.deleteExistingSession);
 
+// getting all skills
+app.get("/skills", skills.getAllSkills);
+
 http.createServer(app).listen(80);
 https.createServer(credentials, app).listen(443);
-console.log("up and running!");
+console.log("Server up and running!");

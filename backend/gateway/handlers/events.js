@@ -1,7 +1,6 @@
 "use strict";
 
 const { NewUser } = require("./../models/user");
-const dbUser = require("./../helpers/dbUser");
 
 async function createNewUser(req, res) {
 
@@ -34,35 +33,9 @@ async function createNewUser(req, res) {
     }
 }
 
-async function addSkill(req, res) {
-
-    try {
-        
-        // Get userid by email
-        var loggedInUser = await dbUser.getUserByEmail(req, res);
-        loggedInUser = loggedInUser[0];
-
-        // Insert user and skill connection into User_Skills
-        const insertUserSkillQuery = "INSERT INTO User_Skill(UserID, SkillID) VALUES(?,?)"
-        await req.db.query(insertUserSkillQuery, [loggedInUser.ID, req.params.skillid]);
-
-        req.db.end();
-        res.set("Content-Type", "text/plain");
-        res.status(201).send("User and skill connection successfully added.");
-
-    } catch (err) {
-        console.log(err.message);
-        res.set("Content-Type", "text/plain");
-        res.status(400).send("Bad Request: Could not add skill for user.");
-        req.db.end();
-        return;
-    }
-}
-
 /**
 * Expose public handler functions.
 */
 module.exports = {
-    createNewUser,
-    addSkill
+    createNewUser
 }
