@@ -77,9 +77,38 @@ CREATE TABLE IF NOT EXISTS Events (
     PRIMARY KEY (EventID)
 );
 
+CREATE TABLE IF NOT EXISTS Event_Result (
+    EventResultID INT NOT NULL AUTO_INCREMENT,
+    EventID INT NOT NULL,
+    ResultID INT NOT NULL,
+    FOREIGN KEY (EventID) REFERENCES Events(EventID),
+    FOREIGN KEY (ResultID) REFERENCES Results(ResultID),
+    PRIMARY KEY (EventResultID)
+);
+
+CREATE TABLE IF NOT EXISTS Reasons (
+    ReasonID INT NOT NULL AUTO_INCREMENT,
+    ReasonName VARCHAR(255) NOT NULL,
+    ReasonDesc VARCHAR(1024),
+    PRIMARY KEY (ReasonID)
+);
+
+CREATE TABLE IF NOT EXISTS Result_Reason (
+    ResultReasonID INT NOT NULL AUTO_INCREMENT,
+    ResultID INT NOT NULL,
+    ReasonID INT NOT NULL,
+    FOREIGN KEY (ResultID) REFERENCES Results(ResultID),
+    FOREIGN KEY (ReasonID) REFERENCES Reasons(ReasonID),
+    PRIMARY KEY (ResultReasonID)
+);
 
 
 
+
+
+INSERT INTO Reasons (ReasonName, ReasonDesc) VALUES ('Motivation', 'I did not feel motivated enough.');
+INSERT INTO Reasons (ReasonName, ReasonDesc) VALUES ('Tired', 'I was too tired.');
+INSERT INTO Reasons (ReasonName, ReasonDesc) VALUES ('Busy', 'I had more important things to do.');
 
 INSERT INTO Results (ResultName) VALUES ('Success');
 INSERT INTO Results (ResultName) VALUES ('Failure');

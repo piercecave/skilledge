@@ -83,14 +83,14 @@ app.post("/users/skills/:skillid", checkIsLoggedIn, users.addSkill);
 app.post("/users/skills/:skillid/habits", checkIsLoggedIn, skills.addHabit);
 // // getting all events for a user
 // app.get("/users/events", checkIsLoggedIn, users.getUserEvents);
-// // getting all events for a certain day for a user
-// app.get("/users/events/:date", checkIsLoggedIn, users.getUserEventsForDay);
+// getting all events for a certain day for a user
+app.get("/users/events/:date", checkIsLoggedIn, users.getUserEventsForDay);
 // // creating an event for a habit
 // app.post("/habits/:habitid/events", checkIsLoggedIn, habits.addEvent);
-// // reporting a result for an event
-// app.post("/events/:eventid/results", checkIsLoggedIn, events.setResult);
-// // adding a reason for an event's result
-// app.post("/events/:eventid/reasons", checkIsLoggedIn, events.addReason);
+// reporting a result for an event
+app.post("/events/:eventid/results", checkIsLoggedIn, events.setResult);
+// adding a reason for an event's result
+app.post("/events/:eventid/reasons", checkIsLoggedIn, events.addReason);
 
 // logging in and logging out
 app.post("/sessions", sessions.createNewSession);

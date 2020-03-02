@@ -37,7 +37,7 @@ async function createNewUser(req, res) {
 async function addSkill(req, res) {
 
     try {
-        
+
         // Get userid by email
         var loggedInUser = await dbUser.getUserByEmail(req, res);
         loggedInUser = loggedInUser[0];
@@ -59,10 +59,44 @@ async function addSkill(req, res) {
     }
 }
 
+async function getUserEventsForDay(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        // Get events for day
+        const selectEventsQuery = `
+        SELECT * 
+        FROM Events AS E
+            JOIN Habits AS H ON E.HabitID = H.HabitID
+            JOIN User_Skill AS US ON H.UserSkillID = US.UserSkillID
+            JOIN Users AS U ON US.UserID = U.ID
+        WHERE U.ID = ? 
+            AND Event.EventDate = ?
+        `
+        const userEvents = await req.db.query(selectEventsQuery, [loggedInUser.ID, req.params.date]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userEvents);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not add skill for user.");
+        req.db.end();
+        return;
+    }
+}
+
 /**
 * Expose public handler functions.
 */
 module.exports = {
     createNewUser,
-    addSkill
+    addSkill,
+    getUserEventsForDay
 }
