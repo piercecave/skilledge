@@ -15,5 +15,6 @@ COPY coaching/ /usr/share/nginx/html/coaching
 COPY edit_habit/ /usr/share/nginx/html/edit_habit
 COPY edit_skill/ /usr/share/nginx/html/edit_skill
 COPY gamifying/ /usr/share/nginx/html/gamifying
+COPY dashboard/ /usr/share/nginx/html/dashboard
 COPY header/ /usr/share/nginx/html/header
 ADD default.conf /etc/nginx/conf.d/default.conf

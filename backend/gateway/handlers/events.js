@@ -7,8 +7,14 @@ async function setResult(req, res) {
     try {
 
         // Insert user and skill connection into User_Skills
-        const insertEventReasonQuery = "INSERT INTO Result_Reason(ResultID, ReasonID) VALUES(?,?)"
-        await req.db.query(insertEventReasonQuery, [req.params.eventid, req.body.reasonid]);
+        const updateEventResultQuery = `
+            UPDATE Events 
+            SET 
+                ResultID = ?
+            WHERE
+                EventID = ?;
+        `
+        await req.db.query(updateEventResultQuery, [req.body.resultid, req.params.eventid]);
 
         req.db.end();
         res.set("Content-Type", "text/plain");

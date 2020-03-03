@@ -69,14 +69,17 @@ async function getUserEventsForDay(req, res) {
 
         // Get events for day
         const selectEventsQuery = `
-        SELECT * 
-        FROM Events AS E
+        SELECT S.SkillID, S.SkillName, H.HabitID, H.HabitAction, H.HabitTime, H.HabitLocation, E.EventID, E.EventDate, R.ResultID, R.ResultName
+        FROM Results AS R
+            JOIN Events AS E ON R.ResultID = E.ResultID
             JOIN Habits AS H ON E.HabitID = H.HabitID
             JOIN User_Skill AS US ON H.UserSkillID = US.UserSkillID
             JOIN Users AS U ON US.UserID = U.ID
+            JOIN Skills AS S ON S.SkillID = US.SkillID
         WHERE U.ID = ? 
-            AND Event.EventDate = ?
+            AND E.EventDate = ?
         `
+        
         const userEvents = await req.db.query(selectEventsQuery, [loggedInUser.ID, req.params.date]);
 
         req.db.end();
