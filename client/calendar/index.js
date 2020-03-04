@@ -24,6 +24,8 @@ function previous() {
 }
 
 function jump() {
+    var selectYear = document.getElementById("year");
+    var selectMonth = document.getElementById("month");
     var currentYear = parseInt(selectYear.value);
     var currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
