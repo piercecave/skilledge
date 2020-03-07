@@ -2,26 +2,41 @@
 <html lang="en">
 
 <head>
-  <title>User Sign Up</title>
+  <title>Charts</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="index.css">
+
+  <script src="./../header/insert_header.js" defer></script>
+
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Popper JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <!-- Latest compiled JavaScript -->
+  <!-- Latest compiled bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="index.css">
-  <script src="./../header/insert_header.js" defer></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+
   <script src="index.js"></script>
 </head>
 
 <body>
   <div id="main_nav"></div>
   <main>
+    <div id="successRateChartContainer" class="container">
+      <div class="card my-3">
+        <div class="card-body">
+          <h5 class="card-title">Success Rate / Time</h5>
+          <div class="d-flex justify-content-center" id="successRateChart"></div>
+        </div>
+      </div>
+    </div>
   </main>
 </body>
 

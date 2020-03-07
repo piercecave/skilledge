@@ -81,8 +81,8 @@ app.post("/users/skills/:skillid", checkIsLoggedIn, users.addSkill);
 // app.get("/users/habits", checkIsLoggedIn, users.getUserHabits);
 // creating a habit for a specific skill for a specific user
 app.post("/users/skills/:skillid/habits", checkIsLoggedIn, skills.addHabit);
-// // getting all events for a user
-// app.get("/users/events", checkIsLoggedIn, users.getUserEvents);
+// getting all events for a user
+app.get("/users/events", checkIsLoggedIn, users.getUserEvents);
 // getting all events for a certain day for a user
 app.get("/users/events/:date", checkIsLoggedIn, users.getUserEventsForDay);
 // // creating an event for a habit
