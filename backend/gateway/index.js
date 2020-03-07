@@ -53,7 +53,7 @@ app.use(session({
     secure: true,
     sameSite: "none"
   },
-  store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 }),
+  store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 }),
 }));
 
 // Establish a connection with the database and pass the connection 

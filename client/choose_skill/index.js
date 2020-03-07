@@ -23,13 +23,33 @@ const checkAuthenticated = () => {
 const displayResult = async (response) => {
     const responseJSON = await response.json();
 
-    const skillButtonsContainer = document.getElementById('skillButtonsContainer');
+    const skillsContainer = document.getElementById('skillsContainer');
 
     for (const skill of responseJSON) {
-        const skillButton = document.createElement("button");
 
+        // Create card
+        const skillCard = document.createElement("div");
+        skillCard.classList.add("card", "my-3");
+        skillsContainer.appendChild(skillCard);
+        // Create card body
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
+        skillCard.appendChild(cardBody);
+        // Create label
+        const cardTitle = document.createElement("h5");
+        cardTitle.classList.add("card-title");
+        cardTitle.innerText = skill.SkillName;
+        cardBody.appendChild(cardTitle);
+        // Create action
+        const cardText = document.createElement("p");
+        cardText.classList.add("card-text");
+        cardText.innerText = skill.SkillDesc;
+        cardBody.appendChild(cardText);
+        // Create submit button
+        const skillButton = document.createElement("button");
         skillButton.classList.add("btn", "btn-primary");
-        skillButton.innerText = skill.SkillName;
+        skillButton.innerText = "Select";
+        cardBody.appendChild(skillButton);
 
         skillButton.onclick = () => {
             fetch(ADD_SKILL_URL + skill.SkillID, {
@@ -42,10 +62,6 @@ const displayResult = async (response) => {
                 })
                 .catch(displayError);
         };
-
-        skillButtonsContainer.appendChild(skillButton);
-        skillButtonsContainer.appendChild(document.createElement("br"));
-        skillButtonsContainer.appendChild(document.createElement("br"));
     }
 }
 

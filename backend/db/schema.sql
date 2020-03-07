@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS UserSignInLog (
 CREATE TABLE IF NOT EXISTS Skills (
     SkillID INT NOT NULL AUTO_INCREMENT,
     SkillName VARCHAR(255) NOT NULL UNIQUE,
+    SkillDesc VARCHAR(1024) NOT NULL,
     PRIMARY KEY (SkillID)
 );
 
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS User_Skill (
 CREATE TABLE IF NOT EXISTS Habits (
     HabitID INT NOT NULL AUTO_INCREMENT,
     UserSkillID INT NOT NULL,
-    HabitAction VARCHAR(1028) NOT NULL,
+    HabitAction VARCHAR(1024) NOT NULL,
     HabitStartDate DATE,
     HabitEndDate DATE,
     HabitTime TIME,
@@ -113,8 +114,8 @@ INSERT INTO Weekdays (WeekdayName) VALUES ('Thursday');
 INSERT INTO Weekdays (WeekdayName) VALUES ('Friday');
 INSERT INTO Weekdays (WeekdayName) VALUES ('Saturday');
 
-INSERT INTO Skills (SkillName) VALUES ('Rock Climbing');
-INSERT INTO Skills (SkillName) VALUES ('Guitar');
+INSERT INTO Skills (SkillName, SkillDesc) VALUES ('Rock Climbing', 'Get stronger, enjoy the outdoors, and make friends all at once by learning how to Rock Climb!');
+INSERT INTO Skills (SkillName, SkillDesc) VALUES ('Guitar', 'Learn to play your favorite songs, or make your own by learning how to play guitar!');
 
 INSERT INTO Users (
     ID,

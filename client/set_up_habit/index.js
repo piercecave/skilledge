@@ -7,6 +7,17 @@ const ADD_HABIT_URL = "https://api.skilledge.site/users/skills/:skillid/habits";
  */
 
 window.addEventListener("load", () => {
+    var chooseSkillCard = document.getElementById('skillChooseCard');
+    // chooseSkillCard
+    let animation = anime({
+        targets: '#skillChooseCard',
+        // Properties 
+        translateX: "-150%",
+        // Property Parameters
+        duration: 2000,
+        easing: 'linear',
+        // Animation Parameters
+    });
     configureSubmitButton();
 });
 

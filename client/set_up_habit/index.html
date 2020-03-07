@@ -15,6 +15,7 @@
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="index.css">
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
   <script src="./../header/insert_header.js" defer></script>
   <script src="index.js"></script>
 </head>
@@ -22,72 +23,76 @@
 <body>
   <div id="main_nav"></div>
   <main>
-    <h2>Learn how to <em>your skill</em> by practicing everyday!</h2>
+      <div id="skillChooseCard" class="card processBox">
+        <div class="card-body">
+          <h2>Learn how to <em>your skill</em> by practicing everyday!</h2>
 
-    <!-- <p>Choose your daily habit or create your own!</p>
-    <ul>
-      <li>ex 1 (i.e. climb for 1 hour)</li>
-      <li>ex 1</li>
-      <li>ex 1</li>
-    </ul> -->
+          <br>
+          <p>What <strong>action</strong> do you want to take?</p>
+          <input id="actionInput" type="text" placeholder="e.g. I will go rock climbing for 1 hour." required />
 
-    <br>
-    <p>What <strong>action</strong> do you want to take?</p>
-    <input id="actionInput" type="text" placeholder="e.g. I will go rock climbing for 1 hour." required />
+          <br><br>
+          <p><strong>What time</strong> will you do <em>your habit</em>?</p>
+          <input id="timeInput" type="text" placeholder="e.g. 3:00PM" required />
 
-    <br><br>
-    <p><strong>What time</strong> will you do <em>your habit</em>?</p>
-    <input id="timeInput" type="text" placeholder="e.g. 3:00PM" required />
+          <br><br>
+          <p><strong>Where</strong> will you do <em>your habit</em>?</p>
+          <input id="locationInput" type="text" placeholder="Boulder Climbing Gym" required />
 
-    <br><br>
-    <p><strong>Where</strong> will you do <em>your habit</em>?</p>
-    <input id="locationInput" type="text" placeholder="Boulder Climbing Gym" required />
+          <br><br>
+          <p>What <strong>day</strong> will you <strong>start</strong> <em>your habit</em>?</p>
+          <input id="startDateInput" type="text" placeholder="Boulder Climbing Gym" required />
 
-    <br><br>
-    <p>What <strong>day</strong> will you <strong>start</strong> <em>your habit</em>?</p>
-    <input id="startDateInput" type="text" placeholder="Boulder Climbing Gym" required />
+          <br><br>
+          <p>What <strong>day</strong> will you <strong>end</strong> <em>your habit</em>?</p>
+          <input id="endDateInput" type="text" placeholder="Boulder Climbing Gym" required />
 
-    <br><br>
-    <p>What <strong>day</strong> will you <strong>end</strong> <em>your habit</em>?</p>
-    <input id="endDateInput" type="text" placeholder="Boulder Climbing Gym" required />
-
-    <br><br>
-    <p>What<strong> days of the week </strong> will you do <em>your habit</em>?</p>
-    <div id="checkboxesContainer">
-      <div>
-        <input type="checkbox" id="sundayCheckbox" name="sunday" value="Sunday">
-        <label for="sundayCheckbox">Sunday</label>
+          <br><br>
+          <p>What<strong> days of the week </strong> will you do <em>your habit</em>?</p>
+          <div id="checkboxesContainer">
+            <div>
+              <input type="checkbox" id="sundayCheckbox" name="sunday" value="Sunday">
+              <label for="sundayCheckbox">Sunday</label>
+            </div>
+            <div>
+              <input type="checkbox" id="mondayCheckbox" name="monday" value="Monday">
+              <label for="mondayCheckbox">Monday</label>
+            </div>
+            <div>
+              <input type="checkbox" id="tuesdayCheckbox" name="tuesday" value="Tuesday">
+              <label for="tuesdayCheckbox">Tuesday</label>
+            </div>
+            <div>
+              <input type="checkbox" id="wednesdayCheckbox" name="wednesday" value="Wednesday">
+              <label for="wednesdayCheckbox">Wednesday</label>
+            </div>
+            <div>
+              <input type="checkbox" id="thursdayCheckbox" name="thursday" value="Thursday">
+              <label for="thursdayCheckbox">Thursday</label>
+            </div>
+            <div>
+              <input type="checkbox" id="fridayCheckbox" name="friday" value="Friday">
+              <label for="fridayCheckbox">Friday</label>
+            </div>
+            <div>
+              <input type="checkbox" id="saturdayCheckbox" name="saturday" value="Saturday">
+              <label for="saturdayCheckbox">Saturday</label>
+            </div>
+          </div>
+          <br><br>
+          <button id="addHabitSubmitButton" type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </div>
-      <div>
-        <input type="checkbox" id="mondayCheckbox" name="monday" value="Monday">
-        <label for="mondayCheckbox">Monday</label>
+      <div id="actionChooseCard" class="card processBox" style="left: 150%;">
+        <div class="card-body">
+        </div>
       </div>
-      <div>
-        <input type="checkbox" id="tuesdayCheckbox" name="tuesday" value="Tuesday">
-        <label for="tuesdayCheckbox">Tuesday</label>
-      </div>
-      <div>
-        <input type="checkbox" id="wednesdayCheckbox" name="wednesday" value="Wednesday">
-        <label for="wednesdayCheckbox">Wednesday</label>
-      </div>
-      <div>
-        <input type="checkbox" id="thursdayCheckbox" name="thursday" value="Thursday">
-        <label for="thursdayCheckbox">Thursday</label>
-      </div>
-      <div>
-        <input type="checkbox" id="fridayCheckbox" name="friday" value="Friday">
-        <label for="fridayCheckbox">Friday</label>
-      </div>
-      <div>
-        <input type="checkbox" id="saturdayCheckbox" name="saturday" value="Saturday">
-        <label for="saturdayCheckbox">Saturday</label>
-      </div>
-    </div>
-    <br><br>
-    <button id="addHabitSubmitButton" type="submit" class="btn btn-primary">Submit</button>
+  </main>
+</body>
 
+</html>
 
-    <!-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<!-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <input id="datepicker" width="276" />
     <script>
       $('#datepicker').datepicker({
@@ -107,10 +112,3 @@
     <script>
       $('#basic_example').timepicker();
     </script> -->
-
-
-
-  </main>
-</body>
-
-</html>
