@@ -1,7 +1,45 @@
 main {
-  margin: 2em;
+  margin: 3.5em;
 }
 
-.hidden {
+
+html, body{
+  background: linear-gradient(lightblue, yellow , #ffffff);
+  height: 100%;
+
+  float: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+ #animation img {
   display: none;
 }
+#animation img:first-child {
+  display: block;
+}  
+
+#progress{
+  border: 5px;
+}
+
+
+/* * {box-sizing: border-box;
+  padding-bottom: 0.1px;
+}
+
+/*Container for level bar */
+/* .container {
+  width: 100%;
+  background-color: #ddd;
+}
+
+
+
+.css {width: 80%; background-color: #2196F3;} Blue */
+
