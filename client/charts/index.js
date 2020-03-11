@@ -49,6 +49,9 @@ const createCharts = (responseJSON) => {
         return event;
     });
 
+    // Order by date
+    cumulativeEventsData.sort((a, b) => a.EventDate - b.EventDate);
+
     // Visualize using d3
 
     // set the dimensions and margins of the graph

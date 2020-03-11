@@ -73,8 +73,8 @@ app.get("/", checkIsLoggedIn, handleHome);
 
 // creating a new user
 app.post("/users", users.createNewUser);
-// // getting all skills for a user
-// app.get("/users/skills", checkIsLoggedIn, users.getUserSkills);
+// getting all skills for a user
+app.get("/users/skills", checkIsLoggedIn, users.getUserSkills);
 // adding a skill to a user
 app.post("/users/skills/:skillid", checkIsLoggedIn, users.addSkill);
 // // getting all habits for a user

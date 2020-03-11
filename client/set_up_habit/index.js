@@ -1,34 +1,121 @@
 "use strict";
 
+const GET_USER_SKILLS_URL = "https://api.skilledge.site/users/skills";
 const ADD_HABIT_URL = "https://api.skilledge.site/users/skills/:skillid/habits";
 
 /**
- *  Functions that will be called once the window is loaded
+ * Edit date and time pickers
+ * Edit submit card to display current options
+ * Edit submit button to gather correct data
  */
 
+ var state = {
+     currentStep: 0,
+     chosenSkillID: 0,
+     chosenSkillName: ""
+ }
+
 window.addEventListener("load", () => {
-    var chooseSkillCard = document.getElementById('skillChooseCard');
-    // chooseSkillCard
-    let animation = anime({
-        targets: '#skillChooseCard',
-        // Properties 
-        translateX: "-150%",
-        // Property Parameters
-        duration: 2000,
-        easing: 'linear',
-        // Animation Parameters
-    });
+    // setProcessStep(1);
+    getUserSkills();
+    configureProcessNavButtons();
     configureSubmitButton();
+    // yourFunction();
 });
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+const yourFunction = async () => {
+    await delay(4000);
+    setProcessStep(1);
+    await delay(2000);
+    setProcessStep(2);
+    await delay(2000);
+    setProcessStep(3);
+    await delay(2000);
+    setProcessStep(4);
+    await delay(2000);
+    setProcessStep(5);
+    await delay(2000);
+    setProcessStep(6);
+};
+
+const getUserSkills = () => {
+    fetch(GET_USER_SKILLS_URL, {
+        credentials: 'include'
+    })
+        .then(displaySkills)
+        .catch(displayError);
+}
+
+const displaySkills = async (response) => {
+    const responseJSON = await response.json();
+
+    const userSkillsContainer = document.getElementById('userSkillsContainer');
+
+    for (const skill of responseJSON) {
+
+        // Create card
+        const skillCard = document.createElement("div");
+        skillCard.classList.add("my-3");
+        userSkillsContainer.appendChild(skillCard);
+        // Create card body
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
+        skillCard.appendChild(cardBody);
+        // Create label
+        const cardTitle = document.createElement("h5");
+        cardTitle.classList.add("card-title");
+        cardTitle.innerText = skill.SkillName;
+        cardBody.appendChild(cardTitle);
+        // Create action
+        const cardText = document.createElement("p");
+        cardText.classList.add("card-text");
+        cardText.innerText = skill.SkillDesc;
+        cardBody.appendChild(cardText);
+        // Create submit button
+        const skillButton = document.createElement("button");
+        skillButton.classList.add("btn", "btn-primary");
+        skillButton.innerText = "Select";
+        cardBody.appendChild(skillButton);
+
+        skillButton.onclick = () => {
+            state.chosenSkillID = skill.SkillID;
+            state.chosenSkillName = skill.SkillName;
+            nextStep();
+        };
+    }
+}
+
+const prevStep = () => {
+    state.currentStep = state.currentStep - 1;
+    setProcessStep(state.currentStep);
+}
+
+const nextStep = () => {
+    state.currentStep = state.currentStep + 1;
+    setProcessStep(state.currentStep);
+}
+
+const configureProcessNavButtons = () => {
+
+    var prevButtons = document.getElementsByClassName("prevButton");
+    var nextButtons = document.getElementsByClassName("nextButton");
+
+    for (var i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].onclick = () => prevStep();
+    };
+
+    for (var i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].onclick = () => nextStep();
+    };
+}
 
 const configureSubmitButton = () => {
 
     const addHabitSubmitButton = document.getElementById("addHabitSubmitButton");
 
     addHabitSubmitButton.onclick = () => {
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlSkillID = urlParams.get('skillid');
 
         var weekdays = [];
 
@@ -49,7 +136,7 @@ const configureSubmitButton = () => {
             habitWeekdaysList: JSON.stringify(weekdays)
         }
 
-        fetch(ADD_HABIT_URL.replace(":skillid", urlSkillID), {
+        fetch(ADD_HABIT_URL.replace(":skillid", state.chosenSkillID), {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -63,6 +150,21 @@ const configureSubmitButton = () => {
             })
             .catch(displayError);
     };
+}
+
+const setProcessStep = (step) => {
+
+    var cardsXPosition = step * -1 * 150;
+
+    return anime({
+        targets: '.processBox',
+        // Properties 
+        translateX: cardsXPosition + "%",
+        // Property Parameters
+        duration: 1000,
+        easing: 'linear',
+        // Animation Parameters
+    });
 }
 
 /**

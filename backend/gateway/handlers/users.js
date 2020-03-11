@@ -59,6 +59,38 @@ async function addSkill(req, res) {
     }
 }
 
+async function getUserSkills(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        // Get skills for user
+        const selectSkillsQuery = `
+        SELECT S.SkillID, S.SkillName, S.SkillDesc
+        FROM User_Skill AS US
+            JOIN Users AS U ON US.UserID = U.ID
+            JOIN Skills AS S ON S.SkillID = US.SkillID
+        WHERE U.ID = ?
+        `
+        
+        const userSkills = await req.db.query(selectSkillsQuery, [loggedInUser.ID]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userSkills);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get skills for user.");
+        req.db.end();
+        return;
+    }
+}
+
 async function getUserEvents(req, res) {
 
     try {
@@ -136,6 +168,7 @@ async function getUserEventsForDay(req, res) {
 module.exports = {
     createNewUser,
     addSkill,
+    getUserSkills,
     getUserEvents,
     getUserEventsForDay
 }

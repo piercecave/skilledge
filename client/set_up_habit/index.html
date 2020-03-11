@@ -22,71 +22,117 @@
 
 <body>
   <div id="main_nav"></div>
+  <h2 class="mt-4" style="display: block; margin: 0 auto; text-align: center;">Schedule A Habit</h2>
   <main>
-      <div id="skillChooseCard" class="card processBox">
-        <div class="card-body">
-          <h2>Learn how to <em>your skill</em> by practicing everyday!</h2>
-
-          <br>
-          <p>What <strong>action</strong> do you want to take?</p>
-          <input id="actionInput" type="text" placeholder="e.g. I will go rock climbing for 1 hour." required />
-
-          <br><br>
-          <p><strong>What time</strong> will you do <em>your habit</em>?</p>
-          <input id="timeInput" type="text" placeholder="e.g. 3:00PM" required />
-
-          <br><br>
-          <p><strong>Where</strong> will you do <em>your habit</em>?</p>
-          <input id="locationInput" type="text" placeholder="Boulder Climbing Gym" required />
-
-          <br><br>
-          <p>What <strong>day</strong> will you <strong>start</strong> <em>your habit</em>?</p>
-          <input id="startDateInput" type="text" placeholder="Boulder Climbing Gym" required />
-
-          <br><br>
-          <p>What <strong>day</strong> will you <strong>end</strong> <em>your habit</em>?</p>
-          <input id="endDateInput" type="text" placeholder="Boulder Climbing Gym" required />
-
-          <br><br>
-          <p>What<strong> days of the week </strong> will you do <em>your habit</em>?</p>
-          <div id="checkboxesContainer">
-            <div>
-              <input type="checkbox" id="sundayCheckbox" name="sunday" value="Sunday">
-              <label for="sundayCheckbox">Sunday</label>
-            </div>
-            <div>
-              <input type="checkbox" id="mondayCheckbox" name="monday" value="Monday">
-              <label for="mondayCheckbox">Monday</label>
-            </div>
-            <div>
-              <input type="checkbox" id="tuesdayCheckbox" name="tuesday" value="Tuesday">
-              <label for="tuesdayCheckbox">Tuesday</label>
-            </div>
-            <div>
-              <input type="checkbox" id="wednesdayCheckbox" name="wednesday" value="Wednesday">
-              <label for="wednesdayCheckbox">Wednesday</label>
-            </div>
-            <div>
-              <input type="checkbox" id="thursdayCheckbox" name="thursday" value="Thursday">
-              <label for="thursdayCheckbox">Thursday</label>
-            </div>
-            <div>
-              <input type="checkbox" id="fridayCheckbox" name="friday" value="Friday">
-              <label for="fridayCheckbox">Friday</label>
-            </div>
-            <div>
-              <input type="checkbox" id="saturdayCheckbox" name="saturday" value="Saturday">
-              <label for="saturdayCheckbox">Saturday</label>
-            </div>
+    <div id="skillChooseCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Skill</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Which skill would you like to create a habit for?</h6>
+        <div id="userSkillsContainer"></div>
+      </div>
+    </div>
+    <div id="actionChooseCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Action</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Decide on an action to take everyday!</h6>
+        <p>What <strong>action</strong> do you want to take?</p>
+        <input id="actionInput" class="form-control" type="text" placeholder="e.g. I will go rock climbing for 1 hour."
+          required />
+          <div class="processNavContainer">
+            <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+            <button class="btn btn-outline-primary nextButton mt-3">Next</button>
           </div>
-          <br><br>
-          <button id="addHabitSubmitButton" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+    <div id="timeChooseCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Time</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Choosing a time improves your ability to follow through.</h6>
+        <p>What <strong>time</strong> will you do <em>your habit</em>?</p>
+        <input id="timeInput" class="form-control" type="text" placeholder="e.g. 3:00PM" required />
+        <div class="processNavContainer">
+          <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+          <button class="btn btn-outline-primary nextButton mt-3">Next</button>
         </div>
       </div>
-      <div id="actionChooseCard" class="card processBox" style="left: 150%;">
-        <div class="card-body">
+    </div>
+    <div id="locationChooseCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Location</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Knowing where exactly you plan to work makes it easier to get started.</h6>
+        <p><strong>Where</strong> will you do <em>your habit</em>?</p>
+        <input id="locationInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required />
+        <div class="processNavContainer">
+          <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+          <button class="btn btn-outline-primary nextButton mt-3">Next</button>
         </div>
       </div>
+    </div>
+    <div id="dateRangeChooseCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Date Range</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Set a start date and end date for your habit. We recommend about a month to start.</h6>
+        <p>What <strong>day</strong> will you <strong>start</strong> <em>your habit</em>?</p>
+        <input id="startDateInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required />
+        <p class="mt-3">What <strong>day</strong> will you <strong>end</strong> <em>your habit</em>?</p>
+        <input id="endDateInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required />
+        <div class="processNavContainer">
+          <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+          <button class="btn btn-outline-primary nextButton mt-3">Next</button>
+        </div>
+      </div>
+    </div>
+    <div id="weekdaysChooseCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Days of the Week</h4>
+        <h6 class="card-subtitle mb-2 text-muted">What days of the week will you commit to learning your new skill?</h6>
+        <p>Select as many as you would like to commit to.</p>
+        <div id="checkboxesContainer">
+          <div>
+            <input type="checkbox" id="sundayCheckbox" name="sunday" value="Sunday">
+            <label for="sundayCheckbox">Sunday</label>
+          </div>
+          <div>
+            <input type="checkbox" id="mondayCheckbox" name="monday" value="Monday">
+            <label for="mondayCheckbox">Monday</label>
+          </div>
+          <div>
+            <input type="checkbox" id="tuesdayCheckbox" name="tuesday" value="Tuesday">
+            <label for="tuesdayCheckbox">Tuesday</label>
+          </div>
+          <div>
+            <input type="checkbox" id="wednesdayCheckbox" name="wednesday" value="Wednesday">
+            <label for="wednesdayCheckbox">Wednesday</label>
+          </div>
+          <div>
+            <input type="checkbox" id="thursdayCheckbox" name="thursday" value="Thursday">
+            <label for="thursdayCheckbox">Thursday</label>
+          </div>
+          <div>
+            <input type="checkbox" id="fridayCheckbox" name="friday" value="Friday">
+            <label for="fridayCheckbox">Friday</label>
+          </div>
+          <div>
+            <input type="checkbox" id="saturdayCheckbox" name="saturday" value="Saturday">
+            <label for="saturdayCheckbox">Saturday</label>
+          </div>
+        </div>
+        <div class="processNavContainer">
+          <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+          <button class="btn btn-outline-primary nextButton mt-3">Next</button>
+        </div>
+      </div>
+    </div>
+    <div id="submitCard" class="processBox">
+      <div class="card-body">
+        <h4 class="card-title">Submit Habit Information</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Review any details you'd like and when you press submit we will create your skill-learning habit for you!</h6>
+        <div class="processNavContainer">
+          <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+          <button id="addHabitSubmitButton"class="btn btn-success mt-3">Submit</button>
+        </div>
+      </div>
+    </div>
   </main>
 </body>
 

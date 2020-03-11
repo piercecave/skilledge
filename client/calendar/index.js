@@ -12,22 +12,22 @@ window.addEventListener("load", () => {
 
 
 function next() {
-    var currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
-    var currentMonth = (currentMonth + 1) % 12;
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
     showCalendar(currentMonth, currentYear);
 }
 
 function previous() {
-    var currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-    var currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
     showCalendar(currentMonth, currentYear);
 }
 
 function jump() {
     var selectYear = document.getElementById("year");
     var selectMonth = document.getElementById("month");
-    var currentYear = parseInt(selectYear.value);
-    var currentMonth = parseInt(selectMonth.value);
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
 }
 
@@ -65,7 +65,6 @@ function showCalendar(month, year) {
             else if (date > daysInMonth(month, year)) {
                 break;
             }
-
             else {
                 var cell = document.createElement("td");
                 var cellText = document.createTextNode(date);
