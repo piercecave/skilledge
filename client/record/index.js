@@ -12,6 +12,14 @@ let state = {
 }
 
 window.addEventListener("load", () => {
+    // Check for date query
+    const urlParams = new URLSearchParams(window.location.search);
+    const userProvidedDate = urlParams.get('date');
+    console.log("user provided date: " + userProvidedDate)
+    if (userProvidedDate) {
+        console.log("passed if test");
+        state.currentDate = new Date(userProvidedDate + "T06:00:00Z");
+    }
     var formattedDate = formatDateForDB(state.currentDate);
     document.getElementById("currentDateLabel").innerText = formattedDate;
     loadEvents(formattedDate);
@@ -149,9 +157,9 @@ const displayError = (error) => {
 }
 
 const formatDateForDB = (currentDate) => {
-    var newYear = currentDate.getFullYear();
-    var newMonth = currentDate.getMonth() + 1;
-    var newDate = currentDate.getDate();
+    var newYear = currentDate.getUTCFullYear();
+    var newMonth = currentDate.getUTCMonth() + 1;
+    var newDate = currentDate.getUTCDate();
     if (newMonth < 10) newMonth = "0" + newMonth;
     if (newDate < 10) newDate = "0" + newDate;
     return newYear + "-" + newMonth + "-" + newDate;

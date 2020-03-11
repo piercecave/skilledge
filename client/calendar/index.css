@@ -1,0 +1,49 @@
+.day_cell {
+    text-align: center;
+    padding: 0px;
+    height: 50px;
+    position: relative;
+}
+
+.day_text {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    left: 50%;
+    top: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    position: absolute;   
+    text-align: center;
+}
+
+.event_marker {
+    border-radius: 14px;
+    margin-top: 11px;
+    width: 28px;
+    height: 28px;
+    background-color: aqua;
+    display: inline-block;
+}
+
+.card {
+    margin-bottom: 3rem;
+}
+
+.table td {
+    padding: 0;
+}
+
+.table th {
+    padding: 0;
+    text-align: center;
+}
+
+table {
+    table-layout: fixed ;
+    width: 100% ;
+}
+
+td {
+    width: 14.285%;
+}

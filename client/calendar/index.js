@@ -1,15 +1,39 @@
 "use strict";
 
+const GET_EVENTS_FOR_USER_URL = "https://api.skilledge.site/users/events";
+
 var today = new Date();
 var currentMonth = today.getMonth();
 var currentYear = today.getFullYear();
 
+var eventDates = [];
+
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 window.addEventListener("load", () => {
-    showCalendar(currentMonth, currentYear);
+    loadEvents();
 });
 
+const loadEvents = () => {
+
+    fetch(GET_EVENTS_FOR_USER_URL, {
+        credentials: 'include'
+    })
+        .then(checkStatus)
+        .then((response) => {
+            return response.json();
+        })
+        .then(initCalendar)
+        .catch(displayError);
+}
+
+function initCalendar(responseJSON) {
+
+    eventDates = Array.from(responseJSON, event => event.EventDate.substring(0, 10)).filter(onlyUnique);
+    console.log(eventDates);
+
+    showCalendar(currentMonth, currentYear);
+}
 
 function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
@@ -29,6 +53,10 @@ function jump() {
     currentYear = parseInt(selectYear.value);
     currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
+}
+
+function isEventDate(date) {
+
 }
 
 function showCalendar(month, year) {
@@ -67,10 +95,23 @@ function showCalendar(month, year) {
             }
             else {
                 var cell = document.createElement("td");
-                var cellText = document.createTextNode(date);
+                cell.classList.add("day_cell");
+                var cellText = document.createElement("p");
+                cellText.innerText = date;
+                cellText.classList.add("day_text");
                 if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                     cell.classList.add("bg-info");
                 } // color today's date
+                var currentDateString = getComparableDate(year, month, date);
+                if (eventDates.includes(currentDateString)) {
+                    console.log(currentDateString);
+                    var cellMarker = document.createElement("div");
+                    cellMarker.classList.add("event_marker");
+                    cell.appendChild(cellMarker);
+                    cell.onclick = (function(currentDateString) {return function() {
+                        sendToRecord(currentDateString);
+                    };})(currentDateString);
+                }
                 cell.appendChild(cellText);
                 row.appendChild(cell);
                 date++;
@@ -84,8 +125,45 @@ function showCalendar(month, year) {
 
 }
 
+function sendToRecord(currentDateString) {
+    window.location.href = "https://skilledge.site/record/?date=" + currentDateString;
+}
 
 // check how many days in a month code from https://dzone.com/articles/determining-number-days-month
 function daysInMonth(iMonth, iYear) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
+}
+
+const formatDateForDB = (currentDate) => {
+    var newYear = currentDate.getFullYear();
+    var newMonth = currentDate.getMonth() + 1;
+    var newDate = currentDate.getDate();
+    if (newMonth < 10) newMonth = "0" + newMonth;
+    if (newDate < 10) newDate = "0" + newDate;
+    return newYear + "-" + newMonth + "-" + newDate;
+}
+
+const getComparableDate = (year, month, date) => {
+    var newYear = year;
+    var newMonth = month + 1;
+    var newDate = date;
+    if (newMonth < 10) newMonth = "0" + newMonth;
+    if (newDate < 10) newDate = "0" + newDate;
+    return newYear + "-" + newMonth + "-" + newDate;
+}
+
+const onlyUnique = (value, index, self) => {
+    return self.indexOf(value) === index;
+}
+
+const checkStatus = (response) => {
+    if (response.status >= 200 && response.status < 300) {
+        return response;
+    } else {
+        return Promise.reject(new Error(response.status + ": " + response.statusText));
+    }
+}
+
+const displayError = (error) => {
+    console.log(error);
 }
