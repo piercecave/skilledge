@@ -34,6 +34,11 @@ const createCharts = (responseJSON) => {
     // Filter out pending events
     var eventsData = responseJSON.filter(event => event.ResultName != "Pending");
 
+    eventsData = eventsData.map(event => {
+        event.EventDate = new Date(event.EventDate);
+        return event;
+    });
+
     // Order by date
     eventsData.sort((a, b) => a.EventDate - b.EventDate);
 
@@ -45,7 +50,6 @@ const createCharts = (responseJSON) => {
         }
         totalEvents++;
         event.SuccessRate = totalSuccesses / totalEvents * 100;
-        event.EventDate = new Date(event.EventDate);
         return event;
     });
 

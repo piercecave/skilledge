@@ -47,3 +47,11 @@ table {
 td {
     width: 14.285%;
 }
+
+.failure_day {
+    background-color: crimson;
+}
+
+.success_day {
+    background-color: chartreuse;
+}

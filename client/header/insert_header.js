@@ -46,16 +46,7 @@ document.getElementById("main_nav").innerHTML = `
         <a class="nav-link" href="./../charts/">Charts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="./../coaching/">Coaching</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="./../gamifying/">Gamifying</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./../edit_habit/">Edit Habit</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./../edit_skill/">Edit Skill</a>
       </li>
     </ul>
       <!-- Links -->

@@ -6,6 +6,7 @@ var today = new Date();
 var currentMonth = today.getMonth();
 var currentYear = today.getFullYear();
 
+var eventsData = [];
 var eventDates = [];
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -29,8 +30,15 @@ const loadEvents = () => {
 
 function initCalendar(responseJSON) {
 
+    console.log(responseJSON);
+
     eventDates = Array.from(responseJSON, event => event.EventDate.substring(0, 10)).filter(onlyUnique);
-    console.log(eventDates);
+
+    eventsData = responseJSON.map(function(event) {
+        event.FormattedEventDate = event.EventDate.substring(0, 10);
+        return event;
+    });
+    console.log(eventsData);
 
     showCalendar(currentMonth, currentYear);
 }
@@ -53,10 +61,6 @@ function jump() {
     currentYear = parseInt(selectYear.value);
     currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
-}
-
-function isEventDate(date) {
-
 }
 
 function showCalendar(month, year) {
@@ -104,9 +108,18 @@ function showCalendar(month, year) {
                 } // color today's date
                 var currentDateString = getComparableDate(year, month, date);
                 if (eventDates.includes(currentDateString)) {
-                    console.log(currentDateString);
                     var cellMarker = document.createElement("div");
                     cellMarker.classList.add("event_marker");
+                    var eventsForDate = eventsData.filter((event) => {
+                        return currentDateString.localeCompare(event.FormattedEventDate) == 0;
+                    });
+                    if (eventsForDate) {
+                        if (eventsForDate[0].ResultName.localeCompare("Success") == 0) {
+                            cellMarker.classList.add("success_day");
+                        } else if (eventsForDate[0].ResultName.localeCompare("Failure") == 0) {
+                            cellMarker.classList.add("failure_day");
+                        }
+                    }
                     cell.appendChild(cellMarker);
                     cell.onclick = (function(currentDateString) {return function() {
                         sendToRecord(currentDateString);
