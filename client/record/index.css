@@ -14,11 +14,11 @@ main {
 }
 
 .recordContainer {
-  width: 80%;
+  width: 60%;
 }
 
 @media (min-width: 768px) {
   .recordContainer {
-    width: 60%;
+    width: 80%;
   }
 }
