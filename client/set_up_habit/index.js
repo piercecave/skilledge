@@ -147,6 +147,7 @@ const configureSubmitButton = () => {
             .then(checkStatus)
             .then((response) => {
                 // console.log(response);
+                window.location.href = '/calendar';
             })
             .catch(displayError);
     };
@@ -154,14 +155,14 @@ const configureSubmitButton = () => {
 
 const setProcessStep = (step) => {
 
-    var cardsXPosition = step * -1 * 150;
+    var cardsXPosition = step * -1 * 112.5;
 
     return anime({
         targets: '.processBox',
         // Properties 
         translateX: cardsXPosition + "%",
         // Property Parameters
-        duration: 1000,
+        duration: 500,
         easing: 'linear',
         // Animation Parameters
     });

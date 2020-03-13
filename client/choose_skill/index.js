@@ -58,7 +58,7 @@ const displayResult = async (response) => {
             })
                 .then((response) => {
                     skillButton.setAttribute("disabled", "n/a");
-                    window.location.href = '/set_up_habit?skillid=' + skill.SkillID;
+                    window.location.href = '/set_up_habit';
                 })
                 .catch(displayError);
         };

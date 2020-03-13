@@ -2,7 +2,7 @@
 #login-form {
   margin: auto auto;
   margin-top: 5em;
-  width: 40%;
+  width: 80%;
   box-shadow: 0 6px 10px #DDDDDD;
   border-radius: 5px;
   padding: 1.5em; 
@@ -15,4 +15,10 @@
 
 .hidden {
   display: none;
+}
+
+@media (min-width: 768px) {
+  #login-form {
+    width: 60%;
+  }  
 }

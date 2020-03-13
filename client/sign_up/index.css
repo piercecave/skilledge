@@ -1,6 +1,6 @@
 #create-account-form {
   margin: 3em auto;
-  width: 60%;
+  width: 80%;
   box-shadow: 0 6px 10px #DDDDDD;
   border-radius: 5px;
   padding: 1.5em; 
@@ -8,4 +8,10 @@
 
 .hidden {
   display: none;
+}
+
+@media (min-width: 768px) {
+  #create-account-form {
+    width: 60%;
+  }  
 }

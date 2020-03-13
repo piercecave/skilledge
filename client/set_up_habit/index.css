@@ -14,14 +14,14 @@ main {
 }
 
 .processBox {
-  margin-left: 25%;
+  margin-left: 10%;
   min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
-  flex: 0 0 50%;
+  flex: 0 0 80%;
 }
 
 .processNavContainer {

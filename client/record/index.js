@@ -20,7 +20,12 @@ window.addEventListener("load", () => {
         console.log("passed if test");
         state.currentDate = new Date(userProvidedDate + "T06:00:00Z");
     }
-    var formattedDate = formatDateForDB(state.currentDate);
+    var formattedDate = "";
+    if (userProvidedDate) {
+        formattedDate = formatDateForDB(state.currentDate);
+    } else {
+        formattedDate = formatLocalDateForDB(state.currentDate);
+    }
     document.getElementById("currentDateLabel").innerText = formattedDate;
     loadEvents(formattedDate);
     configureDatePickers();
@@ -160,6 +165,15 @@ const formatDateForDB = (currentDate) => {
     var newYear = currentDate.getUTCFullYear();
     var newMonth = currentDate.getUTCMonth() + 1;
     var newDate = currentDate.getUTCDate();
+    if (newMonth < 10) newMonth = "0" + newMonth;
+    if (newDate < 10) newDate = "0" + newDate;
+    return newYear + "-" + newMonth + "-" + newDate;
+}
+
+const formatLocalDateForDB = (currentDate) => {
+    var newYear = currentDate.getFullYear();
+    var newMonth = currentDate.getMonth() + 1;
+    var newDate = currentDate.getDate();
     if (newMonth < 10) newMonth = "0" + newMonth;
     if (newDate < 10) newDate = "0" + newDate;
     return newYear + "-" + newMonth + "-" + newDate;
