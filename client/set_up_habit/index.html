@@ -38,10 +38,10 @@
         <p>What <strong>action</strong> do you want to take?</p>
         <input id="actionInput" class="form-control" type="text" placeholder="e.g. I will go rock climbing for 1 hour."
           required />
-          <div class="processNavContainer">
-            <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
-            <button class="btn btn-outline-primary nextButton mt-3">Next</button>
-          </div>
+        <div class="processNavContainer">
+          <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
+          <button class="btn btn-outline-primary nextButton mt-3">Next</button>
+        </div>
       </div>
     </div>
     <div id="timeChooseCard" class="processBox">
@@ -49,7 +49,16 @@
         <h4 class="card-title">Time</h4>
         <h6 class="card-subtitle mb-2 text-muted">Choosing a time improves your ability to follow through.</h6>
         <p>What <strong>time</strong> will you do <em>your habit</em>?</p>
-        <input id="timeInput" class="form-control" type="text" placeholder="e.g. 3:00PM" required />
+        <!-- <input id="timeInput" class="form-control" type="text" placeholder="e.g. 3:00PM" required /> -->
+        <label for="hourInput">Hour:</label>
+        <input class="form-control" type="number" id="hourInput" name="hourInput" min="1" max="12" value="12">
+        <label for="minutesInput">Minutes:</label>
+        <input class="form-control" type="number" id="minutesInput" name="minutesInput" min="1" max="59" value="0">
+        <label for="periodInput">AM or PM</label>
+        <select class="custom-select" id="periodInput" name="periodInput">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
         <div class="processNavContainer">
           <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
           <button class="btn btn-outline-primary nextButton mt-3">Next</button>
@@ -59,7 +68,8 @@
     <div id="locationChooseCard" class="processBox">
       <div class="card-body">
         <h4 class="card-title">Location</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Knowing where exactly you plan to work makes it easier to get started.</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Knowing where exactly you plan to work makes it easier to get started.
+        </h6>
         <p><strong>Where</strong> will you do <em>your habit</em>?</p>
         <input id="locationInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required />
         <div class="processNavContainer">
@@ -71,11 +81,24 @@
     <div id="dateRangeChooseCard" class="processBox">
       <div class="card-body">
         <h4 class="card-title">Date Range</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Set a start date and end date for your habit. We recommend about a month to start.</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Set a start date and end date for your habit. We recommend about a
+          month to start.</h6>
         <p>What <strong>day</strong> will you <strong>start</strong> <em>your habit</em>?</p>
-        <input id="startDateInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required />
+        <label for="startMonthInput">Month:</label>
+        <input class="form-control" type="number" id="startMonthInput" name="startMonthInput" min="1" max="12">
+        <label for="startDateInput">Date:</label>
+        <input class="form-control" type="number" id="startDateInput" name="startDateInput" min="1" max="31">
+        <label for="startYearInput">Year:</label>
+        <input class="form-control" type="number" id="startYearInput" name="startYearInput" min="1000" max="9999">
+        <!-- <input id="startDateInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required /> -->
         <p class="mt-3">What <strong>day</strong> will you <strong>end</strong> <em>your habit</em>?</p>
-        <input id="endDateInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required />
+        <label for="endMonthInput">Month:</label>
+        <input class="form-control" type="number" id="endMonthInput" name="endMonthInput" min="1" max="12">
+        <label for="endDateInput">Date:</label>
+        <input class="form-control" type="number" id="endDateInput" name="endDateInput" min="1" max="31">
+        <label for="endYearInput">Year:</label>
+        <input class="form-control" type="number" id="endYearInput" name="endYearInput" min="1000" max="9999">
+        <!-- <input id="endDateInput" class="form-control" type="text" placeholder="Boulder Climbing Gym" required /> -->
         <div class="processNavContainer">
           <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
           <button class="btn btn-outline-primary nextButton mt-3">Next</button>
@@ -126,10 +149,11 @@
     <div id="submitCard" class="processBox">
       <div class="card-body">
         <h4 class="card-title">Submit Habit Information</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Review any details you'd like and when you press submit we will create your skill-learning habit for you!</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Review any details you'd like and when you press submit we will create
+          your skill-learning habit for you!</h6>
         <div class="processNavContainer">
           <button class="btn btn-outline-primary prevButton mt-3">Previous</button>
-          <button id="addHabitSubmitButton"class="btn btn-success mt-3">Submit</button>
+          <button id="addHabitSubmitButton" class="btn btn-success mt-3">Submit</button>
         </div>
       </div>
     </div>

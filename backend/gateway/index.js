@@ -51,7 +51,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { 
     secure: true,
-    sameSite: "none"
+    sameSite: "none",
+    maxAge: 86400 * 30
   },
   store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 }),
 }));

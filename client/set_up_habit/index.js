@@ -19,6 +19,7 @@ window.addEventListener("load", () => {
     // setProcessStep(1);
     getUserSkills();
     configureProcessNavButtons();
+    configureDatePickers();
     configureSubmitButton();
     // yourFunction();
 });
@@ -129,9 +130,9 @@ const configureSubmitButton = () => {
 
         var newHabit = {
             habitAction: document.getElementById("actionInput").value,
-            habitStartDate: document.getElementById("startDateInput").value,
-            habitEndDate: document.getElementById("endDateInput").value,
-            habitTime: document.getElementById("timeInput").value,
+            habitStartDate: getHabitStartDate(),
+            habitEndDate: getHabitEndDate(),
+            habitTime: getHabitTime(),
             habitLocation: document.getElementById("locationInput").value,
             habitWeekdaysList: JSON.stringify(weekdays)
         }
@@ -151,6 +152,92 @@ const configureSubmitButton = () => {
             })
             .catch(displayError);
     };
+}
+
+const configureDatePickers = () => {
+    const startYearInput = document.getElementById("startYearInput");
+    const startMonthInput = document.getElementById("startMonthInput");
+    const startDateInput = document.getElementById("startDateInput");
+
+    const endYearInput = document.getElementById("endYearInput");
+    const endMonthInput = document.getElementById("endMonthInput");
+    const endDateInput = document.getElementById("endDateInput");
+
+    var currentDate = new Date();
+
+    startYearInput.value = currentDate.getFullYear();
+    startMonthInput.value = currentDate.getMonth() + 1;
+    startDateInput.value = currentDate.getDate();
+
+    var endDate = currentDate;
+    endDate.setDate(endDate.getDate() + 30);
+
+    endYearInput.value = endDate.getFullYear();
+    endMonthInput.value = endDate.getMonth() + 1;
+    endDateInput.value = endDate.getDate();
+}
+
+const getHabitStartDate = () => {
+    const startYearInput = document.getElementById("startYearInput");
+    const startMonthInput = document.getElementById("startMonthInput");
+    const startDateInput = document.getElementById("startDateInput");
+
+    var year = +(startYearInput.value);
+    var month = +(startMonthInput.value);
+    var date = +(startDateInput.value);
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    if (date < 10) {
+        date = "0" + date;
+    }
+    
+    return year + "-" + month + "-" + date;
+}
+
+const getHabitEndDate = () => {
+    const endYearInput = document.getElementById("endYearInput");
+    const endMonthInput = document.getElementById("endMonthInput");
+    const endDateInput = document.getElementById("endDateInput");
+    
+    var year = +(endYearInput.value);
+    var month = +(endMonthInput.value);
+    var date = +(endDateInput.value);
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    if (date < 10) {
+        date = "0" + date;
+    }
+    
+    return year + "-" + month + "-" + date;
+}
+
+const getHabitTime = () => {
+    const hourInput = document.getElementById("hourInput");
+    const minutesInput = document.getElementById("minutesInput");
+    const periodInput = document.getElementById("periodInput");
+
+    var hour = +hourInput.value;
+    var minutes = +minutesInput.value;
+
+    if (periodInput.value.localeCompare("PM") == 0) {
+        hour += 12;
+    }
+
+    if (hour < 10) {
+        hour = "0" + hour;
+    }
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    
+    return hour + ":" + minutes + ":" + "00";
 }
 
 const setProcessStep = (step) => {

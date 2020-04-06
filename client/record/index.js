@@ -126,7 +126,9 @@ const configureSuccessButton = (event, successButton) => {
             body: JSON.stringify(newResult)
         })
             .then(checkStatus)
-            .then(console.log)
+            .then(function() {
+                window.location.href = '/calendar';
+            })
             .catch(displayError);
     };
 }
@@ -148,7 +150,9 @@ const configureFailureButton = (event, failureButton) => {
             body: JSON.stringify(newResult)
         })
             .then(checkStatus)
-            .then(console.log)
+            .then(function() {
+                window.location.href = '/calendar';
+            })
             .catch(displayError);
     };
 }
