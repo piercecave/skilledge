@@ -1,13 +1,5 @@
 main {
-  margin: 3.5em;
-}
-
-
-html, body{
-  background: linear-gradient(lightblue, yellow , #ffffff);
-  height: 100%;
-
-  float: center;
+  margin: 2em;
 }
 
 .center {
@@ -17,29 +9,25 @@ html, body{
   width: 50%;
 }
 
- #animation img {
+.hidden {
   display: none;
 }
-#animation img:first-child {
-  display: block;
-}  
 
-#progress{
-  border: 5px;
+
+main {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  overflow-x: hidden;
 }
-
-
-/* * {box-sizing: border-box;
-  padding-bottom: 0.1px;
+#theButtons {
+  margin: 3% 6% 3% 6%;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  flex: 0 0 80%;
 }
-
-/*Container for level bar */
-/* .container {
-  width: 100%;
-  background-color: #ddd;
-}
-
-
-
-.css {width: 80%; background-color: #2196F3;} Blue */
 

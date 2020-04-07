@@ -24,57 +24,71 @@
     <div id="main_nav"></div>
     <main>
 
-
-       <img src = "cat/Idle/Idle%20(1).png" id ='myCat' class= "center" style = "display:block" width = "200" height="200"  >
-
-
-      <div id="animation1" class="center jump " style = "display:none">
-        <img src="cat/Jump/Jump%20(1).png" width="200" height="200" alt="cat jump" />
-        <img src="cat/Jump/Jump%20(2).png" width="200" height="200" alt="cat jump" />
-        <img src="cat/Jump/Jump%20(3).png" width="200" height="200" alt="cat jump" />
-        <img src="cat/Jump/Jump%20(4).png" width="200" height="200" alt="cat jump" />
-      </div>
-
-      <div id="animation2" class="center idle " style = "display:none">
-        <img src="cat/Idle/Idle%20(1).png" width="200" height="200" alt="cat idle" />
-        <img src="cat/Idle/Idle%20(2).png" width="200" height="200" alt="cat idle" />
-        <img src="cat/Idle/Idle%20(3).png" width="200" height="200" alt="cat idle" />
-        <img src="cat/Idle/Idle%20(4).png" width="200" height="200" alt="cat idle" />
-     
-      </div> 
-
-      <div id="animation3" class="center idle " style = "display:none">
-        <img src="cat/Dead/Dead%20(1).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(2).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(3).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(4).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(5).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(6).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(7).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(8).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(9).png" width="200" height="200" alt="cat dead" />
-        <img src="cat/Dead/Dead%20(10).png" width="200" height="200" alt="cat dead" />
-      </div> 
+      <div id="recordContainer" class="container">
+        <div class="card my-3">
+          <div class="card-body">
+            <h5 class="card-title">Record Your Progress!</h5>
 
 
+            <img src="cat/Idle/Idle%20(1).png" id='myCat' class="center" style="display:block" width="200" height="200">
 
-      <!-- makes level container-->
-      <br />
 
-      <div class="container">
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0"
-            aria-valuemax="100" style="width:40%"> 40%</div>
+            <div id="animation1" class="center jump ">
+              <img src="cat/Jump/Jump%20(1).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(2).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(3).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(4).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(5).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(6).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(7).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+              <img src="cat/Jump/Jump%20(8).png" class="center" width="200" height="200" alt="cat jump" style="display:none" />
+            </div>
+
+            <div id="animation2" class="center play dead ">
+              <img src="cat/Dead/Dead%20(1).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(2).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(3).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(4).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(5).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(6).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(7).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(8).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(9).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Dead/Dead%20(10).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+            </div>
+
+            <div id="animation3" class="center play falling">
+              <img src="cat/Fall/Fall%20(1).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(2).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(3).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(4).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(5).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(6).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(7).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Fall/Fall%20(8).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+            </div>
+
+            <div id="animation4" class="center play hurt">
+              <img src="cat/Hurt/Hurt%20(1).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(2).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(3).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(4).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(5).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(6).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(7).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(8).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(9).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+              <img src="cat/Hurt/Hurt%20(10).png" class="center" width="200" height="200" alt="cat dead" style="display:none" />
+            </div>
+          </div>
+          <div id="theButtons">
+            <button type="jumping" id="button1" class="btn btn-info btn-lg btn-block">Jump</button>
+            <button type="play dead" id="button2" class="btn btn-info btn-lg btn-block">Play Dead</button>
+            <button type="play falling " id="button3" class="btn btn-info btn-lg btn-block">Fall Down</button>
+            <button type="fake injury" id="button4" class="btn btn-info btn-lg btn-block">Fake Injury</button>
+          </div>
         </div>
       </div>
-      <br />
-  </div>
-
-  <div id="bottom">
-    <button type="interaction" id = "button1" class="btn btn-info btn-lg btn-block">Interaction</button>
-    <button type="avater" class="btn btn-info btn-lg btn-block">My Avatar</button>
-    <button type="achievemnts" class="btn btn-info btn-lg btn-block">Achievements</button>
-    <button type="settings" class="btn btn-info btn-lg btn-block">Settings</button>
   </div>
   </main>
 </body>
