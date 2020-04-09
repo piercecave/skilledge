@@ -1,10 +1,9 @@
 #!/bin/bash
+export DOCKERNAME=$(head -n 1 ./../docker_username)
 
-export DOCKERNAME=$1
-
-docker pull $DOCKERNAME/skilledgegateway
-docker pull $DOCKERNAME/skilledgedatabase
-echo "✅  Pulled Docker Containers"
+docker build -t $DOCKERNAME/skilledgegateway ./gateway/
+docker build -t $DOCKERNAME/skilledgedatabase ./db/
+echo "✅  Local Docker Builds Complete"
 
 docker rm -f skilledgegateway
 docker rm -f skilledgedatabase
@@ -35,5 +34,5 @@ echo "✅  Docker Network Created"
 
 docker run -d --network backendnetwork --name redisserver redis
 docker run -d --network backendnetwork --name skilledgedatabase -e MYSQL_USER=$MYSQL_USER -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=$MYSQL_DB_NAME $DOCKERNAME/skilledgedatabase
-docker run -d --network backendnetwork --name skilledgegateway --restart unless-stopped -p 80:80 -p 443:443 -v /etc/letsencrypt:/etc/letsencrypt:ro -e ENV=$ENV -e TLSCERT=$TLSCERT -e TLSKEY=$TLSKEY -e REDISADDR=$REDISADDR -e SESSIONKEY=$SESSIONKEY -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_USER=$MYSQL_USER -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DB_NAME=$MYSQL_DB_NAME -e DSN=$DSN $DOCKERNAME/skilledgegateway
-echo "✅  Docker Containers Successfully Running"
+docker run -d --network backendnetwork --name skilledgegateway --restart unless-stopped -p 3002:80 -e ENV=$ENV -e TLSCERT=$TLSCERT -e TLSKEY=$TLSKEY -e REDISADDR=$REDISADDR -e SESSIONKEY=$SESSIONKEY -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_USER=$MYSQL_USER -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DB_NAME=$MYSQL_DB_NAME -e DSN=$DSN $DOCKERNAME/skilledgegateway
+echo "🎊  Server Deployment Complete!"

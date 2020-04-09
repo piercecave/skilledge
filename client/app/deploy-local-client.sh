@@ -1,4 +1,6 @@
 #!/bin/bash
 docker rm -f client
-docker build -t client .
-docker run --name client -itd --rm -v /app -v /app/node_modules -p 3001:80 -e CHOKIDAR_USEPOLLING=true client
+docker build -t client . -f Dockerfile.dev
+docker run --name client -d -p 3001:80 client
+echo "✅  Updated Docker Container Successfully Running"
+echo "🎊  Client Deployment Complete!"

@@ -16,11 +16,6 @@ redisClient.on('error', (err) => {
   console.log('Redis Error: ', err);
 });
 
-var privateKey  = fs.readFileSync(process.env.TLSKEY, 'utf8');
-var certificate = fs.readFileSync(process.env.TLSCERT, 'utf8');
-var credentials = {key: privateKey, cert: certificate};
-var forceSsl = require('express-force-ssl');
-
 const db = require("./middleware/db");
 const { checkIsLoggedIn } = require("./middleware/auth");
 const cors = require("./middleware/cors");
@@ -33,8 +28,15 @@ const sessions = require("./handlers/sessions");
 
 const app = express();
 
-// Forces a secure connection
-app.use(forceSsl);
+if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
+  var privateKey = fs.readFileSync(process.env.TLSKEY, 'utf8');
+  var certificate = fs.readFileSync(process.env.TLSCERT, 'utf8');
+  var credentials = { key: privateKey, cert: certificate };
+  var forceSsl = require('express-force-ssl');
+  // Forces a secure connection
+  app.use(forceSsl);
+}
+
 // JSON parsing for application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }))
 // JSON parsing for application/json
@@ -49,7 +51,7 @@ app.use(session({
   name: 'RedisSessionDB',
   resave: false,
   saveUninitialized: true,
-  cookie: { 
+  cookie: {
     secure: true,
     sameSite: "none",
     maxAge: 86400 * 30

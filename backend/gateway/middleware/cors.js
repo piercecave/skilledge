@@ -2,7 +2,11 @@
 
 async function setHTTPHeaders(req, res, next) {
 
-  res.setHeader("Access-Control-Allow-Origin", "https://skilledge.site");
+  if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
+    res.setHeader("Access-Control-Allow-Origin", "https://skilledge.site");
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+  }
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
