@@ -2,7 +2,7 @@ import React from 'react';
 import './HomePage.css';
 import { Header } from './Header'; 
 
-const BASE_URL = "http://localhost:3002/";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL + "/";
 
 export class HomePage extends React.Component {
     render() {
@@ -20,7 +20,7 @@ function returnsString() {
     return "hi";
 }
 
-const checkAuthenticated = () => {
+function checkAuthenticated() {
     fetch(BASE_URL, {
         credentials: 'include'
     })

@@ -25,6 +25,7 @@ export SESSIONKEY="key"
 export REDISADDR="redisserver:6379"
 export DSN="root:testpwd@tcp(skilledgedatabase:3306)/skilledgedb"
 export ENV="DEVELOPMENT"
+export CLIENT_URL="http://localhost:3000"
 export TLSCERT=/etc/letsencrypt/live/api.skilledge.site/fullchain.pem
 export TLSKEY=/etc/letsencrypt/live/api.skilledge.site/privkey.pem
 echo "✅  Environment Variables Set"

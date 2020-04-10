@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from './logo.svg';
-import './HomePage.css';
 
 export class Header extends React.Component {
     render() {
