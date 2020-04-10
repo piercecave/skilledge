@@ -14,6 +14,7 @@ export class Calendar extends React.Component {
 }
 
 function showCalendar() {
+    return (
     <div class="container col-sm-4 col-md-7 col-lg-4 mt-5">
         <div class="card">
             <h3 class="card-header" id="monthAndYear"></h3>
@@ -105,6 +106,7 @@ function showCalendar() {
                 </select></form>
         </div>
     </div>
+    )
 }
 
 export default Calendar;
