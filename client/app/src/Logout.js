@@ -6,6 +6,9 @@ export class Logout extends React.Component {
 
   constructor(props) {
     super(props);
+
+    document.title = 'Log Out';
+
     this.BASE_URL = process.env.REACT_APP_BACKEND_URL + "/sessions";
     this.initLogOut = this.initLogOut.bind(this);
   }

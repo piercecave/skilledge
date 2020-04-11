@@ -6,6 +6,9 @@ export class SignUp extends React.Component {
 
   constructor(props) {
     super(props);
+
+    document.title = 'Sign Up';
+
     this.BASE_URL = process.env.REACT_APP_BACKEND_URL + "/users";
     this.initSignUp = this.initSignUp.bind(this);
   }

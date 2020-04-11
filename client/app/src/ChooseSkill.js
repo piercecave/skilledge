@@ -7,6 +7,9 @@ export class ChooseSkill extends React.Component {
 
   constructor(props) {
     super(props);
+
+    document.title = 'Choose Skill';
+
     this.GET_SKILLS_URL = process.env.REACT_APP_BACKEND_URL + "/skills";
     this.ADD_SKILL_URL = process.env.REACT_APP_BACKEND_URL + "/users/skills/";
     this.initChooseSkill = this.initChooseSkill.bind(this);

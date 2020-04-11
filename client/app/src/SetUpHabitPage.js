@@ -8,6 +8,9 @@ export class SetUpHabitPage extends React.Component {
 
     constructor(props) {
         super(props);
+
+        document.title = 'Set Up Habit';
+
         this.GET_USER_SKILLS_URL = process.env.REACT_APP_BACKEND_URL + "/users/skills";
         this.ADD_HABIT_URL = process.env.REACT_APP_BACKEND_URL + "/users/skills/:skillid/habits";
         this.initSetUpHabitPage = this.initSetUpHabitPage.bind(this);

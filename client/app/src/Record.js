@@ -1,11 +1,14 @@
 import React from 'react';
-import './RecordPage.css';
+import './Record.css';
 import { Header } from './Header';
 
-export class RecordPage extends React.Component {
+export class Record extends React.Component {
 
   constructor(props) {
     super(props);
+
+    document.title='Record Progress';
+
     this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
     this.SET_RESULT_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/result";
@@ -213,7 +216,7 @@ export class RecordPage extends React.Component {
 
   render() {
     return (
-      <div className="RecordPage">
+      <div className="Record">
         <Header />
         <div id="recordContainer" className="container">
           <div className="card my-3">
@@ -232,4 +235,4 @@ export class RecordPage extends React.Component {
     );
   }
 }
-export default RecordPage;
+export default Record;

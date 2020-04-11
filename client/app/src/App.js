@@ -4,13 +4,14 @@ import { HomePage } from './HomePage';
 import { SetUpHabitPage } from './SetUpHabitPage';
 import { Calendar } from './Calendar';
 import { BrowserRouter, Route } from 'react-router-dom'
-import RecordPage from './RecordPage';
+import Record from './Record';
 import SignUp from './SignUp';
 import Login from './Login';
 import Logout from './Logout';
 import ChooseSkill from './ChooseSkill';
 
 function App() {
+
   return (
     <BrowserRouter>
       <Route exact path='/' component={HomePage} />
@@ -20,7 +21,7 @@ function App() {
       <Route exact path='/choose_skill/' component={ChooseSkill} />
       <Route exact path='/set_up_habit/' component={SetUpHabitPage} />
       <Route exact path='/calendar/' component={Calendar} />
-      <Route exact path='/record/' component={RecordPage} />
+      <Route exact path='/record/' component={Record} />
     </BrowserRouter>
   );
 }

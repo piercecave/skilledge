@@ -6,6 +6,9 @@ export class Calendar extends React.Component {
 
     constructor(props) {
         super(props);
+
+        document.title = 'Calendar';
+
         this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
         this.previous = this.previous.bind(this);

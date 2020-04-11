@@ -6,6 +6,9 @@ export class Login extends React.Component {
 
   constructor(props) {
     super(props);
+
+    document.title = 'Log In';
+
     this.BASE_URL = process.env.REACT_APP_BACKEND_URL + "/sessions";
     this.initLogin = this.initLogin.bind(this);
   }
