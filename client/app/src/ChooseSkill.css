@@ -1,0 +1,11 @@
+#chooseSkillContainer {
+    width: 80%;
+    margin: auto auto;
+    margin-top: 2em;
+}
+
+@media (min-width: 768px) {
+    #chooseSkillContainer {
+        width: 60%;
+    }
+}
