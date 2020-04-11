@@ -27,7 +27,10 @@ const events = require("./handlers/events");
 const sessions = require("./handlers/sessions");
 
 const app = express();
-
+const cookie = {
+  sameSite: "none",
+  maxAge: 86400 * 30
+}
 if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
   var privateKey = fs.readFileSync(process.env.TLSKEY, 'utf8');
   var certificate = fs.readFileSync(process.env.TLSCERT, 'utf8');
@@ -35,6 +38,10 @@ if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
   var forceSsl = require('express-force-ssl');
   // Forces a secure connection
   app.use(forceSsl);
+  cookie = {
+    sameSite: "none",
+    maxAge: 86400 * 30
+  }
 }
 
 // JSON parsing for application/x-www-form-urlencoded
@@ -51,11 +58,7 @@ app.use(session({
   name: 'RedisSessionDB',
   resave: false,
   saveUninitialized: true,
-  cookie: {
-    secure: true,
-    sameSite: "none",
-    maxAge: 86400 * 30
-  },
+  cookie: cookie,
   store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 }),
 }));
 

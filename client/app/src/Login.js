@@ -2,13 +2,17 @@ import React from 'react';
 import './Login.css';
 import { Header } from './Header';
 
-const BASE_URL = process.env.REACT_APP_BACKEND_URL + "/sessions";
-
 export class Login extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.BASE_URL = process.env.REACT_APP_BACKEND_URL + "/sessions";
+    this.initLogin = this.initLogin.bind(this);
+  }
+
   initLogin(event) {
-    // event.preventDefault();
-    // this.authenticate();
+    event.preventDefault();
+    this.authenticate();
   };
 
   authenticate() {
@@ -16,7 +20,7 @@ export class Login extends React.Component {
       email: this.idValue('Email'),
       password: this.idValue('Password'),
     }
-    fetch(BASE_URL, {
+    fetch(this.BASE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,17 +39,18 @@ export class Login extends React.Component {
 
   displayError(error) {
     // Retrieve container for displaying error
-    const metaContainer = this.id('meta-container');
-    if (metaContainer.classList.contains("hidden")) {
-      metaContainer.classList.remove("hidden");
-    }
-    metaContainer.innerHTML = "";
+    console.log(error);
+    // const metaContainer = this.id('meta-container');
+    // if (metaContainer.classList.contains("hidden")) {
+    //   metaContainer.classList.remove("hidden");
+    // }
+    // metaContainer.innerHTML = "";
 
-    // Render error
-    const errorMsg = document.createElement('h2');
-    errorMsg.classList.add("error-msg");
-    errorMsg.textContent = error;
-    metaContainer.appendChild(errorMsg);
+    // // Render error
+    // const errorMsg = document.createElement('h2');
+    // errorMsg.classList.add("error-msg");
+    // errorMsg.textContent = error;
+    // metaContainer.appendChild(errorMsg);
   }
 
   id(idName) {
@@ -80,9 +85,6 @@ export class Login extends React.Component {
   }
 
   render() {
-
-
-
     return (
       <div className="Login" >
         <Header />
@@ -99,7 +101,7 @@ export class Login extends React.Component {
               <label htmlFor="Password">Password</label>
               <input type="Password" className="form-control" id="Password" placeholder="Enter password" required />
             </div>
-            <button id="submit" type="submit" className="btn btn-primary" onClick={this.initLogin}>Submit</button>
+            <button id="submit" className="btn btn-primary" onClick={this.initLogin}>Submit</button>
           </form>
           <a id="create-account" href="./../sign_up/">Create an account</a>
           <div id="meta-container" className="card hidden"></div>
