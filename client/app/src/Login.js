@@ -1,6 +1,6 @@
 import React from 'react';
-import './Login.css';
 import { Header } from './Header';
+import './Login.css';
 
 export class Login extends React.Component {
 
@@ -104,7 +104,7 @@ export class Login extends React.Component {
             <button id="submit" className="btn btn-primary" onClick={this.initLogin}>Submit</button>
           </form>
           <a id="create-account" href="./../sign_up/">Create an account</a>
-          <div id="meta-container" className="card hidden"></div>
+          <div id="meta-container" className="hidden card"></div>
         </section>
       </div>
     );
