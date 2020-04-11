@@ -114,7 +114,7 @@ function showCalendar1() {
     )
 }
 
-const GET_EVENTS_FOR_USER_URL = "https://api.skilledge.site/users/events";
+const GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
 
 var today = new Date();
 var currentMonth = today.getMonth();
