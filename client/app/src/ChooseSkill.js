@@ -10,10 +10,22 @@ export class ChooseSkill extends React.Component {
     this.GET_SKILLS_URL = process.env.REACT_APP_BACKEND_URL + "/skills";
     this.ADD_SKILL_URL = process.env.REACT_APP_BACKEND_URL + "/users/skills/";
     this.initChooseSkill = this.initChooseSkill.bind(this);
+    this.chooseSkill = this.chooseSkill.bind(this);
 
     this.state = {
       skills: []
     }
+  }
+
+  chooseSkill(skillProps) {
+    fetch(this.ADD_SKILL_URL + skillProps.skill.SkillID, {
+      method: 'POST',
+      credentials: 'include'
+    })
+      .then(() => {
+        window.location.href = '/set_up_habit';
+      })
+      .catch(this.displayError);
   }
 
   componentDidMount() {
@@ -68,7 +80,7 @@ export class ChooseSkill extends React.Component {
               <p><em>(We'll help you figure out how next!)</em></p>
               <div id="skillsContainer" className="container my-3">
                 {this.state.skills.map((skill, index) => (
-                  <Skill key={index} skill={skill} />
+                  <Skill key={index} skill={skill} onClick={this.chooseSkill}/>
                 ))}
               </div>
             </div>

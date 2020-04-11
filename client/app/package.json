@@ -38,6 +38,9 @@
     ]
   },
   "devDependencies": {
+    "@types/animejs": "^3.1.0",
+    "anime": "^0.1.2",
+    "animejs": "^3.2.0",
     "env-cmd": "^10.1.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1"
