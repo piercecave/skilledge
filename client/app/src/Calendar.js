@@ -77,7 +77,6 @@ export class Calendar extends React.Component {
     }
 
     showCalendar() {
-        console.log("showcalendar")
         const month = this.state.currentMonth;
         const year = this.state.currentYear;
 
@@ -104,9 +103,10 @@ export class Calendar extends React.Component {
 
             //creating individual cells, filing them up with data.
             for (let j = 0; j < 7; j++) {
+                var cell = document.createElement("td");
+                var cellText;
                 if (i === 0 && j < firstDay) {
-                    var cell = document.createElement("td");
-                    const cellText = document.createTextNode("");
+                    cellText = document.createTextNode("");
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                 }
@@ -114,25 +114,26 @@ export class Calendar extends React.Component {
                     break;
                 }
                 else {
-                    var cell = document.createElement("td");
                     cell.classList.add("day_cell");
-                    var cellText = document.createElement("p");
+                    cellText = document.createElement("p");
                     cellText.innerText = date;
                     cellText.classList.add("day_text");
                     if (date === this.state.today.getDate() && year === this.state.today.getFullYear() && month === this.state.today.getMonth()) {
                         cell.classList.add("bg-info");
                     } // color today's date
-                    var currentDateString = this.getComparableDate(year, month, date);
+                    let currentDateString = this.getComparableDate(year, month, date);
                     if (this.state.eventDates.includes(currentDateString)) {
                         var cellMarker = document.createElement("div");
                         cellMarker.classList.add("event_marker");
+
                         var eventsForDate = this.state.eventsData.filter((event) => {
-                            return currentDateString.localeCompare(event.FormattedEventDate) == 0;
+                            return currentDateString.localeCompare(event.FormattedEventDate) === 0;
                         });
+
                         if (eventsForDate) {
-                            if (eventsForDate[0].ResultName.localeCompare("Success") == 0) {
+                            if (eventsForDate[0].ResultName.localeCompare("Success") === 0) {
                                 cellMarker.classList.add("success_day");
-                            } else if (eventsForDate[0].ResultName.localeCompare("Failure") == 0) {
+                            } else if (eventsForDate[0].ResultName.localeCompare("Failure") === 0) {
                                 cellMarker.classList.add("failure_day");
                             }
                         }
@@ -157,7 +158,7 @@ export class Calendar extends React.Component {
     }
 
     sendToRecord(currentDateString) {
-        window.location.href = "https://skilledge.site/record/?date=" + currentDateString;
+        window.location.href = "./../record/?date=" + currentDateString;
     }
 
     // check how many days in a month code from https://dzone.com/articles/determining-number-days-month
@@ -205,7 +206,7 @@ export class Calendar extends React.Component {
                 <Header />
                 <div className="container col-sm-4 col-md-7 col-lg-4 mt-5">
                     <div className="card">
-                        <h3 className="card-header" id="monthAndYear"></h3>
+                        <h3 className="card-header" id="monthAndYear">YYYY-MM-DD</h3>
                         <table className="table table-bordered table-responsive-sm" id="calendar">
                             <thead>
                                 <tr>

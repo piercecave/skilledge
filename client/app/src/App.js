@@ -4,7 +4,7 @@ import { HomePage } from './HomePage';
 import { SetUpHabitPage } from './SetUpHabitPage';
 import { Calendar } from './Calendar';
 import { BrowserRouter, Route } from 'react-router-dom'
-import Record from './Record';
+import RecordPage from './RecordPage';
 import SignUp from './SignUp';
 import Login from './Login';
 import Logout from './Logout';
@@ -20,7 +20,7 @@ function App() {
       <Route exact path='/choose_skill/' component={ChooseSkill} />
       <Route exact path='/set_up_habit/' component={SetUpHabitPage} />
       <Route exact path='/calendar/' component={Calendar} />
-      <Route exact path='/record/' component={Record} />
+      <Route exact path='/record/' component={RecordPage} />
     </BrowserRouter>
   );
 }
