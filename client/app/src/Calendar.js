@@ -11,14 +11,14 @@ export class Calendar extends React.Component {
 
             <div className="Calendar">
                 <Header />
-                Test: { showCalendar() }
+                Test: { showCalendar1() }
                 {loadEvents()}
             </div>
         );
     }
 }
 
-function showCalendar() {
+function showCalendar1() {
     return (
     <div class="container col-sm-4 col-md-7 col-lg-4 mt-5">
         <div class="card">

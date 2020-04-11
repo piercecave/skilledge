@@ -6,6 +6,9 @@ import { Calendar } from './Calendar';
 import { BrowserRouter, Route } from 'react-router-dom'
 import Record from './Record';
 import SignUp from './SignUp';
+import Login from './Login';
+import Logout from './Logout';
+import ChooseSkill from './ChooseSkill';
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
       <Route exact path='/calendar/' component={Calendar} />
       <Route exact path='/sign_up/' component={SignUp} />
       <Route exact path='/record/' component={Record} />
+      <Route exact path='/log_in/' component={Login} />
+      <Route exact path='/log_out/' component={Logout} />
+      <Route exact path='/choose_skill/' component={ChooseSkill} />
     </BrowserRouter>
   );
 }
