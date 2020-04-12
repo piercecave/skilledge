@@ -1,58 +1,31 @@
 import React from 'react';
-import './RecordPage.css';
-import { Header } from './Header';
-import Record from './Record'
+import './Record.css';
 
-export class RecordPage extends React.Component {
+export class Record extends React.Component {
 
   constructor(props) {
     super(props);
-
-    document.title = 'Record Progress';
+    this.previousDay = this.previousDay.bind(this);
+    this.nextDay = this.nextDay.bind(this);
 
     this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
     this.SET_RESULT_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/result";
-    // this.previous = this.previous.bind(this);
-
-    this.state = {
-      currentDate: new Date(),
-      isLocalDate: false
-    }
   }
 
   componentDidMount() {
-    // Check for date query
-    const urlParams = new URLSearchParams(window.location.search);
-    const userProvidedDate = urlParams.get('date');
-
-    var editCurrentDate = this.state.currentDate;
-    var formattedDate = "";
-
-    var isLocalDate = true;
-
-    if (userProvidedDate) {
-      editCurrentDate = new Date(userProvidedDate + "T06:00:00Z");
-      isLocalDate = false;
-    }
-
-    formattedDate = this.formatDate(editCurrentDate, isLocalDate);
-
-    this.setState({
-      currentDate: editCurrentDate,
-      isLocalDate: isLocalDate
-    }, this.initRecordPage(formattedDate));
+    this.loadEvents();
   }
 
-  initRecordPage(formattedDate) {
-    document.getElementById("currentDateLabel").innerText = formattedDate;
-    this.loadEvents(formattedDate);
-    this.configureDatePickers();
+  componentDidUpdate() {
+    this.loadEvents();
   }
 
-  loadEvents = (currentDate) => {
+  loadEvents() {
 
-    fetch(this.GET_EVENTS_FOR_DATE_URL.replace(":date", currentDate), {
+    const formatedCurrentDate = this.formatDate(this.props.currentDate);
+
+    fetch(this.GET_EVENTS_FOR_DATE_URL.replace(":date", formatedCurrentDate), {
       credentials: 'include'
     })
       .then(this.checkStatus)
@@ -61,44 +34,6 @@ export class RecordPage extends React.Component {
       })
       .then(this.createEventCards)
       .catch(this.displayError);
-  }
-
-  configureDatePickers = () => {
-    var prevDateButton = document.getElementById("prevDateButton");
-
-    prevDateButton.onclick = () => {
-      var dateOffset = (24 * 60 * 60 * 1000) * 1;
-
-      this.setState((prevState) => {
-        var newCurrentDate = new Date();
-        newCurrentDate.setTime(prevState.currentDate.getTime() - dateOffset);
-        return {
-          currentDate: newCurrentDate
-        }
-      }, () => {
-        var formattedDate = this.formatDate(this.state.currentDate, this.state.isLocalDate);
-        document.getElementById("currentDateLabel").innerText = formattedDate;
-        this.loadEvents(formattedDate);
-      });
-    }
-
-    var nextDateButton = document.getElementById("nextDateButton");
-
-    nextDateButton.onclick = () => {
-      var dateOffset = (24 * 60 * 60 * 1000) * 1;
-
-      this.setState((prevState) => {
-        var newCurrentDate = new Date();
-        newCurrentDate.setTime(prevState.currentDate.getTime() + dateOffset);
-        return {
-          currentDate: newCurrentDate
-        }
-      }, () => {
-        var formattedDate = this.formatDate(this.state.currentDate, this.state.isLocalDate);
-        document.getElementById("currentDateLabel").innerText = formattedDate;
-        this.loadEvents(formattedDate);
-      });
-    }
   }
 
   createEventCards = (responseJSON) => {
@@ -158,9 +93,7 @@ export class RecordPage extends React.Component {
         body: JSON.stringify(newResult)
       })
         .then(this.checkStatus)
-        .then(function () {
-          window.location.href = '/calendar';
-        })
+        .then(this.props.eventUpdated())
         .catch(this.displayError);
     };
   }
@@ -182,9 +115,7 @@ export class RecordPage extends React.Component {
         body: JSON.stringify(newResult)
       })
         .then(this.checkStatus)
-        .then(function () {
-          window.location.href = '/calendar';
-        })
+        .then(this.props.eventUpdated())
         .catch(this.displayError);
     };
   }
@@ -193,15 +124,10 @@ export class RecordPage extends React.Component {
     console.log(error);
   }
 
-  formatDate = (currentDate, isLocalDate) => {
-    var newYear = currentDate.getUTCFullYear();
-    var newMonth = currentDate.getUTCMonth() + 1;
-    var newDate = currentDate.getUTCDate();
-    if (isLocalDate) {
-      newYear = currentDate.getFullYear();
-      newMonth = currentDate.getMonth() + 1;
-      newDate = currentDate.getDate();
-    }
+  formatDate = (currentDate) => {
+    var newYear = currentDate.getFullYear();
+    var newMonth = currentDate.getMonth() + 1;
+    var newDate = currentDate.getDate();
     if (newMonth < 10) newMonth = "0" + newMonth;
     if (newDate < 10) newDate = "0" + newDate;
     return newYear + "-" + newMonth + "-" + newDate;
@@ -215,15 +141,26 @@ export class RecordPage extends React.Component {
     }
   }
 
+  previousDay() {
+    this.props.previousDay();
+  }
+
+  nextDay() {
+    this.props.nextDay();
+  }
+
   render() {
     return (
-      <div className="RecordPage">
-        <Header />
-        <div id="recordContainer" className="container">
-          <Record currentDate={this.state.currentDate} />
+      <div className="card-body">
+        <h5 className="card-title">Record Your Progress!</h5>
+        <div id="date-pick">
+          <button id="prevDateButton" className="btn btn-success" onClick={this.previousDay}><strong>&lt;</strong></button>
+          <h4 id="currentDateLabel">{this.formatDate(this.props.currentDate)}</h4>
+          <button id="nextDateButton" className="btn btn-success" onClick={this.nextDay}><strong>&gt;</strong></button>
         </div>
+        <div id="eventsContainer"></div>
       </div>
     );
   }
 }
-export default RecordPage;
+export default Record;
