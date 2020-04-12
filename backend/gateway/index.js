@@ -27,7 +27,7 @@ const events = require("./handlers/events");
 const sessions = require("./handlers/sessions");
 
 const app = express();
-const cookie = {
+var cookie = {
   sameSite: "none",
   maxAge: 86400 * 30 * 30 * 30
 }
