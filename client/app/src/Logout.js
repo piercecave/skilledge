@@ -57,12 +57,12 @@ export class Logout extends React.Component {
       <div className="Logout">
         <Header />
         <section id="login-form">
-          <div class="page-header">
+          <div className="page-header">
             <h1>Log Out?</h1>
           </div>
           <br />
-          <button id="log_out" class="btn btn-primary" onClick={this.initLogOut}>Log Out</button>
-          <div id="meta-container" class="card hidden"></div>
+          <button id="log_out" className="btn btn-primary" onClick={this.initLogOut}>Log Out</button>
+          <div id="meta-container" className="card hidden"></div>
         </section>
       </div>
     );

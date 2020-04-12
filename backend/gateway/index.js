@@ -29,7 +29,7 @@ const sessions = require("./handlers/sessions");
 const app = express();
 const cookie = {
   sameSite: "none",
-  maxAge: 86400 * 30
+  maxAge: 86400 * 30 * 30 * 30
 }
 if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
   var privateKey = fs.readFileSync(process.env.TLSKEY, 'utf8');
@@ -40,7 +40,7 @@ if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
   app.use(forceSsl);
   cookie = {
     sameSite: "none",
-    maxAge: 86400 * 30
+    maxAge: 86400 * 30 * 30 * 30
   }
 }
 
@@ -59,7 +59,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: cookie,
-  store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 }),
+  store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 * 30 * 30 }),
 }));
 
 // Establish a connection with the database and pass the connection 
