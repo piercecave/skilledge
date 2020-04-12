@@ -2,3 +2,4 @@ shared_project_key.pem
 shared_project_key_serverside.pem
 .DS_Store
 docker_username
+client/app/node_modules

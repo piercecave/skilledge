@@ -1,0 +1,42 @@
+main {
+  margin: 2em;
+}
+
+.hidden {
+  display: none;
+}
+
+#date-pick {
+  text-align: center;
+  display: inline-block;
+  margin-left: .3rem;
+  margin-right: .3rem;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.recordContainer {
+  width: 60%;
+}
+
+#prevDateButton {
+  display: inline-block; 
+  padding-bottom: .6rem;
+}
+
+#currentDateLabel {
+  display: inline-block; 
+  margin: 1em; 
+}
+
+#nextDateButton {
+  display: inline-block; 
+  padding-bottom: .6rem;
+}
+
+@media (min-width: 768px) {
+  .recordContainer {
+    width: 80%;
+  }
+}

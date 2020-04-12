@@ -16,11 +16,6 @@ redisClient.on('error', (err) => {
   console.log('Redis Error: ', err);
 });
 
-var privateKey  = fs.readFileSync(process.env.TLSKEY, 'utf8');
-var certificate = fs.readFileSync(process.env.TLSCERT, 'utf8');
-var credentials = {key: privateKey, cert: certificate};
-var forceSsl = require('express-force-ssl');
-
 const db = require("./middleware/db");
 const { checkIsLoggedIn } = require("./middleware/auth");
 const cors = require("./middleware/cors");
@@ -32,9 +27,23 @@ const events = require("./handlers/events");
 const sessions = require("./handlers/sessions");
 
 const app = express();
+var cookie = {
+  sameSite: "none",
+  maxAge: 86400 * 30 * 30 * 30
+}
+if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
+  var privateKey = fs.readFileSync(process.env.TLSKEY, 'utf8');
+  var certificate = fs.readFileSync(process.env.TLSCERT, 'utf8');
+  var credentials = { key: privateKey, cert: certificate };
+  var forceSsl = require('express-force-ssl');
+  // Forces a secure connection
+  app.use(forceSsl);
+  cookie = {
+    sameSite: "none",
+    maxAge: 86400 * 30 * 30 * 30
+  }
+}
 
-// Forces a secure connection
-app.use(forceSsl);
 // JSON parsing for application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }))
 // JSON parsing for application/json
@@ -49,12 +58,8 @@ app.use(session({
   name: 'RedisSessionDB',
   resave: false,
   saveUninitialized: true,
-  cookie: { 
-    secure: true,
-    sameSite: "none",
-    maxAge: 86400 * 30
-  },
-  store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 }),
+  cookie: cookie,
+  store: new redisStore({ host: 'redisserver', port: 6379, client: redisClient, ttl: 86400 * 30 * 30 * 30 }),
 }));
 
 // Establish a connection with the database and pass the connection 
