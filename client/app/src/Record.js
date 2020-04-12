@@ -1,5 +1,6 @@
 import React from 'react';
 import './Record.css';
+import Event from './Event';
 
 export class Record extends React.Component {
 
@@ -10,7 +11,10 @@ export class Record extends React.Component {
 
     this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
-    this.SET_RESULT_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/result";
+
+    this.state = {
+      events: []
+    }
   }
 
   componentDidMount() {
@@ -32,92 +36,12 @@ export class Record extends React.Component {
       .then((response) => {
         return response.json();
       })
-      .then(this.createEventCards)
+      .then((responseJSON) => {
+        this.setState({
+          events: responseJSON
+        });
+      })
       .catch(this.displayError);
-  }
-
-  createEventCards = (responseJSON) => {
-
-    const eventsContainer = document.getElementById("eventsContainer");
-    eventsContainer.innerHTML = "";
-
-    for (const event of responseJSON) {
-
-      // Create card
-      const eventCard = document.createElement("div");
-      eventCard.classList.add("card");
-      eventsContainer.appendChild(eventCard);
-      // Create card body
-      const cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
-      eventCard.appendChild(cardBody);
-      // Create label
-      const cardTitle = document.createElement("h5");
-      cardTitle.classList.add("card-title");
-      cardTitle.innerText = event.SkillName;
-      cardBody.appendChild(cardTitle);
-      // Create action
-      const cardText = document.createElement("p");
-      cardText.classList.add("card-text");
-      cardText.innerText = event.HabitAction;
-      cardBody.appendChild(cardText);
-      // Create success button
-      const successButton = document.createElement("button");
-      successButton.classList.add("btn", "btn-primary", "mr-1");
-      successButton.innerText = "Success";
-      this.configureSuccessButton(event, successButton);
-      cardBody.appendChild(successButton);
-      // Create failure button
-      const failureButton = document.createElement("button");
-      failureButton.classList.add("btn", "btn-danger");
-      failureButton.innerText = "Not today";
-      this.configureFailureButton(event, failureButton);
-      cardBody.appendChild(failureButton);
-    }
-  }
-
-  configureSuccessButton = (event, successButton) => {
-
-    successButton.onclick = () => {
-
-      const newResult = {
-        resultid: 1
-      }
-
-      fetch(this.SET_RESULT_URL.replace(":eventid", event.EventID), {
-        method: 'PATCH',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newResult)
-      })
-        .then(this.checkStatus)
-        .then(this.props.eventUpdated())
-        .catch(this.displayError);
-    };
-  }
-
-  configureFailureButton = (event, failureButton) => {
-
-    failureButton.onclick = () => {
-
-      const newResult = {
-        resultid: 2
-      }
-
-      fetch(this.SET_RESULT_URL.replace(":eventid", event.EventID), {
-        method: 'PATCH',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newResult)
-      })
-        .then(this.checkStatus)
-        .then(this.props.eventUpdated())
-        .catch(this.displayError);
-    };
   }
 
   displayError = (error) => {
@@ -158,7 +82,11 @@ export class Record extends React.Component {
           <h4 id="currentDateLabel">{this.formatDate(this.props.currentDate)}</h4>
           <button id="nextDateButton" className="btn btn-success" onClick={this.nextDay}><strong>&gt;</strong></button>
         </div>
-        <div id="eventsContainer"></div>
+        <div id="eventsContainer">
+          {this.state.events.map((event, index) => (
+            <Event key={index} event={event} onFailure={this.props.onFailure} eventUpdated={this.props.eventUpdated} />
+          ))}
+        </div>
       </div>
     );
   }

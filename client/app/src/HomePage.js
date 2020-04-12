@@ -15,6 +15,7 @@ export class HomePage extends React.Component {
         this.nextDay = this.nextDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
         this.eventUpdated = this.eventUpdated.bind(this);
+        this.queryReasonsForFailure = this.queryReasonsForFailure.bind(this);
 
         this.state = {
             currentDate: new Date(),
@@ -86,6 +87,10 @@ export class HomePage extends React.Component {
         }, 200);
     }
 
+    queryReasonsForFailure(event) {
+        console.log(event);
+    }
+
     render() {
         return (
             <div className="HomePage">
@@ -99,7 +104,7 @@ export class HomePage extends React.Component {
                         </div>
                         <div className="col">
                             <div className="card">
-                                <Record currentDate={this.state.currentDate} previousDay={this.previousDay} nextDay={this.nextDay} eventUpdated={this.eventUpdated} />
+                                <Record currentDate={this.state.currentDate} previousDay={this.previousDay} nextDay={this.nextDay} eventUpdated={this.eventUpdated} onFailure={this.queryReasonsForFailure}/>
                             </div>
                         </div>
                     </div>
