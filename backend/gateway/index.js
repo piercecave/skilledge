@@ -40,7 +40,9 @@ if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
   app.use(forceSsl);
   cookie = {
     sameSite: "none",
-    maxAge: 86400 * 30 * 30 * 30
+    maxAge: 86400 * 30 * 30 * 30,
+    secure: true,
+    httpOnly: false
   }
 }
 

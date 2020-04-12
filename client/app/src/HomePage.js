@@ -83,7 +83,7 @@ export class HomePage extends React.Component {
         // response data, with a limit of like 100 fetches
         setTimeout(() => {
             this.loadEvents();
-        }, 100);
+        }, 200);
     }
 
     render() {
