@@ -11,30 +11,28 @@ export class Event extends React.Component {
     }
 
     success() {
-
         const newResult = {
             resultid: 1
         }
 
-        fetch(this.SET_RESULT_URL.replace(":eventid", this.props.event.EventID), {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newResult)
-        })
-            .then(this.checkStatus)
-            .then(this.props.eventUpdated(this.props.event))
-            .catch(this.displayError);
+        this.handleResult(newResult, () => {
+            this.props.eventUpdated(this.props.event);
+        });
     };
 
     failure() {
-
         const newResult = {
             resultid: 2
         }
 
+        this.handleResult(newResult, () => {
+            this.props.eventUpdated(this.props.event);
+            this.props.onFailure(this.props.event);
+        });
+    }
+
+    handleResult(newResult, fetchCallback) {
+
         fetch(this.SET_RESULT_URL.replace(":eventid", this.props.event.EventID), {
             method: 'PATCH',
             credentials: 'include',
@@ -44,9 +42,20 @@ export class Event extends React.Component {
             body: JSON.stringify(newResult)
         })
             .then(this.checkStatus)
-            .then(this.props.onFailure(this.props.event))
+            .then(fetchCallback())
             .catch(this.displayError);
+    }
 
+    displayError = (error) => {
+        console.log(error);
+    }
+
+    checkStatus = (response) => {
+        if (response.status >= 200 && response.status < 300) {
+            return response;
+        } else {
+            return Promise.reject(new Error(response.status + ": " + response.statusText));
+        }
     }
 
     render() {
