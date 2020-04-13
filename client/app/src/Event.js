@@ -60,14 +60,18 @@ export class Event extends React.Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="card record-card">
                 <div className="card-body">
                     <h5 className="card-title">
                         {this.props.event.SkillName}
                     </h5>
-                    <p className="card-text">
-                        {this.props.event.HabitAction}
-                    </p>
+                    <div className="card-text">
+                        <p>
+                            Action: {this.props.event.HabitAction}<br/>
+                            Time: {this.props.event.HabitTime}<br/>
+                            Location: {this.props.event.HabitLocation}
+                        </p>
+                    </div>
                     <button className="btn btn-primary mr-1" onClick={this.success}>
                         Success
                     </button>
