@@ -1,4 +1,5 @@
 import React from 'react';
+import Reason from './Reason';
 import './Event.css';
 
 export class Event extends React.Component {
@@ -8,6 +9,10 @@ export class Event extends React.Component {
         this.SET_RESULT_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/result";
         this.failure = this.failure.bind(this);
         this.success = this.success.bind(this);
+
+        this.state = {
+            reasons: []
+        }
     }
 
     success() {
@@ -17,6 +22,9 @@ export class Event extends React.Component {
 
         this.handleResult(newResult, () => {
             this.props.eventUpdated(this.props.event);
+            setTimeout(() => {
+                this.props.onSuccess();
+            }, 200);
         });
     };
 
@@ -59,6 +67,13 @@ export class Event extends React.Component {
     }
 
     render() {
+        let reasonsList = [];
+        if (this.props.event.Reasons) {
+            reasonsList = this.props.event.Reasons.map((reason, index) => (
+                <Reason key={index} reason={reason} />
+            ))
+        }
+
         return (
             <div className="card record-card">
                 <div className="card-body">
@@ -67,11 +82,13 @@ export class Event extends React.Component {
                     </h5>
                     <div className="card-text">
                         <p>
-                            Action: {this.props.event.HabitAction}<br/>
-                            Time: {this.props.event.HabitTime}<br/>
+                            Status: {this.props.event.ResultName}<br />
+                            Action: {this.props.event.HabitAction}<br />
+                            Time: {this.props.event.HabitTime}<br />
                             Location: {this.props.event.HabitLocation}
                         </p>
                     </div>
+                    {reasonsList}
                     <button className="btn btn-primary mr-1" onClick={this.success}>
                         Success
                     </button>

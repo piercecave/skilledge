@@ -8,10 +8,12 @@ export class Record extends React.Component {
 
   constructor(props) {
     super(props);
+    this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
     this.previousDay = this.previousDay.bind(this);
     this.nextDay = this.nextDay.bind(this);
     this.queryReasons = this.queryReasons.bind(this);
     this.restore = this.restore.bind(this);
+    this.loadEvents = this.loadEvents.bind(this);
     this.handleFailure = this.handleFailure.bind(this);
 
     this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -28,8 +30,10 @@ export class Record extends React.Component {
     this.loadEvents();
   }
 
-  componentDidUpdate() {
-    this.loadEvents();
+  componentDidUpdate(prevProps) {
+    if (this.props.currentDate !== prevProps.currentDate) {
+      this.loadEvents();
+    }
   }
 
   loadEvents() {
@@ -46,7 +50,28 @@ export class Record extends React.Component {
       .then((responseJSON) => {
         this.setState({
           events: responseJSON
-        });
+        }, this.getAllReasonsForAllEvents);
+      })
+      .catch(this.displayError);
+  }
+
+  async getAllReasonsForAllEvents() {
+    let newEvents = this.state.events;
+    for (const event of this.state.events) {
+      event.Reasons = await this.fetchReasons(event.EventID);
+    }
+    this.setState({
+      events: newEvents
+    });
+  }
+
+  async fetchReasons(eventid) {
+    return await fetch(this.GET_REASONS_URL.replace(":eventid", eventid), {
+      credentials: 'include',
+    })
+      .then(this.checkStatus)
+      .then((response) => {
+        return response.json()
       })
       .catch(this.displayError);
   }
@@ -93,6 +118,7 @@ export class Record extends React.Component {
       currentStep: 0
     }, () => {
       this.setProcessStep();
+      this.loadEvents();
     });
   }
 
@@ -114,7 +140,9 @@ export class Record extends React.Component {
   handleFailure(event) {
     this.setState({
       selectedEvent: event
-    }, this.queryReasons);
+    }, () => {
+      this.queryReasons();
+    });
   }
 
   render() {
@@ -129,13 +157,12 @@ export class Record extends React.Component {
           </div>
           <div id="eventsContainer">
             {this.state.events.map((event, index) => (
-              <Event key={index} event={event} onFailure={this.handleFailure} eventUpdated={this.props.eventUpdated} />
+              <Event key={index} event={event} onFailure={this.handleFailure} onSuccess={this.loadEvents} eventUpdated={this.props.eventUpdated} />
             ))}
-            <button onClick={this.queryReasons}>x</button>
           </div>
         </div>
         <div className="eventStepBox">
-          <FailureReasonsForm event={this.state.selectedEvent} onFinished={this.restore}/>
+          <FailureReasonsForm event={this.state.selectedEvent} onFinished={this.restore} />
         </div>
       </div>
     );
