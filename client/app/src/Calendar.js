@@ -6,8 +6,6 @@ export class Calendar extends React.Component {
     constructor(props) {
         super(props);
 
-        document.title = 'Calendar';
-
         this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.previous = this.previous.bind(this);
         this.next = this.next.bind(this);

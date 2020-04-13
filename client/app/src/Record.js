@@ -1,24 +1,39 @@
 import React from 'react';
 import './Record.css';
+import Event from './Event';
+import FailureReasonsForm from './FailureReasonsForm';
+import anime from 'animejs/lib/anime.es';
 
 export class Record extends React.Component {
 
   constructor(props) {
     super(props);
+    this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
     this.previousDay = this.previousDay.bind(this);
     this.nextDay = this.nextDay.bind(this);
+    this.queryReasons = this.queryReasons.bind(this);
+    this.restore = this.restore.bind(this);
+    this.loadEvents = this.loadEvents.bind(this);
+    this.handleFailure = this.handleFailure.bind(this);
 
     this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
-    this.SET_RESULT_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/result";
+
+    this.state = {
+      events: [],
+      currentStep: 0,
+      selectedEvent: {}
+    }
   }
 
   componentDidMount() {
     this.loadEvents();
   }
 
-  componentDidUpdate() {
-    this.loadEvents();
+  componentDidUpdate(prevProps) {
+    if (this.props.currentDate !== prevProps.currentDate) {
+      this.loadEvents();
+    }
   }
 
   loadEvents() {
@@ -32,92 +47,33 @@ export class Record extends React.Component {
       .then((response) => {
         return response.json();
       })
-      .then(this.createEventCards)
+      .then((responseJSON) => {
+        this.setState({
+          events: responseJSON
+        }, this.getAllReasonsForAllEvents);
+      })
       .catch(this.displayError);
   }
 
-  createEventCards = (responseJSON) => {
-
-    const eventsContainer = document.getElementById("eventsContainer");
-    eventsContainer.innerHTML = "";
-
-    for (const event of responseJSON) {
-
-      // Create card
-      const eventCard = document.createElement("div");
-      eventCard.classList.add("card");
-      eventsContainer.appendChild(eventCard);
-      // Create card body
-      const cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
-      eventCard.appendChild(cardBody);
-      // Create label
-      const cardTitle = document.createElement("h5");
-      cardTitle.classList.add("card-title");
-      cardTitle.innerText = event.SkillName;
-      cardBody.appendChild(cardTitle);
-      // Create action
-      const cardText = document.createElement("p");
-      cardText.classList.add("card-text");
-      cardText.innerText = event.HabitAction;
-      cardBody.appendChild(cardText);
-      // Create success button
-      const successButton = document.createElement("button");
-      successButton.classList.add("btn", "btn-primary", "mr-1");
-      successButton.innerText = "Success";
-      this.configureSuccessButton(event, successButton);
-      cardBody.appendChild(successButton);
-      // Create failure button
-      const failureButton = document.createElement("button");
-      failureButton.classList.add("btn", "btn-danger");
-      failureButton.innerText = "Not today";
-      this.configureFailureButton(event, failureButton);
-      cardBody.appendChild(failureButton);
+  async getAllReasonsForAllEvents() {
+    let newEvents = this.state.events;
+    for (const event of this.state.events) {
+      event.Reasons = await this.fetchReasons(event.EventID);
     }
+    this.setState({
+      events: newEvents
+    });
   }
 
-  configureSuccessButton = (event, successButton) => {
-
-    successButton.onclick = () => {
-
-      const newResult = {
-        resultid: 1
-      }
-
-      fetch(this.SET_RESULT_URL.replace(":eventid", event.EventID), {
-        method: 'PATCH',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newResult)
+  async fetchReasons(eventid) {
+    return await fetch(this.GET_REASONS_URL.replace(":eventid", eventid), {
+      credentials: 'include',
+    })
+      .then(this.checkStatus)
+      .then((response) => {
+        return response.json()
       })
-        .then(this.checkStatus)
-        .then(this.props.eventUpdated())
-        .catch(this.displayError);
-    };
-  }
-
-  configureFailureButton = (event, failureButton) => {
-
-    failureButton.onclick = () => {
-
-      const newResult = {
-        resultid: 2
-      }
-
-      fetch(this.SET_RESULT_URL.replace(":eventid", event.EventID), {
-        method: 'PATCH',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newResult)
-      })
-        .then(this.checkStatus)
-        .then(this.props.eventUpdated())
-        .catch(this.displayError);
-    };
+      .catch(this.displayError);
   }
 
   displayError = (error) => {
@@ -149,16 +105,65 @@ export class Record extends React.Component {
     this.props.nextDay();
   }
 
+  queryReasons() {
+    this.setState({
+      currentStep: 1
+    }, () => {
+      this.setProcessStep();
+    });
+  }
+
+  restore() {
+    this.setState({
+      currentStep: 0
+    }, () => {
+      this.setProcessStep();
+      this.loadEvents();
+    });
+  }
+
+  setProcessStep() {
+
+    var cardsXPosition = this.state.currentStep * -1 * 112.5;
+
+    return anime({
+      targets: '.eventStepBox',
+      // Properties 
+      translateX: cardsXPosition + "%",
+      // Property Parameters
+      duration: 500,
+      easing: 'linear',
+      // Animation Parameters
+    });
+  }
+
+  handleFailure(event) {
+    this.setState({
+      selectedEvent: event
+    }, () => {
+      this.queryReasons();
+    });
+  }
+
   render() {
     return (
-      <div className="card-body">
-        <h5 className="card-title">Record Your Progress!</h5>
-        <div id="date-pick">
-          <button id="prevDateButton" className="btn btn-success" onClick={this.previousDay}><strong>&lt;</strong></button>
-          <h4 id="currentDateLabel">{this.formatDate(this.props.currentDate)}</h4>
-          <button id="nextDateButton" className="btn btn-success" onClick={this.nextDay}><strong>&gt;</strong></button>
+      <div className="card-body record-body">
+        <div className="eventStepBox">
+          <h3 className="card-title">Record Your Progress!</h3>
+          <div id="date-pick">
+            <button id="prevDateButton" className="btn btn-success" onClick={this.previousDay}><strong>&lt;</strong></button>
+            <h4 id="currentDateLabel">{this.formatDate(this.props.currentDate)}</h4>
+            <button id="nextDateButton" className="btn btn-success" onClick={this.nextDay}><strong>&gt;</strong></button>
+          </div>
+          <div id="eventsContainer">
+            {this.state.events.map((event, index) => (
+              <Event key={index} event={event} onFailure={this.handleFailure} onSuccess={this.loadEvents} eventUpdated={this.props.eventUpdated} />
+            ))}
+          </div>
         </div>
-        <div id="eventsContainer"></div>
+        <div className="eventStepBox">
+          <FailureReasonsForm event={this.state.selectedEvent} onFinished={this.restore} />
+        </div>
       </div>
     );
   }

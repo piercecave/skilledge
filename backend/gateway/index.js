@@ -40,7 +40,9 @@ if (process.env.ENV.localeCompare("DEVELOPMENT") != 0) {
   app.use(forceSsl);
   cookie = {
     sameSite: "none",
-    maxAge: 86400 * 30 * 30 * 30
+    maxAge: 86400 * 30 * 30 * 30,
+    secure: true,
+    httpOnly: false
   }
 }
 
@@ -95,8 +97,11 @@ app.get("/users/events/:date", checkIsLoggedIn, users.getUserEventsForDay);
 // app.post("/habits/:habitid/events", checkIsLoggedIn, habits.addEvent);
 // reporting a result for an event
 app.patch("/events/:eventid/result", checkIsLoggedIn, events.setResult);
+
+// adding reasons for an event's result
+app.get("/events/:eventid/reasons", checkIsLoggedIn, events.getReasons);
 // adding a reason for an event's result
-app.post("/events/:eventid/reasons", checkIsLoggedIn, events.addReason);
+app.post("/events/:eventid/reasons", checkIsLoggedIn, events.addReasons);
 
 // logging in and logging out
 app.post("/sessions", sessions.createNewSession);

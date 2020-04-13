@@ -37,12 +37,6 @@ export class Header extends React.Component {
                                 <a className="nav-link" href="./../set_up_habit/">Set Up Habit</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="./../record/">Record</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../calendar/">Calendar</a>
-                            </li>
-                            <li className="nav-item">
                                 <a className="nav-link" href="./../charts/">Charts</a>
                             </li>
                             <li className="nav-item">

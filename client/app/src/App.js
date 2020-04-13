@@ -1,10 +1,8 @@
 import React from 'react';
 import './App.css';
-import { HomePage } from './HomePage';
-import { SetUpHabitPage } from './SetUpHabitPage';
-import { CalendarPage } from './CalendarPage';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import RecordPage from './RecordPage';
+import HomePage from './HomePage';
+import SetUpHabitPage from './SetUpHabitPage';
 import SignUp from './SignUp';
 import Login from './Login';
 import Logout from './Logout';
@@ -31,8 +29,6 @@ function App() {
         <Route exact path='/log_out/' component={Logout} />
         <Route exact path='/choose_skill/' component={ChooseSkill} />
         <Route exact path='/set_up_habit/' component={SetUpHabitPage} />
-        <Route exact path='/calendar/' component={CalendarPage} />
-        <Route exact path='/record/' component={RecordPage} />
         <Route exact path='/charts/' component={ChartsPage} />
         <Route exact path='/gamifying/' component={GamifyingPage} />
         <Route component={NoMatch} />

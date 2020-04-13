@@ -4,3 +4,4 @@ shared_project_key_serverside.pem
 docker_username
 client/app/node_modules
 backend/gateway/node_modules
+.vscode
