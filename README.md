@@ -28,7 +28,7 @@ In order to get this fully functional you will also have to navigate to:
 
 and run:
 
-    local-deploy-client.sh
+    local-deploy-backend.sh
 
 After that, navigate to:
 
