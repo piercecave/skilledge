@@ -1,4 +1,4 @@
-# Skill Edge: Web Applicaiton for Helping Build your Skills
+# Skill Edge: Web Application for Helping Build your Skills
 
 Within this repo we have a collection of Node.js, SQL, and Java files that work
 in conjunction to build a web application for helping individuals track and
@@ -9,6 +9,37 @@ build their skills.
 The web application prompts users for a skill they want to focus on improving
 within a month timespan and provides interactive UI that allows users to schedule
 how and when they want to hone their specific skill.
+
+## Developer Instructions
+
+Hi! In order to work on this code you will want to deploy it to your local computer. In order to do that you will need to navigate to:
+
+    skilledge/client/app/
+
+and run the following code:
+
+    bash live-local-deploy-client.sh
+
+This will make it so any time you save your code you will see it in your browser.
+
+In order to get this fully functional you will also have to navigate to:
+
+    skilledge/backend
+
+and run:
+
+    bash local-deploy-backend.sh
+
+After that, navigate to:
+
+    skilledge/backend/gateway
+
+and run:
+
+    bash live-local-deploy-gateway.sh
+
+Boom. Please do not run the any scripts not prepended with live-local or local as those scripts deploy to the main website if you have credentials.
+
 
 ### Visualizations
 

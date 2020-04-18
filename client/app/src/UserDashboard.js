@@ -2,22 +2,29 @@ import React from 'react';
 import './UserDashboard.css';
 import Calendar from './Calendar';
 import Record from './Record';
+import SleepReporter from './SleepReporter';
 
 export class UserDashboard extends React.Component {
 
     constructor(props) {
         super(props);
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
+        this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
+        this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
+        this.GET_SLEEP_REPORTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports/:date";
         this.previousDay = this.previousDay.bind(this);
         this.nextDay = this.nextDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
         this.eventUpdated = this.eventUpdated.bind(this);
+        this.sleepUpdated = this.sleepUpdated.bind(this);
 
         this.state = {
             currentDate: new Date(),
             eventUpdatedSwitch: false,
             eventsData: [],
-            eventDates: []
+            eventDates: [],
+            recordEvents: [],
+            currentSleepReport: {}
         }
     }
 
@@ -42,13 +49,13 @@ export class UserDashboard extends React.Component {
             return {
                 currentDate: newCurrentDate
             }
-        });
+        }, this.loadEvents);
     }
 
     changeDate(newDate) {
         this.setState({
             currentDate: newDate
-        })
+        }, this.loadEventsForCurrentDate)
     }
 
     loadEvents() {
@@ -66,7 +73,56 @@ export class UserDashboard extends React.Component {
                         return event;
                     }),
                     eventDates: Array.from(responseJSON, event => event.EventDate.substring(0, 10)).filter(this.onlyUnique)
-                });
+                }, this.loadEventsForCurrentDate);
+            })
+            .catch(this.displayError);
+    }
+
+    loadEventsForCurrentDate() {
+
+        const formatedCurrentDate = this.formatDate(this.state.currentDate);
+
+        fetch(this.GET_EVENTS_FOR_DATE_URL.replace(":date", formatedCurrentDate), {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJSON) => {
+                this.setState({
+                    recordEvents: responseJSON
+                }, this.getAllReasonsForAllEvents);
+            })
+            .catch(this.displayError);
+    }
+
+    formatDate = (currentDate) => {
+        var newYear = currentDate.getFullYear();
+        var newMonth = currentDate.getMonth() + 1;
+        var newDate = currentDate.getDate();
+        if (newMonth < 10) newMonth = "0" + newMonth;
+        if (newDate < 10) newDate = "0" + newDate;
+        return newYear + "-" + newMonth + "-" + newDate;
+    }
+
+    async getAllReasonsForAllEvents() {
+        let newEvents = this.state.recordEvents;
+        for (const event of this.state.recordEvents) {
+            event.Reasons = await this.fetchReasons(event.EventID);
+        }
+        this.setState({
+            recordEvents: newEvents
+        }, this.loadSleepReports);
+    }
+
+    async fetchReasons(eventid) {
+        return await fetch(this.GET_REASONS_URL.replace(":eventid", eventid), {
+            credentials: 'include',
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json()
             })
             .catch(this.displayError);
     }
@@ -76,11 +132,32 @@ export class UserDashboard extends React.Component {
     }
 
     eventUpdated() {
-        // What we SHOULD do is continue fetching user events data until we see a change in the 
-        // response data, with a limit of like 100 fetches
-        setTimeout(() => {
-            this.loadEvents();
-        }, 200);
+        // setTimeout(() => {
+        //     this.loadEvents();
+        // }, 100);
+        this.loadEvents();
+    }
+
+    sleepUpdated() {
+        this.loadSleepReports();
+    }
+
+    loadSleepReports() {
+        const formattedCurrentDate = this.formatDate(this.state.currentDate);
+
+        fetch(this.GET_SLEEP_REPORTS_FOR_DATE_URL.replace(":date", formattedCurrentDate), {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJSON) => {
+                this.setState({
+                    currentSleepReport: responseJSON
+                });
+            })
+            .catch(this.displayError);
     }
 
     render() {
@@ -94,8 +171,15 @@ export class UserDashboard extends React.Component {
                         </div>
                     </div>
                     <div className="col-sm">
+                        <div className="card record-card">
+                            <Record currentDate={this.state.currentDate} events={this.state.recordEvents} previousDay={this.previousDay} nextDay={this.nextDay} eventUpdated={this.eventUpdated} />
+                        </div>
+                    </div>
+                </div>
+                <div className="row row-cols-2 mt-4">
+                    <div className="col">
                         <div className="card">
-                            <Record currentDate={this.state.currentDate} previousDay={this.previousDay} nextDay={this.nextDay} eventUpdated={this.eventUpdated} />
+                            <SleepReporter currentDate={this.formatDate(this.state.currentDate)} currentSleepReport={this.state.currentSleepReport} sleepUpdated={this.sleepUpdated} />
                         </div>
                     </div>
                 </div>

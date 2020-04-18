@@ -45,13 +45,12 @@ export class GamifyingPage extends React.Component {
 
     // function that makes avatar jump 
     startJumping() {
-
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
 
         // blocks orginial picture 
-        document.getElementById("myCat").style.display = 'none';
+        document.getElementById("myCat").style.display = 'd-none';
 
         // unblocks current picture
         document.getElementById("animation1").children[0].style.display = 'block';

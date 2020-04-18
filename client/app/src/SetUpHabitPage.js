@@ -109,7 +109,7 @@ export class SetUpHabitPage extends React.Component {
             .then(this.checkStatus)
             .then((response) => {
                 // console.log(response);
-                window.location.href = '/calendar';
+                window.location.href = './../';
             })
             .catch(this.displayError);
     }
