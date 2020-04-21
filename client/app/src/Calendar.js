@@ -98,10 +98,17 @@ export class Calendar extends React.Component {
                     cellText = document.createElement("p");
                     cellText.innerText = date;
                     cellText.classList.add("day_text");
+
                     if (date === this.state.today.getDate() && year === this.state.today.getFullYear() && month === this.state.today.getMonth()) {
                         cell.classList.add("bg-info");
-                    } // color today's date
+                    } 
+                    
                     let currentDateString = this.getComparableDate(year, month, date);
+                    if (this.formatDateForDB(this.props.currentDate).localeCompare(currentDateString) === 0) {
+                        cell.classList.remove("bg-info");
+                        cell.classList.add("bg-primary");
+                    }
+                    
                     if (this.props.eventDates.includes(currentDateString)) {
                         var cellMarker = document.createElement("div");
                         cellMarker.classList.add("event_marker");

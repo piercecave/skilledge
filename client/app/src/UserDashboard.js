@@ -167,7 +167,7 @@ export class UserDashboard extends React.Component {
                 <div className="row mt-4">
                     <div className="col-sm">
                         <div className="card">
-                            <Calendar changeDate={this.changeDate} eventsData={this.state.eventsData} eventDates={this.state.eventDates} />
+                            <Calendar changeDate={this.changeDate} eventsData={this.state.eventsData} eventDates={this.state.eventDates} currentDate={this.state.currentDate} />
                         </div>
                     </div>
                     <div className="col-sm">

@@ -5,6 +5,7 @@ export class SleepReporter extends React.Component {
     constructor(props) {
         super(props);
         this.ADD_SLEEP_REPORT_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports";
+        this.PATCH_SLEEP_REPORT_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports";
         this.poor = this.poor.bind(this);
         this.average = this.average.bind(this);
         this.great = this.great.bind(this);
@@ -29,7 +30,14 @@ export class SleepReporter extends React.Component {
     };
 
     handleReport(value, fetchCallback) {
+        if (this.props.currentSleepReport.length === 0) {
+            this.addReport(value, fetchCallback);
+        } else {
+            this.editReport(value, fetchCallback)
+        }
+    }
 
+    addReport(value, fetchCallback) {
         const newReport = {
             sleepreportdate: this.props.currentDate,
             sleepvalueid: value
@@ -42,6 +50,25 @@ export class SleepReporter extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newReport)
+        })
+            .then(this.checkStatus)
+            .then(fetchCallback)
+            .catch(this.displayError);
+    }
+
+    editReport(value, fetchCallback) {
+        const updatedReport = {
+            sleepreportid: this.props.currentSleepReport[0].SleepReportID,
+            sleepvalueid: value
+        }
+
+        fetch(this.PATCH_SLEEP_REPORT_URL, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedReport)
         })
             .then(this.checkStatus)
             .then(fetchCallback)

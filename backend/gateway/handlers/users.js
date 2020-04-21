@@ -249,6 +249,33 @@ async function getSleepReportForDate(req, res) {
     }
 }
 
+async function editSleepReport(req, res) {
+
+    try {
+
+        // Insert user and skill connection into User_Skills
+        const updateSleepReportQuery = `
+            UPDATE Sleep_Reports 
+            SET 
+                SleepValueID = ?
+            WHERE
+                SleepReportID = ?;
+        `
+        await req.db.query(updateSleepReportQuery, [req.body.sleepvalueid, req.body.sleepreportid]);
+
+        req.db.end();
+        res.set("Content-Type", "text/plain");
+        res.status(201).send("Successfully edited sleep report.");
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not edit sleep report.");
+        req.db.end();
+        return;
+    }
+}
+
 /**
 * Expose public handler functions.
 */
@@ -260,5 +287,6 @@ module.exports = {
     getUserEventsForDay,
     addSleepReport,
     getSleepReports,
-    getSleepReportForDate
+    getSleepReportForDate,
+    editSleepReport
 }

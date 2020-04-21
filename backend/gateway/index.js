@@ -109,6 +109,8 @@ app.get("/users/sleep-reports", checkIsLoggedIn, users.getSleepReports);
 app.get("/users/sleep-reports/:date", checkIsLoggedIn, users.getSleepReportForDate);
 // adding a sleep report to a user
 app.post("/users/sleep-reports", checkIsLoggedIn, users.addSleepReport);
+// editing a sleep report for a user
+app.patch("/users/sleep-reports", checkIsLoggedIn, users.editSleepReport);
 
 // logging in and logging out
 app.post("/sessions", sessions.createNewSession);
