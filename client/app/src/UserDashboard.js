@@ -8,10 +8,12 @@ export class UserDashboard extends React.Component {
 
     constructor(props) {
         super(props);
+        
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
         this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
         this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
         this.GET_SLEEP_REPORTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports/:date";
+
         this.previousDay = this.previousDay.bind(this);
         this.nextDay = this.nextDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
