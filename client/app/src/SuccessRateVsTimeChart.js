@@ -1,39 +1,7 @@
 import React from 'react';
-import './ChartsPage.css';
-import { Header } from './Header';
-import SuccessRateVsTimeChart from './SuccessRateVsTimeChart';
 import * as d3 from "d3";
 
-export class ChartsPage extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        document.title = 'Charts';
-
-        this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
-
-        this.state = {
-            currentDate: new Date()
-        }
-    }
-
-    componentDidMount() {
-        this.loadEvents();
-    }
-
-    loadEvents() {
-
-        fetch(this.GET_EVENTS_FOR_USER_URL, {
-            credentials: 'include'
-        })
-            .then(this.checkStatus)
-            .then((response) => {
-                return response.json();
-            })
-            .then(this.createCharts)
-            .catch(this.displayError);
-    }
+export class SuccessRateVsTimeChart extends React.Component {
 
     createCharts(responseJSON) {
 
@@ -128,39 +96,14 @@ export class ChartsPage extends React.Component {
             )
     }
 
-    displayError(error) {
-        console.log(error);
-    }
-
-    formatDateForDB(currentDate) {
-        var newYear = currentDate.getFullYear();
-        var newMonth = currentDate.getMonth() + 1;
-        var newDate = currentDate.getDate();
-        if (newMonth < 10) newMonth = "0" + newMonth;
-        if (newDate < 10) newDate = "0" + newDate;
-        return newYear + "-" + newMonth + "-" + newDate;
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        } else {
-            return Promise.reject(new Error(response.status + ": " + response.statusText));
-        }
-    }
-
     render() {
         return (
-            <div className="CalendarPage">
-                <Header />
-                <div id="successRateChartContainer" className="container">
-                    <div className="card  my-3">
-                        <SuccessRateVsTimeChart />
-                    </div>
-                </div>
+            <div className="card-body">
+                <h5 className="card-title">Success Rate / Time</h5>
+                <div className="d-flex justify-content-center" id="successRateChart"></div>
             </div>
         );
     }
 }
 
-export default ChartsPage;
+export default SuccessRateVsTimeChart;
