@@ -2,46 +2,18 @@ import React from 'react';
 import './GamifyingPage.css';
 import { Header } from './Header';
 
+// For each of last three buttons/functions
+    // in constructor, add this.{functionname} = this.{functionname}.bind(this)
+    // edit so you add and remove to classlist instead of changing style
+
 export class GamifyingPage extends React.Component {
 
     constructor(props) {
         super(props);
+        this.startJumping = this.startJumping.bind(this);
 
         document.title = 'Gamifying';
-
-        this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
     }
-
-    //     // event listener for jumping
-    // window.addEventListener('click', (e)=>{
-    //     if(e.target.id == "button1"){
-    //         startJumping()
-    //     }
-    // });
-
-    // // event listener for playing dead
-    // window.addEventListener('click', (e)=>{
-    //     if(e.target.id == "button2"){
-    //         startPlayDead()
-    //     }
-    // });
-
-    // // event listener for fall
-    // window.addEventListener('click', (e)=>{
-    //     if(e.target.id == "button3"){
-    //         startPlayFall()
-    //     }
-    // });
-
-    // // event listener for hurt
-    // window.addEventListener('click', (e)=>{
-    //     if(e.target.id == "button4"){
-    //         startPlayHurt()
-    //     }
-    // });
-
-
-
 
     // function that makes avatar jump 
     startJumping() {
@@ -50,10 +22,12 @@ export class GamifyingPage extends React.Component {
         }
 
         // blocks orginial picture 
-        document.getElementById("myCat").style.display = 'd-none';
+        document.getElementById("myCat").classList.remove('d-block');
+        document.getElementById("myCat").classList.add('d-none');
 
         // unblocks current picture
-        document.getElementById("animation1").children[0].style.display = 'block';
+        document.getElementById("animation1").children[0].classList.remove('d-none');
+        document.getElementById("animation1").children[0].classList.add('d-block');
 
         var frames = document.getElementById("animation1").children;
 
@@ -61,19 +35,24 @@ export class GamifyingPage extends React.Component {
         var i = 0;
 
         const interval = setInterval(() => {
-            frames[i % frameCount].style.display = "none";
-            frames[++i % frameCount].style.display = "block";
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
         }, 100);
 
         setTimeout(() => {
             clearInterval(interval)
-
+            
             // hides all the picture 
             for (const child of document.getElementById("animation1").children) {
-                child.style.display = "none";
+                // child.style.display = "none";
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
             }
             // reverts back to normal pictue
-            document.getElementById("myCat").style.display = 'block';
+            document.getElementById("myCat").classList.remove('d-none');
+            document.getElementById("myCat").classList.add('d-block');
 
             for (const buttons of document.getElementById("theButtons").children) {
                 buttons.disabled = false;
@@ -213,7 +192,7 @@ export class GamifyingPage extends React.Component {
                             <img src="./../cat/Idle/Idle%20(1).png" id='myCat' className="center d-block" width="200" height="200" alt="idle"/>
 
 
-                            <div id="animation1" className="center jump ">
+                            <div id="animation1" className="jump">
                                 <img src="./../cat/Jump/Jump%20(1).png" className="center" width="200" height="200" alt="cat jump"  />
                                 <img src="./../cat/Jump/Jump%20(2).png" className="center" width="200" height="200" alt="cat jump"  />
                                 <img src="./../cat/Jump/Jump%20(3).png" className="center" width="200" height="200" alt="cat jump"  />
@@ -224,7 +203,7 @@ export class GamifyingPage extends React.Component {
                                 <img src="./../cat/Jump/Jump%20(8).png" className="center" width="200" height="200" alt="cat jump"  />
                             </div>
 
-                            <div id="animation2" className="center play dead ">
+                            <div id="animation2" className="play dead">
                                 <img src="./../cat/Dead/Dead%20(1).png" className="center" width="200" height="200" alt="cat dead"  />
                                 <img src="./../cat/Dead/Dead%20(2).png" className="center" width="200" height="200" alt="cat dead"  />
                                 <img src="./../cat/Dead/Dead%20(3).png" className="center" width="200" height="200" alt="cat dead"  />
@@ -237,7 +216,7 @@ export class GamifyingPage extends React.Component {
                                 <img src="./../cat/Dead/Dead%20(10).png" className="center" width="200" height="200" alt="cat dead"  />
                             </div>
 
-                            <div id="animation3" className="center play falling">
+                            <div id="animation3" className="play falling">
                                 <img src="./../cat/Fall/Fall%20(1).png" className="center" width="200" height="200" alt="cat dead"  />
                                 <img src="./../cat/Fall/Fall%20(2).png" className="center" width="200" height="200" alt="cat dead"  />
                                 <img src="./../cat/Fall/Fall%20(3).png" className="center" width="200" height="200" alt="cat dead"  />
@@ -248,7 +227,7 @@ export class GamifyingPage extends React.Component {
                                 <img src="./../cat/Fall/Fall%20(8).png" className="center" width="200" height="200" alt="cat dead"  />
                             </div>
 
-                            <div id="animation4" className="center play hurt">
+                            <div id="animation4" className="play hurt">
                                 <img src="./../cat/Hurt/Hurt%20(1).png" className="center" width="200" height="200" alt="cat dead"  />
                                 <img src="./../cat/Hurt/Hurt%20(2).png" className="center" width="200" height="200" alt="cat dead"  />
                                 <img src="./../cat/Hurt/Hurt%20(3).png" className="center" width="200" height="200" alt="cat dead"  />
@@ -262,7 +241,7 @@ export class GamifyingPage extends React.Component {
                             </div>
                         </div>
                         <div id="theButtons">
-                            <button type="jumping" id="button1" className="btn btn-info btn-lg btn-block" onClick={this.startJumping}>Jump</button>
+                            <button type="jumping" id="button1" className="btn btn-info btn-lg btn-block" onClick={this.startJumping}>Jump Now</button>
                             <button type="play dead" id="button2" className="btn btn-info btn-lg btn-block" onClick={this.startPlayDead}>Play Dead</button>
                             <button type="play falling " id="button3" className="btn btn-info btn-lg btn-block" onClick={this.startPlayFall}>Fall Down</button>
                             <button type="fake injury" id="button4" className="btn btn-info btn-lg btn-block" onClick={this.startPlayHurt}>Fake Injury</button>
