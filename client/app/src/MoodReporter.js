@@ -1,11 +1,11 @@
 import React from 'react';
 
-export class SleepReporter extends React.Component {
+export class MoodReporter extends React.Component {
 
     constructor(props) {
         super(props);
-        this.ADD_SLEEP_REPORT_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports";
-        this.PATCH_SLEEP_REPORT_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports";
+        this.ADD_MOOD_REPORT_URL = process.env.REACT_APP_BACKEND_URL + "/users/mood-reports";
+        this.PATCH_MOOD_REPORT_URL = process.env.REACT_APP_BACKEND_URL + "/users/mood-reports";
         this.poor = this.poor.bind(this);
         this.average = this.average.bind(this);
         this.great = this.great.bind(this);
@@ -13,24 +13,24 @@ export class SleepReporter extends React.Component {
 
     poor() {
         this.handleReport(1, () => {
-            this.props.sleepUpdated();
+            this.props.moodUpdated();
         });
     };
 
     average() {
         this.handleReport(2, () => {
-            this.props.sleepUpdated();
+            this.props.moodUpdated();
         });
     };
 
     great() {
         this.handleReport(3, () => {
-            this.props.sleepUpdated();
+            this.props.moodUpdated();
         });
     };
 
     handleReport(value, fetchCallback) {
-        if (this.props.currentSleepReport.length === 0) {
+        if (this.props.currentMoodReport.length === 0) {
             this.addReport(value, fetchCallback);
         } else {
             this.editReport(value, fetchCallback)
@@ -39,11 +39,11 @@ export class SleepReporter extends React.Component {
 
     addReport(value, fetchCallback) {
         const newReport = {
-            sleepreportdate: this.props.currentDate,
-            sleepvalueid: value
+            moodreportdate: this.props.currentDate,
+            moodvalueid: value
         }
 
-        fetch(this.ADD_SLEEP_REPORT_URL, {
+        fetch(this.ADD_MOOD_REPORT_URL, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -58,11 +58,11 @@ export class SleepReporter extends React.Component {
 
     editReport(value, fetchCallback) {
         const updatedReport = {
-            sleepreportid: this.props.currentSleepReport[0].SleepReportID,
-            sleepvalueid: value
+            moodreportid: this.props.currentMoodReport[0].MoodReportID,
+            moodvalueid: value
         }
 
-        fetch(this.PATCH_SLEEP_REPORT_URL, {
+        fetch(this.PATCH_MOOD_REPORT_URL, {
             method: 'PATCH',
             credentials: 'include',
             headers: {
@@ -79,14 +79,14 @@ export class SleepReporter extends React.Component {
 
         let currentStatus = "Pending";
 
-        if (this.props.currentSleepReport && this.props.currentSleepReport.length > 0) {
-            currentStatus = this.props.currentSleepReport[0].SleepValueName;
+        if (this.props.currentMoodReport && this.props.currentMoodReport.length > 0) {
+            currentStatus = this.props.currentMoodReport[0].MoodValueName;
         }
 
         return (
             <div>
-                <h3 className="card-header">Sleep for {this.props.currentDate}</h3>
-                <div className="card-body">
+                <h3 className="card-header">Mood for {this.props.currentDate}</h3>
+                <div className="card-body mood-reporter-body">
                     <div>
                         <div className="card-text">
                             <p>
@@ -110,4 +110,4 @@ export class SleepReporter extends React.Component {
         );
     }
 }
-export default SleepReporter;
+export default MoodReporter;

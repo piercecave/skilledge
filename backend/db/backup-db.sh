@@ -2,4 +2,4 @@
 
 export MYSQL_ROOT_PASSWORD="testpwd"
 
-ssh -i ./../shared_project_key_serverside.pem -oStrictHostKeyChecking=no ec2-user@api.skilledge.site 'bash -s' < backup-db-remote-instructions.sh
+ssh -i ./../../shared_project_key_serverside.pem -oStrictHostKeyChecking=no ec2-user@api.skilledge.site 'bash -s' < ./aws-instructions/backup-db-remote-instructions.sh

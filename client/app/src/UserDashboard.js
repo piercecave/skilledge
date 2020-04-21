@@ -3,22 +3,25 @@ import './UserDashboard.css';
 import Calendar from './Calendar';
 import Record from './Record';
 import SleepReporter from './SleepReporter';
+import MoodReporter from './MoodReporter';
 
 export class UserDashboard extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
         this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
         this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
         this.GET_SLEEP_REPORTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports/:date";
+        this.GET_MOOD_REPORTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/mood-reports/:date";
 
         this.previousDay = this.previousDay.bind(this);
         this.nextDay = this.nextDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
         this.eventUpdated = this.eventUpdated.bind(this);
         this.sleepUpdated = this.sleepUpdated.bind(this);
+        this.moodUpdated = this.moodUpdated.bind(this);
 
         this.state = {
             currentDate: new Date(),
@@ -26,7 +29,8 @@ export class UserDashboard extends React.Component {
             eventsData: [],
             eventDates: [],
             recordEvents: [],
-            currentSleepReport: {}
+            currentSleepReport: [],
+            currentMoodReport: []
         }
     }
 
@@ -157,6 +161,28 @@ export class UserDashboard extends React.Component {
             .then((responseJSON) => {
                 this.setState({
                     currentSleepReport: responseJSON
+                }, this.loadMoodReports);
+            })
+            .catch(this.displayError);
+    }
+
+    moodUpdated() {
+        this.loadMoodReports();
+    }
+
+    loadMoodReports() {
+        const formattedCurrentDate = this.formatDate(this.state.currentDate);
+
+        fetch(this.GET_MOOD_REPORTS_FOR_DATE_URL.replace(":date", formattedCurrentDate), {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJSON) => {
+                this.setState({
+                    currentMoodReport: responseJSON
                 });
             })
             .catch(this.displayError);
@@ -178,10 +204,15 @@ export class UserDashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="row row-cols-2 mt-4">
-                    <div className="col">
+                <div className="row mt-1">
+                    <div className="col-sm">
                         <div className="card">
                             <SleepReporter currentDate={this.formatDate(this.state.currentDate)} currentSleepReport={this.state.currentSleepReport} sleepUpdated={this.sleepUpdated} />
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                    <div className="card">
+                            <MoodReporter currentDate={this.formatDate(this.state.currentDate)} currentMoodReport={this.state.currentMoodReport} moodUpdated={this.moodUpdated} />
                         </div>
                     </div>
                 </div>

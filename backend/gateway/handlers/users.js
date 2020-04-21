@@ -276,6 +276,117 @@ async function editSleepReport(req, res) {
     }
 }
 
+async function addMoodReport(req, res) {
+
+    try {
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        const insertMoodReportQuery = "INSERT INTO Mood_Reports(UserID, MoodReportDate, MoodValueID) VALUES(?,?,?)"
+        await req.db.query(insertMoodReportQuery, [loggedInUser.ID, req.body.moodreportdate, req.body.moodvalueid]);
+
+        req.db.end();
+        res.set("Content-Type", "text/plain");
+        res.status(201).send("Mood report successfully added for user.");
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not add mood report for user.");
+        req.db.end();
+        return;
+    }
+}
+
+async function getMoodReports(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        const selectMoodReportsQuery = `
+            SELECT MR.MoodReportID, MR.MoodReportDate, MR.MoodValueID, MV.MoodValueID, MV.MoodValueName, MV.MoodValueDesc
+            FROM Mood_Reports AS MR
+                JOIN Mood_Values AS MV ON MV.MoodValueID = MR.MoodValueID
+            WHERE MR.UserID = ?
+        `
+        
+        const userMoodReports = await req.db.query(selectMoodReportsQuery, [loggedInUser.ID]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userMoodReports);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get mood reports for user.");
+        req.db.end();
+        return;
+    }
+}
+
+async function getMoodReportForDate(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        const selectMoodReportsQuery = `
+        SELECT MR.MoodReportID, MR.MoodReportDate, MR.MoodValueID, MV.MoodValueID, MV.MoodValueName, MV.MoodValueDesc
+        FROM Mood_Reports AS MR
+            JOIN Mood_Values AS MV ON MV.MoodValueID = MR.MoodValueID
+        WHERE MR.UserID = ?
+            AND MR.MoodReportDate = ?
+        `
+        
+        const userMoodReports = await req.db.query(selectMoodReportsQuery, [loggedInUser.ID, req.params.date]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userMoodReports);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get mood reports for given date.");
+        req.db.end();
+        return;
+    }
+}
+
+async function editMoodReport(req, res) {
+
+    try {
+
+        // Insert user and skill connection into User_Skills
+        const updateMoodReportQuery = `
+            UPDATE Mood_Reports 
+            SET 
+                MoodValueID = ?
+            WHERE
+                MoodReportID = ?;
+        `
+        await req.db.query(updateMoodReportQuery, [req.body.moodvalueid, req.body.moodreportid]);
+
+        req.db.end();
+        res.set("Content-Type", "text/plain");
+        res.status(201).send("Successfully edited mood report.");
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not edit mood report.");
+        req.db.end();
+        return;
+    }
+}
+
 /**
 * Expose public handler functions.
 */
@@ -288,5 +399,9 @@ module.exports = {
     addSleepReport,
     getSleepReports,
     getSleepReportForDate,
-    editSleepReport
+    editSleepReport,
+    addMoodReport,
+    getMoodReports,
+    getMoodReportForDate,
+    editMoodReport
 }
