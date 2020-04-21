@@ -1,4 +1,4 @@
-# Skill Edge: Web Applicaiton for Helping Build your Skills
+# Skill Edge: Web Application for Helping Build your Skills
 
 Within this repo we have a collection of Node.js, SQL, and Java files that work
 in conjunction to build a web application for helping individuals track and
@@ -28,7 +28,7 @@ In order to get this fully functional you will also have to navigate to:
 
 and run:
 
-    local-deploy-backend.sh
+    bash local-deploy-backend.sh
 
 After that, navigate to:
 
@@ -36,7 +36,7 @@ After that, navigate to:
 
 and run:
 
-    live-local-deploy-gateway.sh
+    bash live-local-deploy-gateway.sh
 
 Boom. Please do not run the any scripts not prepended with live-local or local as those scripts deploy to the main website if you have credentials.
 

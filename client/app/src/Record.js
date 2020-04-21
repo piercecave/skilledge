@@ -8,77 +8,34 @@ export class Record extends React.Component {
 
   constructor(props) {
     super(props);
-    this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
     this.previousDay = this.previousDay.bind(this);
     this.nextDay = this.nextDay.bind(this);
     this.queryReasons = this.queryReasons.bind(this);
     this.restore = this.restore.bind(this);
-    this.loadEvents = this.loadEvents.bind(this);
     this.handleFailure = this.handleFailure.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
 
     this.MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    this.GET_EVENTS_FOR_DATE_URL = process.env.REACT_APP_BACKEND_URL + "/users/events/:date";
 
     this.state = {
-      events: [],
       currentStep: 0,
       selectedEvent: {}
     }
   }
 
-  componentDidMount() {
-    this.loadEvents();
-  }
+  // componentDidMount() {
+  //   this.loadEvents();
+  // }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.currentDate !== prevProps.currentDate) {
-      this.loadEvents();
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.currentDate !== prevProps.currentDate) {
+  //     this.loadEvents();
+  //   }
+  // }
 
-  loadEvents() {
-
-    const formatedCurrentDate = this.formatDate(this.props.currentDate);
-
-    fetch(this.GET_EVENTS_FOR_DATE_URL.replace(":date", formatedCurrentDate), {
-      credentials: 'include'
-    })
-      .then(this.checkStatus)
-      .then((response) => {
-        return response.json();
-      })
-      .then((responseJSON) => {
-        this.setState({
-          events: responseJSON
-        }, this.getAllReasonsForAllEvents);
-      })
-      .catch(this.displayError);
-  }
-
-  async getAllReasonsForAllEvents() {
-    let newEvents = this.state.events;
-    for (const event of this.state.events) {
-      event.Reasons = await this.fetchReasons(event.EventID);
-    }
-    this.setState({
-      events: newEvents
-    });
-  }
-
-  async fetchReasons(eventid) {
-    return await fetch(this.GET_REASONS_URL.replace(":eventid", eventid), {
-      credentials: 'include',
-    })
-      .then(this.checkStatus)
-      .then((response) => {
-        return response.json()
-      })
-      .catch(this.displayError);
-  }
-
-  displayError = (error) => {
-    console.log(error);
-  }
+  // displayError = (error) => {
+  //   console.log(error);
+  // }
 
   formatDate = (currentDate) => {
     var newYear = currentDate.getFullYear();
@@ -89,13 +46,13 @@ export class Record extends React.Component {
     return newYear + "-" + newMonth + "-" + newDate;
   }
 
-  checkStatus = (response) => {
-    if (response.status >= 200 && response.status < 300) {
-      return response;
-    } else {
-      return Promise.reject(new Error(response.status + ": " + response.statusText));
-    }
-  }
+  // checkStatus = (response) => {
+  //   if (response.status >= 200 && response.status < 300) {
+  //     return response;
+  //   } else {
+  //     return Promise.reject(new Error(response.status + ": " + response.statusText));
+  //   }
+  // }
 
   previousDay() {
     this.props.previousDay();
@@ -118,11 +75,12 @@ export class Record extends React.Component {
       currentStep: 0
     }, () => {
       this.setProcessStep();
-      this.loadEvents();
+      this.props.eventUpdated();
     });
   }
 
   setProcessStep() {
+    console.log("Running")
 
     var cardsXPosition = this.state.currentStep * -1 * 112.5;
 
@@ -142,27 +100,46 @@ export class Record extends React.Component {
       selectedEvent: event
     }, () => {
       this.queryReasons();
+      this.props.eventUpdated();
     });
   }
 
+  handleSuccess(event) {
+    this.props.eventUpdated();
+  }
+
   render() {
-    return (
-      <div className="card-body record-body">
-        <div className="eventStepBox">
-          <h3 className="card-title">Record Your Progress!</h3>
-          <div id="date-pick">
-            <button id="prevDateButton" className="btn btn-success" onClick={this.previousDay}><strong>&lt;</strong></button>
-            <h4 id="currentDateLabel">{this.formatDate(this.props.currentDate)}</h4>
-            <button id="nextDateButton" className="btn btn-success" onClick={this.nextDay}><strong>&gt;</strong></button>
-          </div>
-          <div id="eventsContainer">
-            {this.state.events.map((event, index) => (
-              <Event key={index} event={event} onFailure={this.handleFailure} onSuccess={this.loadEvents} eventUpdated={this.props.eventUpdated} />
-            ))}
-          </div>
+
+    let eventsToShow = <h5>No events for today!</h5>;
+
+    if (this.props.events && this.props.events.length > 0) {
+      eventsToShow = (
+        <div>
+          <h5>Planned Events:</h5>
+          {this.props.events.map((event, index) => (
+            <Event key={index} event={event} onFailure={this.handleFailure} onSuccess={this.handleSuccess} eventUpdated={this.props.eventUpdated} />
+          ))}
         </div>
-        <div className="eventStepBox">
-          <FailureReasonsForm event={this.state.selectedEvent} onFinished={this.restore} />
+      )
+    }
+
+    return (
+      <div>
+        <h3 className="card-header">Record Your Progress!</h3>
+        <div className="card-body record-body">
+          <div className="eventStepBox">
+            <div id="date-pick">
+              <button id="prevDateButton" className="btn btn-success" onClick={this.previousDay}><strong>&lt;</strong></button>
+              <h4 id="currentDateLabel">{this.formatDate(this.props.currentDate)}</h4>
+              <button id="nextDateButton" className="btn btn-success" onClick={this.nextDay}><strong>&gt;</strong></button>
+            </div>
+            <div id="eventsContainer">
+              {eventsToShow}
+            </div>
+          </div>
+          <div className="eventStepBox">
+            <FailureReasonsForm event={this.state.selectedEvent} onFinished={this.restore} />
+          </div>
         </div>
       </div>
     );

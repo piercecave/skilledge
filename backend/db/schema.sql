@@ -94,9 +94,28 @@ CREATE TABLE IF NOT EXISTS Event_Reason (
     PRIMARY KEY (EventReasonID)
 );
 
+CREATE TABLE IF NOT EXISTS Sleep_Values (
+    SleepValueID INT NOT NULL AUTO_INCREMENT,
+    SleepValueName VARCHAR(255) NOT NULL,
+    SleepValueDesc VARCHAR(1024),
+    PRIMARY KEY (SleepValueID)
+);
+
+CREATE TABLE IF NOT EXISTS Sleep_Reports (
+    SleepReportID INT NOT NULL AUTO_INCREMENT,
+    UserID INT NOT NULL,
+    SleepReportDate DATE NOT NULL,
+    SleepValueID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(ID),
+    FOREIGN KEY (SleepValueID) REFERENCES Sleep_Values(SleepValueID),
+    PRIMARY KEY (SleepReportID)
+);
 
 
 
+INSERT INTO Sleep_Values (SleepValueName, SleepValueDesc) VALUES ('Below Average', 'Slept worse/less than I normally do');
+INSERT INTO Sleep_Values (SleepValueName, SleepValueDesc) VALUES ('Average', 'Slept an average amount');
+INSERT INTO Sleep_Values (SleepValueName, SleepValueDesc) VALUES ('Above Average', 'Slept in, longer than I usually do');
 
 INSERT INTO Reasons (ReasonName, ReasonDesc) VALUES ('Motivation', 'I did not feel motivated enough.');
 INSERT INTO Reasons (ReasonName, ReasonDesc) VALUES ('Tired', 'I was too tired.');

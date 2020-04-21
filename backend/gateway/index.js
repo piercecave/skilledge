@@ -103,6 +103,15 @@ app.get("/events/:eventid/reasons", checkIsLoggedIn, events.getReasons);
 // adding a reason for an event's result
 app.post("/events/:eventid/reasons", checkIsLoggedIn, events.addReasons);
 
+// getting all sleep reports for a user
+app.get("/users/sleep-reports", checkIsLoggedIn, users.getSleepReports);
+// adding a sleep report to a user
+app.get("/users/sleep-reports/:date", checkIsLoggedIn, users.getSleepReportForDate);
+// adding a sleep report to a user
+app.post("/users/sleep-reports", checkIsLoggedIn, users.addSleepReport);
+// editing a sleep report for a user
+app.patch("/users/sleep-reports", checkIsLoggedIn, users.editSleepReport);
+
 // logging in and logging out
 app.post("/sessions", sessions.createNewSession);
 app.delete("/sessions", sessions.deleteExistingSession);

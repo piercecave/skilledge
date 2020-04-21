@@ -22,9 +22,7 @@ export class Event extends React.Component {
 
         this.handleResult(newResult, () => {
             this.props.eventUpdated(this.props.event);
-            setTimeout(() => {
-                this.props.onSuccess();
-            }, 200);
+            this.props.onSuccess();
         });
     };
 
@@ -50,7 +48,7 @@ export class Event extends React.Component {
             body: JSON.stringify(newResult)
         })
             .then(this.checkStatus)
-            .then(fetchCallback())
+            .then(fetchCallback)
             .catch(this.displayError);
     }
 
@@ -68,10 +66,14 @@ export class Event extends React.Component {
 
     render() {
         let reasonsList = [];
-        if (this.props.event.Reasons) {
-            reasonsList = this.props.event.Reasons.map((reason, index) => (
-                <Reason key={index} reason={reason} />
-            ))
+        if (this.props.event.Reasons && this.props.event.Reasons.length > 0) {
+            reasonsList = (<div><h6>Notes for improvement:</h6>
+                                <ul>
+                                    {this.props.event.Reasons.map((reason, index) => (
+                                        <Reason key={index} reason={reason} />
+                                    ))}
+                                </ul>
+                            </div>)
         }
 
         return (

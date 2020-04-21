@@ -162,6 +162,120 @@ async function getUserEventsForDay(req, res) {
     }
 }
 
+async function addSleepReport(req, res) {
+
+    try {
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        // Insert user and skill connection into User_Skills
+        const insertSleepReportQuery = "INSERT INTO Sleep_Reports(UserID, SleepReportDate, SleepValueID) VALUES(?,?,?)"
+        await req.db.query(insertSleepReportQuery, [loggedInUser.ID, req.body.sleepreportdate, req.body.sleepvalueid]);
+
+        req.db.end();
+        res.set("Content-Type", "text/plain");
+        res.status(201).send("Sleep report successfully added for user.");
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not add sleep report for user.");
+        req.db.end();
+        return;
+    }
+}
+
+async function getSleepReports(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        // Get skills for user
+        const selectSkillsQuery = `
+        SELECT SR.SleepReportID, SR.SleepReportDate, SR.SleepValueID, SV.SleepValueID, SV.SleepValueName, SV.SleepValueDesc
+        FROM Sleep_Reports AS SR
+            JOIN Sleep_Values AS SV ON SV.SleepValueID = SR.SleepValueID
+        WHERE SR.UserID = ?
+        `
+        
+        const userSleepReports = await req.db.query(selectSkillsQuery, [loggedInUser.ID]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userSleepReports);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get sleep reports for user.");
+        req.db.end();
+        return;
+    }
+}
+
+async function getSleepReportForDate(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        // Get skills for user
+        const selectSkillsQuery = `
+        SELECT SR.SleepReportID, SR.SleepReportDate, SR.SleepValueID, SV.SleepValueID, SV.SleepValueName, SV.SleepValueDesc
+        FROM Sleep_Reports AS SR
+            JOIN Sleep_Values AS SV ON SV.SleepValueID = SR.SleepValueID
+        WHERE SR.UserID = ?
+            AND SR.SleepReportDate = ?
+        `
+        
+        const userSleepReports = await req.db.query(selectSkillsQuery, [loggedInUser.ID, req.params.date]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userSleepReports);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get sleep reports for given date.");
+        req.db.end();
+        return;
+    }
+}
+
+async function editSleepReport(req, res) {
+
+    try {
+
+        // Insert user and skill connection into User_Skills
+        const updateSleepReportQuery = `
+            UPDATE Sleep_Reports 
+            SET 
+                SleepValueID = ?
+            WHERE
+                SleepReportID = ?;
+        `
+        await req.db.query(updateSleepReportQuery, [req.body.sleepvalueid, req.body.sleepreportid]);
+
+        req.db.end();
+        res.set("Content-Type", "text/plain");
+        res.status(201).send("Successfully edited sleep report.");
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not edit sleep report.");
+        req.db.end();
+        return;
+    }
+}
+
 /**
 * Expose public handler functions.
 */
@@ -170,5 +284,9 @@ module.exports = {
     addSkill,
     getUserSkills,
     getUserEvents,
-    getUserEventsForDay
+    getUserEventsForDay,
+    addSleepReport,
+    getSleepReports,
+    getSleepReportForDate,
+    editSleepReport
 }
