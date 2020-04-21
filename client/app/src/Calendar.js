@@ -189,7 +189,7 @@ export class Calendar extends React.Component {
         return (
             <div>
                 <h3 className="card-header" id="monthAndYear">YYYY-MM-DD</h3>
-                <table className="table table-bordered table-responsive-sm" id="calendar">
+                <table className="table table-bordered" id="calendar">
                     <thead>
                         <tr>
                             <th>Sun</th>
@@ -209,9 +209,9 @@ export class Calendar extends React.Component {
 
                 <div className="form-inline">
 
-                    <button className="btn btn-outline-primary col-sm-6" id="previous" onClick={this.previous}>Previous</button>
+                    <button className="btn btn-outline-primary col-sm-6 mt-2" id="previous" onClick={this.previous}>Previous</button>
 
-                    <button className="btn btn-outline-primary col-sm-6" id="next" onClick={this.next}>Next</button>
+                    <button className="btn btn-outline-primary col-sm-6 mt-2" id="next" onClick={this.next}>Next</button>
                 </div>
                 <br />
                 <form className="form-inline">

@@ -112,6 +112,15 @@ app.post("/users/sleep-reports", checkIsLoggedIn, users.addSleepReport);
 // editing a sleep report for a user
 app.patch("/users/sleep-reports", checkIsLoggedIn, users.editSleepReport);
 
+// getting all mood reports for a user
+app.get("/users/mood-reports", checkIsLoggedIn, users.getMoodReports);
+// adding a mood report to a user
+app.get("/users/mood-reports/:date", checkIsLoggedIn, users.getMoodReportForDate);
+// adding a mood report to a user
+app.post("/users/mood-reports", checkIsLoggedIn, users.addMoodReport);
+// editing a mood report for a user
+app.patch("/users/mood-reports", checkIsLoggedIn, users.editMoodReport);
+
 // logging in and logging out
 app.post("/sessions", sessions.createNewSession);
 app.delete("/sessions", sessions.deleteExistingSession);

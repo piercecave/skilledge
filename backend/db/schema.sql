@@ -111,7 +111,27 @@ CREATE TABLE IF NOT EXISTS Sleep_Reports (
     PRIMARY KEY (SleepReportID)
 );
 
+CREATE TABLE IF NOT EXISTS Mood_Values (
+    MoodValueID INT NOT NULL AUTO_INCREMENT,
+    MoodValueName VARCHAR(255) NOT NULL,
+    MoodValueDesc VARCHAR(1024),
+    PRIMARY KEY (MoodValueID)
+);
 
+CREATE TABLE IF NOT EXISTS Mood_Reports (
+    MoodReportID INT NOT NULL AUTO_INCREMENT,
+    UserID INT NOT NULL,
+    MoodReportDate DATE NOT NULL,
+    MoodValueID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(ID),
+    FOREIGN KEY (MoodValueID) REFERENCES Mood_Values(MoodValueID),
+    PRIMARY KEY (MoodReportID)
+);
+
+
+INSERT INTO Mood_Values (MoodValueName, MoodValueDesc) VALUES ('Below Average', 'Worse mood than usual');
+INSERT INTO Mood_Values (MoodValueName, MoodValueDesc) VALUES ('Average', 'Normal mood for a normal day');
+INSERT INTO Mood_Values (MoodValueName, MoodValueDesc) VALUES ('Above Average', 'Better than normal mood for today');
 
 INSERT INTO Sleep_Values (SleepValueName, SleepValueDesc) VALUES ('Below Average', 'Slept worse/less than I normally do');
 INSERT INTO Sleep_Values (SleepValueName, SleepValueDesc) VALUES ('Average', 'Slept an average amount');
