@@ -3,12 +3,57 @@ import * as d3 from "d3";
 
 export class SuccessRateVsTimeChart extends React.Component {
 
-    createCharts(responseJSON) {
+    constructor(props) {
+        super(props);
 
-        console.log(responseJSON);
+        this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
 
-        // Filter out pending events
-        var eventsData = responseJSON.filter(event => event.ResultName !== "Pending");
+        this.chartContainer = React.createRef();
+
+        this.state = {
+            eventsData: []
+        }
+    }
+
+    componentDidMount() {
+        this.loadEvents();
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentDidUpdate() {
+        this.createCharts();
+    }
+
+    updateDimensions() {
+        this.setState({
+            chartWidth: 600,
+            chartHeight: 480
+        });
+    }
+
+    loadEvents() {
+
+        fetch(this.GET_EVENTS_FOR_USER_URL, {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJSON) => {
+                this.setState({
+                    eventsData: responseJSON
+                });
+            })
+            .catch(this.displayError);
+    }
+
+    createCharts() {
+        var eventsData = this.state.eventsData.filter(event => event.ResultName !== "Pending");
 
         eventsData = eventsData.map(event => {
             event.EventDate = new Date(event.EventDate);
@@ -28,16 +73,14 @@ export class SuccessRateVsTimeChart extends React.Component {
             event.SuccessRate = totalSuccesses / totalEvents * 100;
             return event;
         });
-
-        // Order by date
+        
         cumulativeEventsData.sort((a, b) => a.EventDate - b.EventDate);
 
-        // Visualize using d3
+        let margin = { top: 10, right: 30, bottom: 90, left: 60 }
+        let width = this.chartContainer.current.offsetWidth - margin.left - margin.right
+        let height = width * .75 - margin.top - margin.bottom;
 
-        // set the dimensions and margins of the graph
-        var margin = { top: 10, right: 30, bottom: 90, left: 60 },
-            width = 600 - margin.left - margin.right,
-            height = 480 - margin.top - margin.bottom;
+        d3.select("#successRateChart").html("");
 
         // append the svg object to the body of the page
         var svg = d3.select("#successRateChart")
@@ -98,7 +141,7 @@ export class SuccessRateVsTimeChart extends React.Component {
 
     render() {
         return (
-            <div className="card-body">
+            <div ref={this.chartContainer} className="card-body">
                 <h5 className="card-title">Success Rate / Time</h5>
                 <div className="d-flex justify-content-center" id="successRateChart"></div>
             </div>
