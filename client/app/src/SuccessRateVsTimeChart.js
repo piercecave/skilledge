@@ -11,13 +11,17 @@ export class SuccessRateVsTimeChart extends React.Component {
         this.chartContainer = React.createRef();
 
         this.state = {
-            eventsData: []
+            eventsData: [],
+            chartWidth: 400
         }
     }
 
     componentDidMount() {
         this.loadEvents();
         window.addEventListener("resize", this.updateDimensions.bind(this));
+        this.setState({
+            chartWidth: this.chartContainer.current.offsetWidth
+        });
     }
 
     componentWillUnmount() {
@@ -30,8 +34,7 @@ export class SuccessRateVsTimeChart extends React.Component {
 
     updateDimensions() {
         this.setState({
-            chartWidth: 600,
-            chartHeight: 480
+            chartWidth: this.chartContainer.current.offsetWidth
         });
     }
 
@@ -76,9 +79,13 @@ export class SuccessRateVsTimeChart extends React.Component {
         
         cumulativeEventsData.sort((a, b) => a.EventDate - b.EventDate);
 
-        let margin = { top: 10, right: 30, bottom: 90, left: 60 }
-        let width = this.chartContainer.current.offsetWidth - margin.left - margin.right
+        let margin = { top: 10, right: 60, bottom: 90, left: 60 }
+        let width = this.state.chartWidth - margin.left - margin.right
+
         let height = width * .75 - margin.top - margin.bottom;
+        if (this.state.chartWidth < 500) {
+            height = width * 1.2 - margin.top - margin.bottom;
+        }
 
         d3.select("#successRateChart").html("");
 
