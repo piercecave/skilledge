@@ -29,7 +29,8 @@ export class SuccessRateVsTimeChart extends React.Component {
     }
 
     componentDidUpdate() {
-        this.createCharts();
+        this.clearOldChart();
+        this.createChart();
     }
 
     updateDimensions() {
@@ -39,7 +40,6 @@ export class SuccessRateVsTimeChart extends React.Component {
     }
 
     loadEvents() {
-
         fetch(this.GET_EVENTS_FOR_USER_URL, {
             credentials: 'include'
         })
@@ -55,19 +55,45 @@ export class SuccessRateVsTimeChart extends React.Component {
             .catch(this.displayError);
     }
 
-    createCharts() {
-        var eventsData = this.state.eventsData.filter(event => event.ResultName !== "Pending");
+    createChart() {
+        let chartData = this.parseEventsData();
+        let chartDimensions = this.calculateChartDimensions();
+        let chart = this.createChartElement(chartDimensions);
+        let scales = this.calculateScales(chartData, chartDimensions);
 
+        this.createXAxis(chart, chartData, chartDimensions, scales.xScale);
+        this.createYAxis(chart, chartDimensions, scales.yScale);
+        this.createTrendLine(chart, scales, chartData);
+    }
+
+    parseEventsData() {
+        let eventsData = this.getEventsWithResults();
+        eventsData = this.orderEventsByDate(eventsData);
+        eventsData = this.calculateRollingTotalSuccessRate(eventsData);
+
+        return eventsData;
+    }
+
+    getEventsWithResults() {
+        return this.state.eventsData.filter(event => event.ResultName !== "Pending");
+    }
+
+    orderEventsByDate(eventsData) {
+        // Edit date values of events to be js date values
         eventsData = eventsData.map(event => {
             event.EventDate = new Date(event.EventDate);
             return event;
         });
 
-        // Order by date
+        // Order events by date
         eventsData.sort((a, b) => a.EventDate - b.EventDate);
 
-        // For each event calculate rolling (total successes / total events)
+        return eventsData;
+    }
+
+    calculateRollingTotalSuccessRate(eventsData) {
         var totalSuccesses = 0, totalEvents = 0;
+
         var cumulativeEventsData = eventsData.map(event => {
             if (event.ResultName === "Success") {
                 totalSuccesses++;
@@ -76,9 +102,11 @@ export class SuccessRateVsTimeChart extends React.Component {
             event.SuccessRate = totalSuccesses / totalEvents * 100;
             return event;
         });
-        
-        cumulativeEventsData.sort((a, b) => a.EventDate - b.EventDate);
 
+        return cumulativeEventsData;
+    }
+
+    calculateChartDimensions() {
         let margin = { top: 10, right: 60, bottom: 90, left: 60 }
         let width = this.state.chartWidth - margin.left - margin.right
 
@@ -87,63 +115,98 @@ export class SuccessRateVsTimeChart extends React.Component {
             height = width * 1.2 - margin.top - margin.bottom;
         }
 
-        d3.select("#successRateChart").html("");
+        return {
+            width: width,
+            height: height,
+            margin: margin
+        }
+    }
 
-        // append the svg object to the body of the page
-        var svg = d3.select("#successRateChart")
+    clearOldChart() {
+        d3.select("#successRateChart").html("");
+    }
+
+    createChartElement(chartDimensions) {
+        return d3.select("#successRateChart")
             .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", chartDimensions.width + chartDimensions.margin.left + chartDimensions.margin.right)
+            .attr("height", chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom)
             .append("g")
             .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
+                "translate(" + chartDimensions.margin.left + "," + chartDimensions.margin.top + ")");
+    }
 
-        var x = d3.scaleTime()
+    calculateScales(chartData, chartDimensions) {
+        let xScale = this.createXScale(chartData, chartDimensions);
+        let yScale = this.createYScale(chartData, chartDimensions);
+
+        return {
+            xScale: xScale,
+            yScale: yScale
+        }
+    }
+
+    createXScale(cumulativeEventsData, chartDimensions) {
+        return d3.scaleTime()
             .domain(d3.extent(cumulativeEventsData, function (d) { return d.EventDate; }))
-            .range([0, width]);
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d")).ticks(cumulativeEventsData.length + 1))
+            .range([0, chartDimensions.width]);
+    }
+
+    createYScale(cumulativeEventsData, chartDimensions) {
+        return d3.scaleLinear()
+            .domain([0, d3.max(cumulativeEventsData, function (d) { return +d.SuccessRate; }) + 10])
+            .range([chartDimensions.height, 0]);
+    }
+
+    createXAxis(chart, cumulativeEventsData, chartDimensions, xScale) {
+        chart.append("g")
+            .attr("transform", "translate(0," + chartDimensions.height + ")")
+            .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d")).ticks(cumulativeEventsData.length + 1))
             .selectAll("text")
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-65)");
+            
+        this.createXAxisLabel(chart, chartDimensions);
+    }
 
-        // text label for the x axis
-        svg.append("text")
+    createXAxisLabel(chart, chartDimensions) {
+        chart.append("text")
             .attr("transform",
-                "translate(" + (width / 2) + " ," +
-                (height + margin.top + margin.bottom - 24) + ")")
+                "translate(" + (chartDimensions.width / 2) + " ," +
+                (chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom - 24) + ")")
             .style("text-anchor", "middle")
             .text("Date");
+    }
 
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, d3.max(cumulativeEventsData, function (d) { return +d.SuccessRate; }) + 10])
-            .range([height, 0]);
-        svg.append("g")
-            .call(d3.axisLeft(y));
+    createYAxis(chart, chartDimensions, yScale) {
+        chart.append("g")
+            .call(d3.axisLeft(yScale));
 
-        // text label for the y axis
-        svg.append("text")
+        this.createYAxisLabel(chart, chartDimensions);
+    }
+
+    createYAxisLabel(chart, chartDimensions) {
+        chart.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x", 0 - (height / 2))
+            .attr("y", 0 - chartDimensions.margin.left)
+            .attr("x", 0 - (chartDimensions.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
             .text("Success Rate (%)");
+    }
 
-        // Add the line
-        svg.append("path")
+    createTrendLine(chart, scales, cumulativeEventsData) {
+        chart.append("path")
             .datum(cumulativeEventsData)
             .attr("fill", "none")
             .attr("stroke", "steelblue")
-            .attr("stroke-width", 1.5)
+            .attr("stroke-chartDimensions.width", 1.5)
             .attr("d", d3.line()
-                .x(function (d) { return x(d.EventDate) })
-                .y(function (d) { return y(d.SuccessRate) })
-            )
+                .x(function (d) { return scales.xScale(d.EventDate) })
+                .y(function (d) { return scales.yScale(d.SuccessRate) })
+            );
     }
 
     render() {
