@@ -1,6 +1,9 @@
 import React from 'react';
 import './Game.css';
 
+// Animation when you complete a task
+// Unlock new avatars as you progress
+
 export default class Game extends React.Component {
 
     constructor(props) {
