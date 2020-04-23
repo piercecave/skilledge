@@ -1,0 +1,11 @@
+.calendarLegend {
+    margin-top: .8rem;
+}
+
+.legend_event_marker {
+    border-radius: 14px;
+    width: 28px;
+    height: 28px;
+    background-color: aqua;
+    display: inline-block;
+}
