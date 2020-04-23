@@ -4,6 +4,7 @@ import Calendar from './Calendar';
 import Record from './Record';
 import SleepReporter from './SleepReporter';
 import MoodReporter from './MoodReporter';
+import Game from './Game';
 
 export class UserDashboard extends React.Component {
 
@@ -211,8 +212,15 @@ export class UserDashboard extends React.Component {
                         </div>
                     </div>
                     <div className="col-sm">
-                    <div className="card">
+                        <div className="card">
                             <MoodReporter currentDate={this.formatDate(this.state.currentDate)} currentMoodReport={this.state.currentMoodReport} moodUpdated={this.moodUpdated} />
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-1">
+                    <div className="col-sm">
+                        <div className="card">
+                            <Game />
                         </div>
                     </div>
                 </div>
