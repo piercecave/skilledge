@@ -4,13 +4,14 @@ import Calendar from './Calendar';
 import Record from './Record';
 import SleepReporter from './SleepReporter';
 import MoodReporter from './MoodReporter';
-import DashboardHeader from './DashboardHeader';
+//import DashboardHeader from './DashboardHeader';
 import Game from './Game';
 
 export class UserDashboard extends React.Component {
 
     constructor(props) {
         super(props);
+        this.GET_USER_INFO_URL = process.env.REACT_APP_BACKEND_URL + "/users";
 
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
         this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
@@ -30,6 +31,7 @@ export class UserDashboard extends React.Component {
             eventUpdatedSwitch: false,
             eventsData: [],
             eventDates: [],
+            userInfo: {},
             recordEvents: [],
             currentSleepReport: [],
             currentMoodReport: []
@@ -103,6 +105,22 @@ export class UserDashboard extends React.Component {
                 this.setState({
                     recordEvents: responseJSON
                 }, this.getAllReasonsForAllEvents);
+            })
+            .catch(this.displayError);
+    }
+
+    loadUserInfo() {
+        fetch(this.GET_USER_INFO_URL, {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJSON) => {
+                this.setState({
+                    userInfo: responseJSON[0]
+                });
             })
             .catch(this.displayError);
     }
@@ -196,6 +214,13 @@ export class UserDashboard extends React.Component {
 
         return (
             <div id="componentsContainer" className="container">
+                {/* <div className="row mt-4">
+                    <div className="col-sm">
+                        <div className="card">
+                            <DashboardHeader userInfo={this.state.userInfo} />
+                        </div>
+                    </div>
+                </div> */}
                 <div className="row mt-4">
                     <div className="col-sm">
                         <div className="card">
