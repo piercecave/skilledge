@@ -4,6 +4,7 @@ import Calendar from './Calendar';
 import Record from './Record';
 import SleepReporter from './SleepReporter';
 import MoodReporter from './MoodReporter';
+import DashboardHeader from './DashboardHeader';
 import Game from './Game';
 
 export class UserDashboard extends React.Component {
