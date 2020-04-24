@@ -4,6 +4,7 @@ import Calendar from './Calendar';
 import Record from './Record';
 import SleepReporter from './SleepReporter';
 import MoodReporter from './MoodReporter';
+import Game from './Game';
 
 export class UserDashboard extends React.Component {
 
@@ -73,12 +74,14 @@ export class UserDashboard extends React.Component {
                 return response.json();
             })
             .then((responseJSON) => {
-                this.setState({
-                    eventsData: responseJSON.map(function (event) {
-                        event.FormattedEventDate = event.EventDate.substring(0, 10);
-                        return event;
-                    }),
-                    eventDates: Array.from(responseJSON, event => event.EventDate.substring(0, 10)).filter(this.onlyUnique)
+                this.setState(() => {
+                    return {
+                        eventsData: responseJSON.map(function (event) {
+                            event.FormattedEventDate = event.EventDate.substring(0, 10);
+                            return event;
+                        }),
+                        eventDates: Array.from(responseJSON, event => event.EventDate.substring(0, 10)).filter(this.onlyUnique)
+                    }
                 }, this.loadEventsForCurrentDate);
             })
             .catch(this.displayError);
@@ -207,11 +210,18 @@ export class UserDashboard extends React.Component {
                 <div className="row mt-1">
                     <div className="col-sm">
                         <div className="card">
+                            <Game ref={(gameComponent) => {window.gameComponent = gameComponent}} eventsData={this.state.eventsData} />
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-1">
+                    <div className="col-sm">
+                        <div className="card">
                             <SleepReporter currentDate={this.formatDate(this.state.currentDate)} currentSleepReport={this.state.currentSleepReport} sleepUpdated={this.sleepUpdated} />
                         </div>
                     </div>
                     <div className="col-sm">
-                    <div className="card">
+                        <div className="card">
                             <MoodReporter currentDate={this.formatDate(this.state.currentDate)} currentMoodReport={this.state.currentMoodReport} moodUpdated={this.moodUpdated} />
                         </div>
                     </div>
