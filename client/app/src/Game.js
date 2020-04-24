@@ -13,286 +13,297 @@ export default class Game extends React.Component {
         this.startPlayFall = this.startPlayFall.bind(this);
         this.startPlayHurt = this.startPlayHurt.bind(this);
         this.startChangeAvatar = this.startChangeAvatar.bind(this);
-        //this.startDogJump = this.startDogJump(this);
+        
     }
 
-    // function that makes avatar jump 
     startJumping() {
+
+        var frames
+        var frameCount
+        var i
 
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
 
-        if (document.getElementById("myCat").className === 'center d-none') {
+        if(document.getElementById("myCat").className ==='center d-none'){
 
-            // blocks orginial picture 
-            document.getElementById("myDog").classList.remove('d-block');
-            document.getElementById("myDog").classList.add('d-none');
+        // blocks orginial picture 
+        document.getElementById("myDog").classList.remove('d-block');
+        document.getElementById("myDog").classList.add('d-none');
 
-            // unblocks current picture
-            document.getElementById("animation5").children[0].classList.remove('d-none');
-            document.getElementById("animation5").children[0].classList.add('d-block');
+        // unblocks current picture
+        document.getElementById("animation5").children[0].classList.remove('d-none');
+        document.getElementById("animation5").children[0].classList.add('d-block');
 
-            var frames = document.getElementById("animation5").children;
+         frames = document.getElementById("animation5").children;
 
-            var frameCount = frames.length;
-            var i = 0;
+        frameCount = frames.length;
+        i = 0;
 
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+           
+        }, 100);
 
-            }, 100);
+        setTimeout(() => {
+            clearInterval(interval)
 
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation5").children) {
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myDog").classList.remove('d-none');
-                document.getElementById("myDog").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
-        } else {
+            // hides all the picture 
+            for (const child of document.getElementById("animation5").children) {
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myDog").classList.remove('d-none');
+            document.getElementById("myDog").classList.add('d-block');
 
             for (const buttons of document.getElementById("theButtons").children) {
-                buttons.disabled = true;
+                buttons.disabled = false;
             }
+        }, 2000)
+    }else{
 
-            // blocks orginial picture 
-            document.getElementById("myCat").classList.remove('d-block');
-            document.getElementById("myCat").classList.add('d-none');
-
-            // unblocks current picture
-            document.getElementById("animation1").children[0].classList.remove('d-none');
-            document.getElementById("animation1").children[0].classList.add('d-block');
-
-            var frames = document.getElementById("animation1").children;
-
-            var frameCount = frames.length;
-            var i = 0;
-
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation1").children) {
-                    // child.style.display = "none";
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myCat").classList.remove('d-none');
-                document.getElementById("myCat").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
+        for (const buttons of document.getElementById("theButtons").children) {
+            buttons.disabled = true;
         }
+
+        // blocks orginial picture 
+        document.getElementById("myCat").classList.remove('d-block');
+        document.getElementById("myCat").classList.add('d-none');
+
+        // unblocks current picture
+        document.getElementById("animation1").children[0].classList.remove('d-none');
+        document.getElementById("animation1").children[0].classList.add('d-block');
+
+         frames = document.getElementById("animation1").children;
+
+         frameCount = frames.length;
+         i = 0;
+
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(interval)
+            
+            // hides all the picture 
+            for (const child of document.getElementById("animation1").children) {
+                // child.style.display = "none";
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myCat").classList.remove('d-none');
+            document.getElementById("myCat").classList.add('d-block');
+
+            for (const buttons of document.getElementById("theButtons").children) {
+                buttons.disabled = false;
+            }
+        }, 2000)
     }
+}
 
 
 
     // function that makes avatar play dead 
     startPlayDead() {
 
+        var frames
+        var frameCount
+        var i
+
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
 
-        if (document.getElementById("myCat").className === 'center d-none') {
+        if(document.getElementById("myCat").className ==='center d-none'){
 
-            // blocks orginial picture 
-            document.getElementById("myDog").classList.remove('d-block');
-            document.getElementById("myDog").classList.add('d-none');
+        // blocks orginial picture 
+        document.getElementById("myDog").classList.remove('d-block');
+        document.getElementById("myDog").classList.add('d-none');
 
-            // unblocks current picture
-            document.getElementById("animation6").children[0].classList.remove('d-none');
-            document.getElementById("animation6").children[0].classList.add('d-block');
+        // unblocks current picture
+        document.getElementById("animation6").children[0].classList.remove('d-none');
+        document.getElementById("animation6").children[0].classList.add('d-block');
 
-            var frames = document.getElementById("animation6").children;
+         frames = document.getElementById("animation6").children;
 
-            var frameCount = frames.length;
-            var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+           
+        }, 100);
 
-            }, 100);
+        setTimeout(() => {
+            clearInterval(interval)
 
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation6").children) {
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myDog").classList.remove('d-none');
-                document.getElementById("myDog").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
-        } else {
+            // hides all the picture 
+            for (const child of document.getElementById("animation6").children) {
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myDog").classList.remove('d-none');
+            document.getElementById("myDog").classList.add('d-block');
 
             for (const buttons of document.getElementById("theButtons").children) {
-                buttons.disabled = true;
+                buttons.disabled = false;
             }
+        }, 2000)
+    }else{
 
-            // blocks orginial picture 
-            document.getElementById("myCat").classList.remove('d-block');
-            document.getElementById("myCat").classList.add('d-none');
-
-            // unblocks current picture
-            document.getElementById("animation2").children[0].classList.remove('d-none');
-            document.getElementById("animation2").children[0].classList.add('d-block');
-
-            var frames = document.getElementById("animation2").children;
-
-            var frameCount = frames.length;
-            var i = 0;
-
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation2").children) {
-                    // child.style.display = "none";
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myCat").classList.remove('d-none');
-                document.getElementById("myCat").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
+        for (const buttons of document.getElementById("theButtons").children) {
+            buttons.disabled = true;
         }
+
+        // blocks orginial picture 
+        document.getElementById("myCat").classList.remove('d-block');
+        document.getElementById("myCat").classList.add('d-none');
+
+        // unblocks current picture
+        document.getElementById("animation2").children[0].classList.remove('d-none');
+        document.getElementById("animation2").children[0].classList.add('d-block');
+
+         frames = document.getElementById("animation2").children;
+
+         frameCount = frames.length;
+         i = 0;
+
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(interval)
+            
+            // hides all the picture 
+            for (const child of document.getElementById("animation2").children) {
+                // child.style.display = "none";
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myCat").classList.remove('d-none');
+            document.getElementById("myCat").classList.add('d-block');
+
+            for (const buttons of document.getElementById("theButtons").children) {
+                buttons.disabled = false;
+            }
+        }, 2000)
+    }
     }
 
 
     // function that makes avatar play falling down
     startPlayFall() {
 
+        var frames
+        var frameCount
+        var i
+
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
 
-        if (document.getElementById("myCat").className === 'center d-none') {
+        if(document.getElementById("myCat").className ==='center d-none'){
 
-            // blocks orginial picture 
-            document.getElementById("myDog").classList.remove('d-block');
-            document.getElementById("myDog").classList.add('d-none');
+        // blocks orginial picture 
+        document.getElementById("myDog").classList.remove('d-block');
+        document.getElementById("myDog").classList.add('d-none');
 
-            // unblocks current picture
-            document.getElementById("animation7").children[0].classList.remove('d-none');
-            document.getElementById("animation7").children[0].classList.add('d-block');
+        // unblocks current picture
+        document.getElementById("animation7").children[0].classList.remove('d-none');
+        document.getElementById("animation7").children[0].classList.add('d-block');
 
-            var frames = document.getElementById("animation7").children;
+         frames = document.getElementById("animation7").children;
 
-            var frameCount = frames.length;
-            var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+           
+        }, 100);
 
-            }, 100);
+        setTimeout(() => {
+            clearInterval(interval)
 
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation7").children) {
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myDog").classList.remove('d-none');
-                document.getElementById("myDog").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
-        } else {
+            // hides all the picture 
+            for (const child of document.getElementById("animation7").children) {
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myDog").classList.remove('d-none');
+            document.getElementById("myDog").classList.add('d-block');
 
             for (const buttons of document.getElementById("theButtons").children) {
-                buttons.disabled = true;
+                buttons.disabled = false;
             }
+        }, 2000)
+    }else{
 
-            // blocks orginial picture 
-            document.getElementById("myCat").classList.remove('d-block');
-            document.getElementById("myCat").classList.add('d-none');
-
-            // unblocks current picture
-            document.getElementById("animation3").children[0].classList.remove('d-none');
-            document.getElementById("animation3").children[0].classList.add('d-block');
-
-            var frames = document.getElementById("animation3").children;
-
-            var frameCount = frames.length;
-            var i = 0;
-
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation3").children) {
-                    // child.style.display = "none";
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myCat").classList.remove('d-none');
-                document.getElementById("myCat").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
+        for (const buttons of document.getElementById("theButtons").children) {
+            buttons.disabled = true;
         }
+
+        // blocks orginial picture 
+        document.getElementById("myCat").classList.remove('d-block');
+        document.getElementById("myCat").classList.add('d-none');
+
+        // unblocks current picture
+        document.getElementById("animation3").children[0].classList.remove('d-none');
+        document.getElementById("animation3").children[0].classList.add('d-block');
+
+         frames = document.getElementById("animation3").children;
+
+         frameCount = frames.length;
+         i = 0;
+
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(interval)
+            
+            // hides all the picture 
+            for (const child of document.getElementById("animation3").children) {
+                // child.style.display = "none";
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myCat").classList.remove('d-none');
+            document.getElementById("myCat").classList.add('d-block');
+
+            for (const buttons of document.getElementById("theButtons").children) {
+                buttons.disabled = false;
+            }
+        }, 2000)
+    }
 
     }
 
@@ -300,124 +311,131 @@ export default class Game extends React.Component {
     // function that makes avatar play hurt
     startPlayHurt() {
 
+        var frames
+        var frameCount
+        var i
+
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
 
-        if (document.getElementById("myCat").className === 'center d-none') {
+        if(document.getElementById("myCat").className ==='center d-none'){
 
-            // blocks orginial picture 
-            document.getElementById("myDog").classList.remove('d-block');
-            document.getElementById("myDog").classList.add('d-none');
+        // blocks orginial picture 
+        document.getElementById("myDog").classList.remove('d-block');
+        document.getElementById("myDog").classList.add('d-none');
 
-            // unblocks current picture
-            document.getElementById("animation8").children[0].classList.remove('d-none');
-            document.getElementById("animation8").children[0].classList.add('d-block');
+        // unblocks current picture
+        document.getElementById("animation8").children[0].classList.remove('d-none');
+        document.getElementById("animation8").children[0].classList.add('d-block');
 
-            var frames = document.getElementById("animation8").children;
+         frames = document.getElementById("animation8").children;
 
-            var frameCount = frames.length;
-            var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+           
+        }, 100);
 
-            }, 100);
+        setTimeout(() => {
+            clearInterval(interval)
 
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation8").children) {
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myDog").classList.remove('d-none');
-                document.getElementById("myDog").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
-        } else {
+            // hides all the picture 
+            for (const child of document.getElementById("animation8").children) {
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myDog").classList.remove('d-none');
+            document.getElementById("myDog").classList.add('d-block');
 
             for (const buttons of document.getElementById("theButtons").children) {
-                buttons.disabled = true;
+                buttons.disabled = false;
             }
+        }, 2000)
+    }else{
 
-            // blocks orginial picture 
-            document.getElementById("myCat").classList.remove('d-block');
-            document.getElementById("myCat").classList.add('d-none');
-
-            // unblocks current picture
-            document.getElementById("animation4").children[0].classList.remove('d-none');
-            document.getElementById("animation4").children[0].classList.add('d-block');
-
-            var frames = document.getElementById("animation4").children;
-
-            var frameCount = frames.length;
-            var i = 0;
-
-            const interval = setInterval(() => {
-                frames[i % frameCount].classList.remove('d-block');
-                frames[i % frameCount].classList.add('d-none');
-                frames[++i % frameCount].classList.remove('d-none');
-                frames[++i % frameCount].classList.add('d-block');
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval)
-
-                // hides all the picture 
-                for (const child of document.getElementById("animation4").children) {
-                    // child.style.display = "none";
-                    child.classList.remove('d-block');
-                    child.classList.add('d-none');
-                }
-                // reverts back to normal pictue
-                document.getElementById("myCat").classList.remove('d-none');
-                document.getElementById("myCat").classList.add('d-block');
-
-                for (const buttons of document.getElementById("theButtons").children) {
-                    buttons.disabled = false;
-                }
-            }, 2000)
+        for (const buttons of document.getElementById("theButtons").children) {
+            buttons.disabled = true;
         }
+
+        // blocks orginial picture 
+        document.getElementById("myCat").classList.remove('d-block');
+        document.getElementById("myCat").classList.add('d-none');
+
+        // unblocks current picture
+        document.getElementById("animation4").children[0].classList.remove('d-none');
+        document.getElementById("animation4").children[0].classList.add('d-block');
+
+         frames = document.getElementById("animation4").children;
+
+         frameCount = frames.length;
+         i = 0;
+
+        const interval = setInterval(() => {
+            frames[i % frameCount].classList.remove('d-block');
+            frames[i % frameCount].classList.add('d-none');
+            frames[++i % frameCount].classList.remove('d-none');
+            frames[++i % frameCount].classList.add('d-block');
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(interval)
+            
+            // hides all the picture 
+            for (const child of document.getElementById("animation4").children) {
+                // child.style.display = "none";
+                child.classList.remove('d-block');
+                child.classList.add('d-none');
+            }
+            // reverts back to normal pictue
+            document.getElementById("myCat").classList.remove('d-none');
+            document.getElementById("myCat").classList.add('d-block');
+
+            for (const buttons of document.getElementById("theButtons").children) {
+                buttons.disabled = false;
+            }
+        }, 2000)
+    }
     }
 
 
     startChangeAvatar() {
-        for (const buttons of document.getElementById("theButtons").children) {
+        for(const buttons of document.getElementById("theButtons").children){
             buttons.disabled = true;
         }
 
-
-        if ((document.getElementById("myCat").className === 'center d-block')) {
-            // blocks orginial picture 
-            document.getElementById("myCat").classList.remove('d-block');
-            document.getElementById("myCat").classList.add('d-none');
-
-            // unblocks current picture
-            document.getElementById("myDog").classList.remove('d-none');
-            document.getElementById("myDog").classList.add('d-block');
-
+        
+        if((document.getElementById("myCat").className ==='center d-block')){
+        // blocks orginial picture 
+        document.getElementById("myCat").classList.remove('d-block');
+        document.getElementById("myCat").classList.add('d-none');
+    
+         // unblocks current picture
+         document.getElementById("myDog").classList.remove('d-none');
+         document.getElementById("myDog").classList.add('d-block');
+      
         } else {
-
+            
             document.getElementById("myCat").classList.remove('d-none');
             document.getElementById("myCat").classList.add('d-block');
-            // unblocks current picture
-            document.getElementById("myDog").classList.remove('d-block');
-            document.getElementById("myDog").classList.add('d-none');
+        // unblocks current picture
+        document.getElementById("myDog").classList.remove('d-block');
+        document.getElementById("myDog").classList.add('d-none');
         }
-
-        for (const buttons of document.getElementById("theButtons").children) {
-            buttons.disabled = false;
-        }
+    
+         for(const buttons of document.getElementById("theButtons").children){
+                buttons.disabled = false;
+            }
     }
+
+    
+
 
     render() {
         return (

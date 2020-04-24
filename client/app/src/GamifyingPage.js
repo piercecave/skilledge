@@ -15,13 +15,17 @@ export class GamifyingPage extends React.Component {
         this.startPlayFall = this.startPlayFall.bind(this);
         this.startPlayHurt = this.startPlayHurt.bind(this);
         this.startChangeAvatar = this.startChangeAvatar.bind(this);
-        //this.startDogJump = this.startDogJump(this);
+        
 
         document.title = 'Gamifying';
     }
 
     // function that makes avatar jump 
     startJumping() {
+
+        var frames
+        var frameCount
+        var i
 
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
@@ -37,10 +41,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation5").children[0].classList.remove('d-none');
         document.getElementById("animation5").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation5").children;
+         frames = document.getElementById("animation5").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+        frameCount = frames.length;
+        i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -80,10 +84,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation1").children[0].classList.remove('d-none');
         document.getElementById("animation1").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation1").children;
+         frames = document.getElementById("animation1").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -117,6 +121,10 @@ export class GamifyingPage extends React.Component {
     // function that makes avatar play dead 
     startPlayDead() {
 
+        var frames
+        var frameCount
+        var i
+
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
@@ -131,10 +139,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation6").children[0].classList.remove('d-none');
         document.getElementById("animation6").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation6").children;
+         frames = document.getElementById("animation6").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -174,10 +182,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation2").children[0].classList.remove('d-none');
         document.getElementById("animation2").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation2").children;
+         frames = document.getElementById("animation2").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -210,6 +218,10 @@ export class GamifyingPage extends React.Component {
     // function that makes avatar play falling down
     startPlayFall() {
 
+        var frames
+        var frameCount
+        var i
+
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
@@ -224,10 +236,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation7").children[0].classList.remove('d-none');
         document.getElementById("animation7").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation7").children;
+         frames = document.getElementById("animation7").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -267,10 +279,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation3").children[0].classList.remove('d-none');
         document.getElementById("animation3").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation3").children;
+         frames = document.getElementById("animation3").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -304,6 +316,10 @@ export class GamifyingPage extends React.Component {
     // function that makes avatar play hurt
     startPlayHurt() {
 
+        var frames
+        var frameCount
+        var i
+
         for (const buttons of document.getElementById("theButtons").children) {
             buttons.disabled = true;
         }
@@ -318,10 +334,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation8").children[0].classList.remove('d-none');
         document.getElementById("animation8").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation8").children;
+         frames = document.getElementById("animation8").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
@@ -361,10 +377,10 @@ export class GamifyingPage extends React.Component {
         document.getElementById("animation4").children[0].classList.remove('d-none');
         document.getElementById("animation4").children[0].classList.add('d-block');
 
-        var frames = document.getElementById("animation4").children;
+         frames = document.getElementById("animation4").children;
 
-        var frameCount = frames.length;
-        var i = 0;
+         frameCount = frames.length;
+         i = 0;
 
         const interval = setInterval(() => {
             frames[i % frameCount].classList.remove('d-block');
