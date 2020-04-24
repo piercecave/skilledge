@@ -274,17 +274,21 @@ export class SetUpHabitPage extends React.Component {
                                 Hour:
                                 <input className="form-control" type="number" id="hourInput" name="hourInput" min="1" max="12" defaultValue="12" />
                             </label>
-                            <label htmlFor="minutesInput">
-                                Minutes:
-                                    <input className="form-control" type="number" id="minutesInput" name="minutesInput" min="1" max="59" defaultValue="0" />
-                            </label>
-                            <label>
-                                AM or PM
+                            <form>
+                                <label htmlFor="minutesInput">
+                                    Minutes:
+                                    <input className="form-control" type="number" id="minutesInput" name="minutesInput" min="0" max="59" defaultValue="0" />
+                                </label>
+                            </form>
+                            <form>
+                                <label htmlFor="periodInput">
+                                    AM or PM:
                                     <select className="custom-select" id="periodInput" name="periodInput">
-                                    <option defaultValue="AM">AM</option>
-                                    <option defaultValue="PM">PM</option>
-                                </select>
-                            </label>
+                                        <option defaultValue="AM">AM</option>
+                                        <option defaultValue="PM">PM</option>
+                                    </select>
+                                </label>
+                            </form>
                             <div className="processNavContainer">
                                 <button className="btn btn-outline-primary prevButton mt-3">Previous</button>
                                 <button className="btn btn-outline-primary nextButton mt-3">Next</button>

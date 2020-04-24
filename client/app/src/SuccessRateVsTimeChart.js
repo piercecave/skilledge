@@ -19,6 +19,7 @@ export class SuccessRateVsTimeChart extends React.Component {
     componentDidMount() {
         this.loadEvents();
         window.addEventListener("resize", this.updateDimensions.bind(this));
+
         this.setState({
             chartWidth: this.chartContainer.current.offsetWidth
         });
@@ -79,13 +80,11 @@ export class SuccessRateVsTimeChart extends React.Component {
     }
 
     orderEventsByDate(eventsData) {
-        // Edit date values of events to be js date values
         eventsData = eventsData.map(event => {
             event.EventDate = new Date(event.EventDate);
             return event;
         });
-
-        // Order events by date
+        
         eventsData.sort((a, b) => a.EventDate - b.EventDate);
 
         return eventsData;
@@ -107,7 +106,7 @@ export class SuccessRateVsTimeChart extends React.Component {
     }
 
     calculateChartDimensions() {
-        let margin = { top: 10, right: 60, bottom: 90, left: 60 }
+        let margin = this.calcMargins();
         let width = this.state.chartWidth - margin.left - margin.right
 
         let height = width * .75 - margin.top - margin.bottom;
@@ -120,6 +119,13 @@ export class SuccessRateVsTimeChart extends React.Component {
             height: height,
             margin: margin
         }
+    }
+
+    calcMargins() {
+        if (this.state.chartWidth < 500) {
+            return { top: 10, right: 60, bottom: 90, left: 45 };
+        }
+        return { top: 10, right: 60, bottom: 90, left: 60 };
     }
 
     clearOldChart() {
@@ -177,12 +183,13 @@ export class SuccessRateVsTimeChart extends React.Component {
                 "translate(" + (chartDimensions.width / 2) + " ," +
                 (chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom - 24) + ")")
             .style("text-anchor", "middle")
-            .text("Date");
+            .text("Date")
+            .attr("font-size", this.calcLabelFontSize());
     }
 
     createYAxis(chart, chartDimensions, yScale) {
         chart.append("g")
-            .call(d3.axisLeft(yScale));
+            .call(d3.axisLeft(yScale))
 
         this.createYAxisLabel(chart, chartDimensions);
     }
@@ -194,7 +201,15 @@ export class SuccessRateVsTimeChart extends React.Component {
             .attr("x", 0 - (chartDimensions.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Success Rate (%)");
+            .text("Success Rate (%)")
+            .attr("font-size", this.calcLabelFontSize());
+    }
+
+    calcLabelFontSize() {
+        if (this.state.chartWidth < 500) {
+            return "10px";
+        }
+        return "16px";
     }
 
     createTrendLine(chart, scales, cumulativeEventsData) {
@@ -202,10 +217,11 @@ export class SuccessRateVsTimeChart extends React.Component {
             .datum(cumulativeEventsData)
             .attr("fill", "none")
             .attr("stroke", "steelblue")
-            .attr("stroke-chartDimensions.width", 1.5)
+            .attr("stroke-width", 4)
             .attr("d", d3.line()
                 .x(function (d) { return scales.xScale(d.EventDate) })
                 .y(function (d) { return scales.yScale(d.SuccessRate) })
+                .curve(d3.curveCardinal)
             );
     }
 
