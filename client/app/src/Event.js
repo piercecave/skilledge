@@ -23,6 +23,9 @@ export class Event extends React.Component {
         this.handleResult(newResult, () => {
             this.props.eventUpdated(this.props.event);
             this.props.onSuccess();
+            if (window.gameComponent) {
+                window.gameComponent.startJumping();
+            }
         });
     };
 
@@ -34,6 +37,9 @@ export class Event extends React.Component {
         this.handleResult(newResult, () => {
             this.props.eventUpdated(this.props.event);
             this.props.onFailure(this.props.event);
+            if (window.gameComponent) {
+                window.gameComponent.startPlayDead();
+            }
         });
     }
 

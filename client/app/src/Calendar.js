@@ -1,5 +1,6 @@
 import React from 'react';
 import './Calendar.css';
+import CalendarLegend from './CalendarLegend';
 
 export class Calendar extends React.Component {
 
@@ -206,6 +207,8 @@ export class Calendar extends React.Component {
                         
                     </tbody>
                 </table>
+
+                <CalendarLegend />
 
                 <div className="form-inline">
 

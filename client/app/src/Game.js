@@ -1,12 +1,10 @@
 import React from 'react';
-import './GamifyingPage.css';
-import { Header } from './Header';
+import './Game.css';
 
-// For each of last three buttons/functions
-    // in constructor, add this.{functionname} = this.{functionname}.bind(this)
-    // edit so you add and remove to classlist instead of changing style
+// Animation when you complete a task
+// Unlock new avatars as you progress
 
-export class GamifyingPage extends React.Component {
+export default class Game extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,11 +14,8 @@ export class GamifyingPage extends React.Component {
         this.startPlayHurt = this.startPlayHurt.bind(this);
         this.startChangeAvatar = this.startChangeAvatar.bind(this);
         
-
-        document.title = 'Gamifying';
     }
 
-    // function that makes avatar jump 
     startJumping() {
 
         var frames
@@ -439,138 +434,126 @@ export class GamifyingPage extends React.Component {
             }
     }
 
-   
-
-
+    
 
 
     render() {
         return (
-            <div className="GamifyingPage">
-                <Header />
-                <div id="recordContainer" className="container">
-                    <div className="card my-3">
-                        <div className="card-body">
-                            <h5 className="card-title">Record Your Progress!</h5>
+            <div className="Game">
+
+                <h3 className="card-header">Avatar</h3>
+
+                <img src="./../cat/Idle/Idle%20(1).png" id='myCat' className="center d-block" width="200" height="200" alt="idle" />
+
+                <img src="./../dog/Idle/Idle%20(1).png" id='myDog' className="center d-none" width="200" height="200" alt="idle" />
 
 
-                            <img src="./../cat/Idle/Idle%20(1).png" id='myCat' className="center d-block" width="200" height="200" alt="idle"/>
-
-                            <img src="./../dog/Idle/Idle%20(1).png" id='myDog' className="center d-none" width="200" height="200" alt="idle"/>
-
-
-                            <div id="animation1" className="cat jump">
-                                <img src="./../cat/Jump/Jump%20(1).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(2).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(3).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(4).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(5).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(6).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(7).png" className="center" width="200" height="200" alt="cat jump"  />
-                                <img src="./../cat/Jump/Jump%20(8).png" className="center" width="200" height="200" alt="cat jump"  />
-                            </div>
-
-                            <div id="animation2" className="cat dead">
-                                <img src="./../cat/Dead/Dead%20(1).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(2).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(3).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(4).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(5).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(6).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(7).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(8).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(9).png" className="center" width="200" height="200" alt="cat dead"  />
-                                <img src="./../cat/Dead/Dead%20(10).png" className="center" width="200" height="200" alt="cat dead"  />
-                            </div>
-
-                            <div id="animation3" className="cat falling">
-                                <img src="./../cat/Fall/Fall%20(1).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(2).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(3).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(4).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(5).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(6).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(7).png" className="center" width="200" height="200" alt="cat fall"  />
-                                <img src="./../cat/Fall/Fall%20(8).png" className="center" width="200" height="200" alt="cat fall"  />
-                            </div>
-
-                            <div id="animation4" className="cat hurt">
-                                <img src="./../cat/Hurt/Hurt%20(1).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(2).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(3).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(4).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(5).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(6).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(7).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(8).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(9).png" className="center" width="200" height="200" alt="cat hurt"  />
-                                <img src="./../cat/Hurt/Hurt%20(10).png" className="center" width="200" height="200" alt="cat hurt"  />
-                            </div>
-
-
-                             {/* Dog Animations  */}
-
-                            <div id="animation5" className="dog jump">
-                                <img src="./../dog/Jump/Jump%20(1).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(2).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(3).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(4).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(5).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(6).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(7).png" className="center" width="200" height="200" alt="dog jump"  />
-                                <img src="./../dog/Jump/Jump%20(8).png" className="center" width="200" height="200" alt="dog jump"  />
-                            </div>
-
-                            <div id="animation6" className="dog dead">
-                                <img src="./../dog/Dead/Dead%20(1).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(2).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(3).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(4).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(5).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(6).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(7).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(8).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(9).png" className="center" width="200" height="200" alt="dog dead"  />
-                                <img src="./../dog/Dead/Dead%20(10).png" className="center" width="200" height="200" alt="dog dead"  />
-                            </div>
-
-                            <div id="animation7" className="dog falling">
-                                <img src="./../dog/Fall/Fall%20(1).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(2).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(3).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(4).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(5).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(6).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(7).png" className="center" width="200" height="200" alt="dog fall"  />
-                                <img src="./../dog/Fall/Fall%20(8).png" className="center" width="200" height="200" alt="dog fall"  />
-                            </div>
-
-                            <div id="animation8" className="dog hurt">
-                                <img src="./../dog/Hurt/Hurt%20(1).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(2).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(3).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(4).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(5).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(6).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(7).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(8).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(9).png" className="center" width="200" height="200" alt="dog hurt"  />
-                                <img src="./../dog/Hurt/Hurt%20(10).png" className="center" width="200" height="200" alt="dog hurt"  />
-                            </div>
-
-                        </div>
-                        <div id="theButtons">
-                            <button type="jumping" id="button1" className="btn btn-info btn-lg btn-block" onClick={this.startJumping}>Jump Now</button>
-                            <button type="play dead" id="button2" className="btn btn-info btn-lg btn-block" onClick={this.startPlayDead}>Play Dead</button>
-                            <button type="play falling " id="button3" className="btn btn-info btn-lg btn-block" onClick={this.startPlayFall}>Fall Down</button>
-                            <button type="fake injury" id="button4" className="btn btn-info btn-lg btn-block" onClick={this.startPlayHurt}>Fake Injury</button>
-                            <button type="change avatar" id="button5" className="btn btn-info btn-lg btn-block" onClick={this.startChangeAvatar}>Change Avatar</button>
-                        </div>
-                    </div>
+                <div id="animation1" className="cat jump">
+                    <img src="./../cat/Jump/Jump%20(1).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(2).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(3).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(4).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(5).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(6).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(7).png" className="center" width="200" height="200" alt="cat jump" />
+                    <img src="./../cat/Jump/Jump%20(8).png" className="center" width="200" height="200" alt="cat jump" />
                 </div>
-            </div>
+
+                <div id="animation2" className="cat dead">
+                    <img src="./../cat/Dead/Dead%20(1).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(2).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(3).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(4).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(5).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(6).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(7).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(8).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(9).png" className="center" width="200" height="200" alt="cat dead" />
+                    <img src="./../cat/Dead/Dead%20(10).png" className="center" width="200" height="200" alt="cat dead" />
+                </div>
+
+                <div id="animation3" className="cat falling">
+                    <img src="./../cat/Fall/Fall%20(1).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(2).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(3).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(4).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(5).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(6).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(7).png" className="center" width="200" height="200" alt="cat fall" />
+                    <img src="./../cat/Fall/Fall%20(8).png" className="center" width="200" height="200" alt="cat fall" />
+                </div>
+
+                <div id="animation4" className="cat hurt">
+                    <img src="./../cat/Hurt/Hurt%20(1).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(2).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(3).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(4).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(5).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(6).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(7).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(8).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(9).png" className="center" width="200" height="200" alt="cat hurt" />
+                    <img src="./../cat/Hurt/Hurt%20(10).png" className="center" width="200" height="200" alt="cat hurt" />
+                </div>
+
+
+                {/* Dog Animations  */}
+
+                <div id="animation5" className="dog jump">
+                    <img src="./../dog/Jump/Jump%20(1).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(2).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(3).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(4).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(5).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(6).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(7).png" className="center" width="200" height="200" alt="dog jump" />
+                    <img src="./../dog/Jump/Jump%20(8).png" className="center" width="200" height="200" alt="dog jump" />
+                </div>
+
+                <div id="animation6" className="dog dead">
+                    <img src="./../dog/Dead/Dead%20(1).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(2).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(3).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(4).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(5).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(6).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(7).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(8).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(9).png" className="center" width="200" height="200" alt="dog dead" />
+                    <img src="./../dog/Dead/Dead%20(10).png" className="center" width="200" height="200" alt="dog dead" />
+                </div>
+
+                <div id="animation7" className="dog falling">
+                    <img src="./../dog/Fall/Fall%20(1).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(2).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(3).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(4).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(5).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(6).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(7).png" className="center" width="200" height="200" alt="dog fall" />
+                    <img src="./../dog/Fall/Fall%20(8).png" className="center" width="200" height="200" alt="dog fall" />
+                </div>
+
+                <div id="animation8" className="dog hurt">
+                    <img src="./../dog/Hurt/Hurt%20(1).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(2).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(3).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(4).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(5).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(6).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(7).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(8).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(9).png" className="center" width="200" height="200" alt="dog hurt" />
+                    <img src="./../dog/Hurt/Hurt%20(10).png" className="center" width="200" height="200" alt="dog hurt" />
+                </div>
+                <div id="theButtons">
+                    <button type="jumping" id="button1" className="btn btn-info btn-lg btn-block" onClick={this.startJumping}>Jump Now</button>
+                    <button type="play dead" id="button2" className="btn btn-info btn-lg btn-block" onClick={this.startPlayDead}>Play Dead</button>
+                    <button type="play falling " id="button3" className="btn btn-info btn-lg btn-block" onClick={this.startPlayFall}>Fall Down</button>
+                    <button type="fake injury" id="button4" className="btn btn-info btn-lg btn-block" onClick={this.startPlayHurt}>Fake Injury</button>
+                    <button type="change avatar" id="button5" className="btn btn-info btn-lg btn-block" onClick={this.startChangeAvatar}>Change Avatar</button>
+                </div>
+            </div >
         );
     }
 }
-
-export default GamifyingPage;
