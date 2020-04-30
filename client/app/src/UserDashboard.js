@@ -213,7 +213,9 @@ export class UserDashboard extends React.Component {
             <div id="componentsContainer" className="container">
                 <div className="row mt-4">
                     <div className="col-sm">
-                        <DashboardHeader userInfo={this.state.userInfo} />
+                        <div className="card">
+                            <DashboardHeader userInfo={this.state.userInfo} />
+                        </div>
                     </div>
                 </div>
                 <div className="row mt-4">
