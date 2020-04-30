@@ -10,17 +10,17 @@ export class DashboardHeader extends React.Component {
         if (this.props.userInfo.FirstName) {
             optionalHeader = (
                 <div id="accordion">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
+                    <div className="card">
+                        <div className="card-header" id="headingOne">
                             <h2>
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Hello, {this.props.userInfo.FirstName}
                                 </button>
                             </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
+                        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div className="card-body">
                                 <div>
                                     <h2>Record Today</h2>
                                 </div>

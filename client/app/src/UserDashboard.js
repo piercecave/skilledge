@@ -4,7 +4,7 @@ import Calendar from './Calendar';
 import Record from './Record';
 import SleepReporter from './SleepReporter';
 import MoodReporter from './MoodReporter';
-//import DashboardHeader from './DashboardHeader';
+import DashboardHeader from './DashboardHeader';
 import Game from './Game';
 
 export class UserDashboard extends React.Component {
@@ -160,9 +160,6 @@ export class UserDashboard extends React.Component {
     }
 
     eventUpdated() {
-        // setTimeout(() => {
-        //     this.loadEvents();
-        // }, 100);
         this.loadEvents();
     }
 
@@ -205,7 +202,7 @@ export class UserDashboard extends React.Component {
             .then((responseJSON) => {
                 this.setState({
                     currentMoodReport: responseJSON
-                });
+                }, this.loadUserInfo);
             })
             .catch(this.displayError);
     }
@@ -214,13 +211,11 @@ export class UserDashboard extends React.Component {
 
         return (
             <div id="componentsContainer" className="container">
-                {/* <div className="row mt-4">
+                <div className="row mt-4">
                     <div className="col-sm">
-                        <div className="card">
-                            <DashboardHeader userInfo={this.state.userInfo} />
-                        </div>
+                        <DashboardHeader userInfo={this.state.userInfo} />
                     </div>
-                </div> */}
+                </div>
                 <div className="row mt-4">
                     <div className="col-sm">
                         <div className="card">
@@ -236,7 +231,7 @@ export class UserDashboard extends React.Component {
                 <div className="row mt-1">
                     <div className="col-sm">
                         <div className="card">
-                            <Game ref={(gameComponent) => {window.gameComponent = gameComponent}} eventsData={this.state.eventsData} />
+                            <Game ref={(gameComponent) => { window.gameComponent = gameComponent }} eventsData={this.state.eventsData} />
                         </div>
                     </div>
                 </div>
