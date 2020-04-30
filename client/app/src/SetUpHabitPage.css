@@ -30,3 +30,7 @@
   margin: 0 auto; 
   text-align: center;
 }
+
+#periodInput {
+  margin-left: .5rem;
+}
