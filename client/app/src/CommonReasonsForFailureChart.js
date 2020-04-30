@@ -80,19 +80,27 @@ export default class CommonReasonsForFailureChart extends React.Component {
     }
 
     createChart() {
-        console.log(this.state.reasonsData)
         let chartData = this.parseEventsData();
         let chartDimensions = this.calculateChartDimensions();
         let chart = this.createChartElement(chartDimensions);
         let scales = this.calculateScales(chartData, chartDimensions);
 
         this.createXAxis(chart, chartData, chartDimensions, scales.xScale);
-        this.createYAxis(chart, chartDimensions, scales.yScale);
-        this.createTrendLine(chart, scales, chartData);
+        this.createYAxis(chart, chartData, chartDimensions, scales.yScale);
+        this.createBars(chart, scales, chartData);
     }
 
     parseEventsData() {
         let reasonsData = this.state.reasonsData;
+
+        reasonsData = reasonsData.reduce((acc, cum) => {
+            if (acc[cum.ReasonName]) {
+                acc[cum.ReasonName] += 1;
+            } else {
+                acc[cum.ReasonName] = 1;
+            }
+            return acc;
+        }, {});
 
         return reasonsData;
     }
@@ -117,7 +125,7 @@ export default class CommonReasonsForFailureChart extends React.Component {
         if (this.state.chartWidth < 500) {
             return { top: 10, right: 60, bottom: 90, left: 45 };
         }
-        return { top: 10, right: 60, bottom: 90, left: 60 };
+        return { top: 10, right: 60, bottom: 120, left: 60 };
     }
 
     clearOldChart() {
@@ -137,36 +145,53 @@ export default class CommonReasonsForFailureChart extends React.Component {
     calculateScales(chartData, chartDimensions) {
         let xScale = this.createXScale(chartData, chartDimensions);
         let yScale = this.createYScale(chartData, chartDimensions);
+        let colorScale = this.createColorScale(chartData);
 
         return {
             xScale: xScale,
-            yScale: yScale
+            yScale: yScale,
+            colorScale: colorScale
         }
     }
 
-    createXScale(cumulativeEventsData, chartDimensions) {
-        return d3.scaleTime()
-            .domain(d3.extent(cumulativeEventsData, function (d) { return d.EventDate; }))
-            .range([0, chartDimensions.width]);
+    createXScale(data, chartDimensions) {
+        return d3.scaleBand()
+            .domain(d3.keys(data))
+            .range([0, chartDimensions.width])
+            .padding(0.1);
     }
 
-    createYScale(cumulativeEventsData, chartDimensions) {
+    createYScale(data, chartDimensions) {
         return d3.scaleLinear()
-            .domain([0, d3.max(cumulativeEventsData, function (d) { return +d.SuccessRate; }) + 10])
+            .domain([0, d3.max(d3.values(data)) + 1]).nice()
             .range([chartDimensions.height, 0]);
+    }
+
+    createColorScale(data) {
+        return d3.scaleSequential()
+                    .domain([0, d3.keys(data).length])
+                    .interpolator(d3.interpolateViridis);
     }
 
     createXAxis(chart, cumulativeEventsData, chartDimensions, xScale) {
         chart.append("g")
             .attr("transform", "translate(0," + chartDimensions.height + ")")
-            .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d")).ticks(cumulativeEventsData.length + 1))
+            .call(d3.axisBottom(xScale))
             .selectAll("text")
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
+            .attr("font-size", this.calcXLabelFontSize())
             .attr("transform", "rotate(-65)");
-            
+
         this.createXAxisLabel(chart, chartDimensions);
+    }
+
+    calcXLabelFontSize() {
+        if (this.state.chartWidth < 500) {
+            return "10px";
+        }
+        return "14px";
     }
 
     createXAxisLabel(chart, chartDimensions) {
@@ -175,13 +200,13 @@ export default class CommonReasonsForFailureChart extends React.Component {
                 "translate(" + (chartDimensions.width / 2) + " ," +
                 (chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom - 24) + ")")
             .style("text-anchor", "middle")
-            .text("Date")
+            .text("Reason")
             .attr("font-size", this.calcLabelFontSize());
     }
 
-    createYAxis(chart, chartDimensions, yScale) {
+    createYAxis(chart, chartData, chartDimensions, yScale) {
         chart.append("g")
-            .call(d3.axisLeft(yScale))
+            .call(d3.axisLeft(yScale).ticks(d3.max(d3.values(chartData))+ 1))
 
         this.createYAxisLabel(chart, chartDimensions);
     }
@@ -193,7 +218,7 @@ export default class CommonReasonsForFailureChart extends React.Component {
             .attr("x", 0 - (chartDimensions.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Success Rate (%)")
+            .text("Occurences")
             .attr("font-size", this.calcLabelFontSize());
     }
 
@@ -204,17 +229,16 @@ export default class CommonReasonsForFailureChart extends React.Component {
         return "16px";
     }
 
-    createTrendLine(chart, scales, cumulativeEventsData) {
-        chart.append("path")
-            .datum(cumulativeEventsData)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 4)
-            .attr("d", d3.line()
-                .x(function (d) { return scales.xScale(d.EventDate) })
-                .y(function (d) { return scales.yScale(d.SuccessRate) })
-                .curve(d3.curveCardinal)
-            );
+    createBars(chart, scales, data) {
+        chart.append("g")
+            .selectAll("rect")
+            .data(d3.entries(data))
+            .join("rect")
+            .attr("x", (d, i) => scales.xScale(d.key))
+            .attr("y", d => scales.yScale(d.value))
+            .attr("height", d => scales.yScale(0) - scales.yScale(d.value))
+            .attr("width", scales.xScale.bandwidth())
+            .attr("fill", (d, i) => scales.colorScale(i));
     }
 
     render() {
