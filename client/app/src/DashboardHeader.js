@@ -1,7 +1,29 @@
 import React from 'react';
 import './DashboardHeader.css';
+import ToDoItem from './ToDoItem';
 
-export class DashboardHeader extends React.Component {
+export default class DashboardHeader extends React.Component {
+
+    toDoItems() {
+        let toDoItemElements = [];
+
+        toDoItemElements.push((
+            <ToDoItem
+                key={0}
+                content={"Reported success or failure for all events today"}
+                complete={this.checkCurrentEventsReported()} />
+        ));
+
+        return toDoItemElements;
+    }
+
+    checkCurrentEventsReported() {
+        return true;
+    }
+
+    getCurrentEvents() {
+        return this.props.eventsData;
+    }
 
     render() {
 
@@ -11,24 +33,23 @@ export class DashboardHeader extends React.Component {
             optionalHeader = (
                 <div id="accordion">
                     <div className="card-header" id="headingOne">
-
-                        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <h3>Hello, {this.props.userInfo.FirstName}</h3>
-                        </button>
-
+                        <div className="container-fluid p-0">
+                            <div className="row">
+                                <div className="col mt-1">
+                                    <h3>Hello, {this.props.userInfo.FirstName}</h3>
+                                </div>
+                                <div className="col">
+                                    <button className="btn btn-link float-right plus-button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        &#10010;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div className="card-body">
-                            <div>
-                                <h2>Record Today</h2>
-                            </div>
-                            <div>
-                                <h3>Sleep Status</h3>
-                            </div>
-                            <div>
-                                <h3>Mood Status</h3>
-                            </div>
+                            {this.toDoItems()}
                         </div>
                     </div>
                 </div>
@@ -53,5 +74,3 @@ export class DashboardHeader extends React.Component {
         );
     }
 }
-
-export default DashboardHeader;
