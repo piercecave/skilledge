@@ -35,7 +35,7 @@ export default class DashboardHeader extends React.Component {
         let todaysEventsWithNoResultsData = this.props.eventsData;
         if (todaysEventsWithNoResultsData) {
             todaysEventsWithNoResultsData = todaysEventsWithNoResultsData.filter((event) => {
-                return event.FormattedEventDate === this.props.currentDate && event.ResultID !== 1;
+                return event.FormattedEventDate === this.props.currentDate && event.ResultName === "Pending";
             });
             if (todaysEventsWithNoResultsData.length === 0) {
                 return true;
