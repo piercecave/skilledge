@@ -3,6 +3,24 @@
 const { NewUser } = require("./../models/user");
 const dbUser = require("./../helpers/dbUser");
 
+async function getUserInformation(req, res) {
+
+    try {
+        const selectEmailQuery = "SELECT Email, UserName, FirstName, LastName, PhotoURL FROM Users WHERE Email = ?"
+        const user = await req.db.query(selectEmailQuery, [req.session.key]);
+
+        req.db.end();
+        res.status(200).json(user);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get user information.");
+        req.db.end();
+        return;
+    }
+}
+
 async function createNewUser(req, res) {
 
     // Generate new user from request data
@@ -391,6 +409,7 @@ async function editMoodReport(req, res) {
 * Expose public handler functions.
 */
 module.exports = {
+    getUserInformation,
     createNewUser,
     addSkill,
     getUserSkills,

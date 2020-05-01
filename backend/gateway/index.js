@@ -79,6 +79,8 @@ async function handleHome(req, res) {
 
 app.get("/", checkIsLoggedIn, handleHome);
 
+// getting user information, if logged in
+app.get("/users", checkIsLoggedIn, users.getUserInformation);
 // creating a new user
 app.post("/users", users.createNewUser);
 // getting all skills for a user
