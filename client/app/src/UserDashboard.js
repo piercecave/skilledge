@@ -214,36 +214,56 @@ export class UserDashboard extends React.Component {
                 <div className="row mt-4">
                     <div className="col-sm">
                         <div className="card">
-                            <DashboardHeader userInfo={this.state.userInfo} />
+                            <DashboardHeader 
+                                userInfo={this.state.userInfo} 
+                                currentDate={this.formatDate(this.state.currentDate)}
+                                eventsData={this.state.eventsData}
+                                currentSleepReport={this.state.currentSleepReport}
+                                currentMoodReport={this.state.currentMoodReport} />
                         </div>
                     </div>
                 </div>
                 <div className="row mt-1">
                     <div className="col-sm">
                         <div className="card">
-                            <Calendar changeDate={this.changeDate} eventsData={this.state.eventsData} eventDates={this.state.eventDates} currentDate={this.state.currentDate} />
+                            <Calendar changeDate={this.changeDate} 
+                                eventsData={this.state.eventsData} 
+                                eventDates={this.state.eventDates} 
+                                currentDate={this.state.currentDate} />
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card record-card">
-                            <Record currentDate={this.state.currentDate} events={this.state.recordEvents} previousDay={this.previousDay} nextDay={this.nextDay} eventUpdated={this.eventUpdated} />
+                            <Record currentDate={this.state.currentDate} 
+                                events={this.state.recordEvents} 
+                                previousDay={this.previousDay} 
+                                nextDay={this.nextDay} 
+                                eventUpdated={this.eventUpdated} />
                         </div>
                     </div>
                 </div>
                 <div className="row mt-1">
                     <div className="col-sm">
                         <div className="card">
-                            <SleepReporter currentDate={this.formatDate(this.state.currentDate)} currentSleepReport={this.state.currentSleepReport} sleepUpdated={this.sleepUpdated} />
+                            <SleepReporter 
+                                currentDate={this.formatDate(this.state.currentDate)} 
+                                currentSleepReport={this.state.currentSleepReport} 
+                                sleepUpdated={this.sleepUpdated} />
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
-                            <MoodReporter currentDate={this.formatDate(this.state.currentDate)} currentMoodReport={this.state.currentMoodReport} moodUpdated={this.moodUpdated} />
+                            <MoodReporter 
+                                currentDate={this.formatDate(this.state.currentDate)} 
+                                currentMoodReport={this.state.currentMoodReport} 
+                                moodUpdated={this.moodUpdated} />
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
-                            <Game ref={(gameComponent) => { window.gameComponent = gameComponent }} eventsData={this.state.eventsData} />
+                            <Game 
+                                ref={(gameComponent) => { window.gameComponent = gameComponent }} 
+                                eventsData={this.state.eventsData} />
                         </div>
                     </div>
                 </div>

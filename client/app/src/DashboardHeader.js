@@ -14,10 +14,48 @@ export default class DashboardHeader extends React.Component {
                 complete={this.checkCurrentEventsReported()} />
         ));
 
+        toDoItemElements.push((
+            <ToDoItem
+                key={1}
+                content={"Reported your sleep for the day"}
+                complete={this.checkSleepReported()} />
+        ));
+
+        toDoItemElements.push((
+            <ToDoItem
+                key={2}
+                content={"Reported your overall mood for the day"}
+                complete={this.checkMoodReported()} />
+        ));
+
         return toDoItemElements;
     }
 
     checkCurrentEventsReported() {
+        let todaysEventsWithNoResultsData = this.props.eventsData;
+        if (todaysEventsWithNoResultsData) {
+            todaysEventsWithNoResultsData = todaysEventsWithNoResultsData.filter((event) => {
+                return event.FormattedEventDate === this.props.currentDate && event.ResultID !== 1;
+            });
+            if (todaysEventsWithNoResultsData.length === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    checkSleepReported() {
+        if (this.props.currentSleepReport.length === 0) {
+            return false;
+        }
+        return true;
+    }
+
+    checkMoodReported() {
+        if (this.props.currentMoodReport.length === 0) {
+            return false;
+        }
         return true;
     }
 
