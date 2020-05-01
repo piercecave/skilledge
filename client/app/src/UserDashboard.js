@@ -218,7 +218,7 @@ export class UserDashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-4">
+                <div className="row mt-1">
                     <div className="col-sm">
                         <div className="card">
                             <Calendar changeDate={this.changeDate} eventsData={this.state.eventsData} eventDates={this.state.eventDates} currentDate={this.state.currentDate} />
@@ -233,19 +233,17 @@ export class UserDashboard extends React.Component {
                 <div className="row mt-1">
                     <div className="col-sm">
                         <div className="card">
-                            <Game ref={(gameComponent) => { window.gameComponent = gameComponent }} eventsData={this.state.eventsData} />
-                        </div>
-                    </div>
-                </div>
-                <div className="row mt-1">
-                    <div className="col-sm">
-                        <div className="card">
                             <SleepReporter currentDate={this.formatDate(this.state.currentDate)} currentSleepReport={this.state.currentSleepReport} sleepUpdated={this.sleepUpdated} />
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="card">
                             <MoodReporter currentDate={this.formatDate(this.state.currentDate)} currentMoodReport={this.state.currentMoodReport} moodUpdated={this.moodUpdated} />
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                        <div className="card">
+                            <Game ref={(gameComponent) => { window.gameComponent = gameComponent }} eventsData={this.state.eventsData} />
                         </div>
                     </div>
                 </div>

@@ -27,18 +27,27 @@ export default class DashboardHeader extends React.Component {
 
     render() {
 
-        let optionalHeader = (<div></div>);
+        // If already filed out, grab current skills from the backend. Function is called 
+        // Find the collaspsable portion of userdashboard. Lost in merge. 
+        // Pass current date and state of user into dashboard header.
+        // Check if user has event was it a success or failure. If they haven't reported yet ask them to. 
+        // Repeat this process for sleep and info. 
+        //
+        // Pierce will grab the individual user skill and habit. 
+        // Build out the sleep info.
+        // Build out the mood info.
+        // Possibilty of adding kitten to the header pane. 
 
-        if (this.props.userInfo.FirstName) {
-            optionalHeader = (
+        return (
+            <div>
                 <div id="accordion">
                     <div className="card-header" id="headingOne">
                         <div className="container-fluid p-0">
                             <div className="row">
-                                <div className="col mt-1">
+                                <div className="col-10 mt-1">
                                     <h3>Hello, {this.props.userInfo.FirstName}</h3>
                                 </div>
-                                <div className="col">
+                                <div className="col-2">
                                     <button className="btn btn-link float-right plus-button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         &#10010;
                                     </button>
@@ -53,23 +62,6 @@ export default class DashboardHeader extends React.Component {
                         </div>
                     </div>
                 </div>
-            );
-        }
-
-        // If already filed out, grab current skills from the backend. Function is called 
-        // Find the collaspsable portion of userdashboard. Lost in merge. 
-        // Pass current date and state of user into dashboard header.
-        // Check if user has event was it a success or failure. If they haven't reported yet ask them to. 
-        // Repeat this process for sleep and info. 
-        //
-        // Pierce will grab the individual user skill and habit. 
-        // Build out the sleep info.
-        // Build out the mood info.
-        // Possibilty of adding kitten to the header pane. 
-
-        return (
-            <div>
-                {optionalHeader}
             </div>
         );
     }
