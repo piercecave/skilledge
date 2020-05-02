@@ -162,7 +162,7 @@ export default class DashboardHeader extends React.Component {
 
     checkAllCurrentEventsReported() {
         let eventsWithNoResultsData = this.props.eventsData;
-        if (eventsWithNoResultsData) {
+        if (eventsWithNoResultsData && eventsWithNoResultsData.length > 0) {
             eventsWithNoResultsData = eventsWithNoResultsData.filter((event) => {
                 return event.ResultName === "Pending";
             });
