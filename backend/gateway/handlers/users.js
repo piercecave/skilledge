@@ -109,6 +109,39 @@ async function getUserSkills(req, res) {
     }
 }
 
+async function getUserHabits(req, res) {
+
+    try {
+
+        // Get userid by email
+        var loggedInUser = await dbUser.getUserByEmail(req, res);
+        loggedInUser = loggedInUser[0];
+
+        // Get skills for user
+        const selectHabitsQuery = `
+        SELECT H.HabitID, H.HabitAction, H.HabitStartDate, H.HabitEndDate, H.HabitTime, H.HabitLocation
+        FROM Habits AS H
+            JOIN User_Skill AS US ON H.UserSkillID = US.UserSkillID
+            JOIN Users AS U ON U.ID = US.UserID
+        WHERE U.ID = ?
+        `
+        
+        const userHabits = await req.db.query(selectHabitsQuery, [loggedInUser.ID]);
+
+        req.db.end();
+        res.set("Content-Type", "application/json");
+        res.status(200).json(userHabits);
+
+    } catch (err) {
+        console.log(err.message);
+        res.set("Content-Type", "text/plain");
+        res.status(400).send("Bad Request: Could not get habits for user.");
+        req.db.end();
+        return;
+    }
+}
+
+
 async function getUserEvents(req, res) {
 
     try {
@@ -413,6 +446,7 @@ module.exports = {
     createNewUser,
     addSkill,
     getUserSkills,
+    getUserHabits,
     getUserEvents,
     getUserEventsForDay,
     addSleepReport,
