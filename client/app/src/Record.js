@@ -80,8 +80,6 @@ export class Record extends React.Component {
   }
 
   setProcessStep() {
-    console.log("Running")
-
     var cardsXPosition = this.state.currentStep * -1 * 112.5;
 
     return anime({

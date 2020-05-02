@@ -54,7 +54,8 @@ export default class DashboardHeader extends React.Component {
     toDoItems() {
         let toDoItemElements = [];
 
-        if (!this.checkSkillsCreated()) {
+        const skillsCreated = this.checkSkillsCreated()
+        if (!skillsCreated) {
             toDoItemElements.push((
                 <ToDoItem
                     key={3}
@@ -63,7 +64,8 @@ export default class DashboardHeader extends React.Component {
             ));
         }
 
-        if (!this.checkHabitsCreated()) {
+        const habitsCreated = this.checkHabitsCreated();
+        if (!habitsCreated) {
             toDoItemElements.push((
                 <ToDoItem
                     key={4}
@@ -72,26 +74,46 @@ export default class DashboardHeader extends React.Component {
             ));
         }
 
+        const currentEventsReported = this.checkCurrentEventsReported();
         toDoItemElements.push((
             <ToDoItem
                 key={0}
                 content={"Reported success or failure for all events today"}
-                complete={this.checkCurrentEventsReported()} />
+                complete={currentEventsReported} />
         ));
 
+        const sleepReported = this.checkSleepReported();
         toDoItemElements.push((
             <ToDoItem
                 key={1}
                 content={"Reported your sleep for the day"}
-                complete={this.checkSleepReported()} />
+                complete={sleepReported} />
         ));
-
+        
+        const moodReported = this.checkMoodReported();
         toDoItemElements.push((
             <ToDoItem
                 key={2}
                 content={"Reported your overall mood for the day"}
-                complete={this.checkMoodReported()} />
+                complete={moodReported} />
         ));
+
+        const allCurrentEventsReported = this.checkAllCurrentEventsReported();
+        if (habitsCreated && allCurrentEventsReported) {
+            toDoItemElements.push((
+                <p key={6}>
+                    You completed all of your habits! If you want to learn about how you can practice even better in the future please visit <a href="./charts/">your charts</a>. Also, if you want to plan out another habit to continue learning please <a href="./set_up_habit/">create a new habit</a>! Thank you so much!
+                </p>
+            ));
+        }
+
+        if (skillsCreated && habitsCreated && currentEventsReported && sleepReported && moodReported && !allCurrentEventsReported) {
+            toDoItemElements.push((
+                <p key={5}>
+                    You've completed all the tasks for today! For insights based on your reported data please visit <a href="./charts/">your charts</a>!
+                </p>
+            ));
+        }
 
         return toDoItemElements;
     }
@@ -136,6 +158,20 @@ export default class DashboardHeader extends React.Component {
             return false;
         }
         return true;
+    }
+
+    checkAllCurrentEventsReported() {
+        let eventsWithNoResultsData = this.props.eventsData;
+        if (eventsWithNoResultsData) {
+            eventsWithNoResultsData = eventsWithNoResultsData.filter((event) => {
+                return event.ResultName === "Pending";
+            });
+            if (eventsWithNoResultsData.length === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     getCurrentEvents() {
