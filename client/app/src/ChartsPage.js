@@ -3,6 +3,7 @@ import './ChartsPage.css';
 import { Header } from './Header';
 import SuccessRateVsTimeChart from './SuccessRateVsTimeChart';
 import CommonReasonsForFailureChart from './CommonReasonsForFailureChart';
+import SleepOverTimeChart from './SleepOverTimeChart';
 
 export class ChartsPage extends React.Component {
 
@@ -84,6 +85,9 @@ export class ChartsPage extends React.Component {
                     </div>
                     <div className="card  my-3">
                         <CommonReasonsForFailureChart />
+                    </div>
+                    <div className="card  my-3">
+                        <SleepOverTimeChart />
                     </div>
                 </div>
             </div>
