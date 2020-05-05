@@ -2,10 +2,51 @@ import React from 'react';
 
 export class Header extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.GET_LOGGED_IN_STATUS = process.env.REACT_APP_BACKEND_URL + "/";
+
+        this.state = {
+            isLoggedIn: false
+        }
+    }
+
+    componentDidMount() {
+        this.checkIsLoggedIn();
+    }
+
+    checkIsLoggedIn() {
+        fetch(this.GET_LOGGED_IN_STATUS, {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then(async (response) => {
+                const isLoggedIn = await response.text();
+                if (isLoggedIn === "I heard you bruh.") {
+                    this.setState({
+                        isLoggedIn: true
+                    });
+                }
+            })
+            .catch(this.handleError);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response;
+        } else {
+            return Promise.reject(new Error(response.status + ": " + response.statusText));
+        }
+    }
+
+    handleError(error) {
+        // console.log(error);
+    }
+
     renderLinks() {
         let userManagementLinks = [];
 
-        if (this.props.isLoggedIn) {
+        if (this.state.isLoggedIn) {
             userManagementLinks.push(this.renderLink("./../log_out/", "Log Out", 7));
         } else {
             userManagementLinks.push(this.renderLink("./../log_in/", "Log In", 6));
