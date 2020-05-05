@@ -55,7 +55,7 @@ export class Logout extends React.Component {
   render() {
     return (
       <div className="Logout">
-        <Header />
+        <Header activeLink="Log Out" />
         <section id="login-form">
           <div className="page-header">
             <h1>Log Out?</h1>

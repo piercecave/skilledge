@@ -79,7 +79,7 @@ export class SignUp extends React.Component {
   render() {
     return (
       <div className="SignUp">
-        <Header />
+        <Header activeLink="Sign Up" />
         <section id="create-account-form">
           <div className="page-header">
             <h1>Create New Account</h1>

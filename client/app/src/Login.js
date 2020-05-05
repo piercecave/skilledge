@@ -41,7 +41,7 @@ export class Login extends React.Component {
 
   displayError(error) {
     // Retrieve container for displaying error
-    alert("Login Failed:" + "\nEmail or Password is incorrect")  // notify user login has failed
+    alert("Login Failed:\nEmail or Password is incorrect")  // notify user login has failed
     console.log(error);
     // const metaContainer = this.id('meta-container');
     // if (metaContainer.classList.contains("hidden")) {
@@ -75,7 +75,7 @@ export class Login extends React.Component {
   render() {
     return (
       <div className="Login" >
-        <Header />
+        <Header activeLink="Log In" />
         <section id="login-form">
           <div className="page-header">
             <h1>Sign In</h1>

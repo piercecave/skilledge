@@ -77,7 +77,7 @@ export class ChartsPage extends React.Component {
     render() {
         return (
             <div className="CalendarPage">
-                <Header />
+                <Header activeLink="Charts"/>
                 <div id="successRateChartContainer" className="container">
                     <div className="card  my-3">
                         <SuccessRateVsTimeChart />
