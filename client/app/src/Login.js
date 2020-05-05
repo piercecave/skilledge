@@ -74,7 +74,7 @@ export class Login extends React.Component {
   render() {
     return (
       <div className="Login" >
-        <Header />
+        <Header activeLink="Log In" />
         <section id="login-form">
           <div className="page-header">
             <h1>Sign In</h1>

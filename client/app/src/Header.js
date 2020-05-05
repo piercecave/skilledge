@@ -1,6 +1,37 @@
 import React from 'react';
 
 export class Header extends React.Component {
+    
+    renderLinks() {
+        return (
+            <ul className="navbar-nav ml-auto">
+                {this.renderLink("./../", "Home", 1)}
+                {this.renderLink("./../choose_skill/", "Choose Skill", 2)}
+                {this.renderLink("./../set_up_habit/", "Set Up Habit", 3)}
+                {this.renderLink("./../charts/", "Charts", 4)}
+                {this.renderLink("./../sign_up/", "Sign Up", 5)}
+                {this.renderLink("./../log_in/", "Log In", 6)}
+                {this.renderLink("./../log_out/", "Log Out", 7)}
+            </ul>
+        );
+    }
+
+    renderLink(linkHref, linkText, uniqueKey) {
+        if (linkText === this.props.activeLink) {
+            return (
+                <li className="nav-item active" key={uniqueKey}>
+                    <a className="nav-link" href={linkHref}>{linkText}<span className="sr-only">(current)</span></a>
+                </li>
+            );
+        } else {
+            return (
+                <li className="nav-item">
+                    <a className="nav-link" href={linkHref}>{linkText}</a>
+                </li>
+            );
+        }
+    }
+
     render() {
         return (
             <div className="header">
@@ -14,36 +45,7 @@ export class Header extends React.Component {
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent1">
-
-                        <ul className="navbar-nav">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="./../">Home<span className="sr-only">(current)</span></a>
-                            </li>
-                        </ul>
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../sign_up/">Sign Up</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../log_in/">Log In</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../log_out/">Log Out</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../choose_skill/">Choose Skill</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../set_up_habit/">Set Up Habit</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../charts/">Charts</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="./../gamifying/">Gamifying</a>
-                            </li>
-                        </ul>
-
+                        {this.renderLinks()}
                     </div>
                 </nav>
             </div>

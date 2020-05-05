@@ -238,7 +238,7 @@ export class SetUpHabitPage extends React.Component {
     render() {
         return (
             <div className="SetUpHabitPage">
-                <Header />
+                <Header activeLink="Set Up Habit" />
                 <h2 className="scheduleHabitHeader mt-4">Schedule A Habit</h2>
                 <div id="main">
                     <div id="skillChooseCard" className="processBox">

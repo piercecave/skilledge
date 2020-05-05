@@ -48,7 +48,7 @@ export class HomePage extends React.Component {
 
         return (
             <div className="HomePage">
-                <Header />
+                <Header activeLink="Home" />
                 {homeContent}
             </div>
         );

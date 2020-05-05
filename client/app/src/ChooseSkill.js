@@ -75,7 +75,7 @@ export class ChooseSkill extends React.Component {
   render() {
     return (
       <div className="ChooseSkill">
-        <Header />
+        <Header activeLink="Choose Skill"/>
         <div id="chooseSkillContainer" className="container">
           <div className="card my-3">
             <div className="card-body">
