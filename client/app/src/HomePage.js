@@ -48,7 +48,9 @@ export class HomePage extends React.Component {
 
         return (
             <div className="HomePage">
-                <Header activeLink="Home" />
+                <Header 
+                    activeLink="Home"
+                    isLoggedIn={this.state.isLoggedIn} />
                 {homeContent}
             </div>
         );

@@ -1,17 +1,24 @@
 import React from 'react';
 
 export class Header extends React.Component {
-    
+
     renderLinks() {
+        let userManagementLinks = [];
+
+        if (this.props.isLoggedIn) {
+            userManagementLinks.push(this.renderLink("./../log_out/", "Log Out", 7));
+        } else {
+            userManagementLinks.push(this.renderLink("./../log_in/", "Log In", 6));
+            userManagementLinks.push(this.renderLink("./../sign_up/", "Sign Up", 5));
+        }
+
         return (
             <ul className="navbar-nav ml-auto">
                 {this.renderLink("./../", "Home", 1)}
                 {this.renderLink("./../choose_skill/", "Choose Skill", 2)}
                 {this.renderLink("./../set_up_habit/", "Set Up Habit", 3)}
                 {this.renderLink("./../charts/", "Charts", 4)}
-                {this.renderLink("./../sign_up/", "Sign Up", 5)}
-                {this.renderLink("./../log_in/", "Log In", 6)}
-                {this.renderLink("./../log_out/", "Log Out", 7)}
+                {userManagementLinks}
             </ul>
         );
     }
@@ -25,7 +32,7 @@ export class Header extends React.Component {
             );
         } else {
             return (
-                <li className="nav-item">
+                <li className="nav-item" key={uniqueKey}>
                     <a className="nav-link" href={linkHref}>{linkText}</a>
                 </li>
             );

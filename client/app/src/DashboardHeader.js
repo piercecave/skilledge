@@ -198,7 +198,7 @@ export default class DashboardHeader extends React.Component {
                         <div className="container-fluid p-0">
                             <div className="row">
                                 <div className="col-10 mt-1">
-                                    <h3>Hello, {this.props.userInfo.FirstName}</h3>
+                                    <h3>Hello {this.props.userInfo.FirstName}</h3>
                                 </div>
                                 <div className="col-2">
                                     <button className="btn btn-link float-right plus-button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
