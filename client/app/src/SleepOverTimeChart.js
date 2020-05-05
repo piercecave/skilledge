@@ -7,18 +7,18 @@ export default class SleepOverTimeChart extends React.Component {
         super(props);
 
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
-        this.GET_REASONS_URL = process.env.REACT_APP_BACKEND_URL + "/events/:eventid/reasons";
+        this.GET_SLEEP_REPORTS_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports/";
 
         this.chartContainer = React.createRef();
 
         this.state = {
-            reasonsData: [],
+            sleepReports: [],
             chartWidth: 400
         }
     }
 
     componentDidMount() {
-        this.loadEvents();
+        this.loadSleepReports();
         window.addEventListener("resize", this.updateDimensions.bind(this));
 
         this.setState({
@@ -41,8 +41,8 @@ export default class SleepOverTimeChart extends React.Component {
         });
     }
 
-    loadEvents() {
-        fetch(this.GET_EVENTS_FOR_USER_URL, {
+    loadSleepReports() {
+        fetch(this.GET_SLEEP_REPORTS_URL, {
             credentials: 'include'
         })
             .then(this.checkStatus)
@@ -50,59 +50,50 @@ export default class SleepOverTimeChart extends React.Component {
                 return response.json();
             })
             .then((responseJSON) => {
-                this.getAllReasonsForAllEvents(responseJSON);
-            })
-            .catch(this.displayError);
-    }
-
-    async getAllReasonsForAllEvents(eventsData) {
-        let reasonsArray = [];
-        for (const event of eventsData) {
-            event.Reasons = await this.fetchReasons(event.EventID);
-            for (const reason of event.Reasons) {
-                reasonsArray.push(reason);
-            }
-        }
-        this.setState({
-            reasonsData: reasonsArray
-        });
-    }
-
-    async fetchReasons(eventid) {
-        return await fetch(this.GET_REASONS_URL.replace(":eventid", eventid), {
-            credentials: 'include',
-        })
-            .then(this.checkStatus)
-            .then((response) => {
-                return response.json()
+                console.log(responseJSON)
+                this.setState({
+                    sleepReports: responseJSON
+                })
             })
             .catch(this.displayError);
     }
 
     createChart() {
-        let chartData = this.parseEventsData();
+        let chartData = this.parseSleepReports();
         let chartDimensions = this.calculateChartDimensions();
         let chart = this.createChartElement(chartDimensions);
         let scales = this.calculateScales(chartData, chartDimensions);
 
         this.createXAxis(chart, chartData, chartDimensions, scales.xScale);
         this.createYAxis(chart, chartData, chartDimensions, scales.yScale);
-        this.createBars(chart, scales, chartData);
+        this.createTrendLine(chart, scales, chartData);
     }
 
-    parseEventsData() {
-        let reasonsData = this.state.reasonsData;
+    parseSleepReports() {
+        let sleepReports = this.state.sleepReports;
+        sleepReports = this.orderReportsByDate(sleepReports);
 
-        reasonsData = reasonsData.reduce((acc, cum) => {
-            if (acc[cum.ReasonName]) {
-                acc[cum.ReasonName] += 1;
-            } else {
-                acc[cum.ReasonName] = 1;
-            }
-            return acc;
-        }, {});
+        sleepReports = sleepReports.map(report => {
+            let newReport = {
+                SleepReportDate: report.SleepReportDate,
+                SleepReportValue: report.SleepValueName
+            };
+            report = newReport;
+            return report;
+        });
 
-        return reasonsData;
+        return sleepReports;
+    }
+
+    orderReportsByDate(sleepReports) {
+        sleepReports = sleepReports.map(report => {
+            report.SleepReportDate = new Date(report.SleepReportDate);
+            return report;
+        });
+
+        sleepReports.sort((a, b) => a.SleepReportDate - b.SleepReportDate);
+
+        return sleepReports;
     }
 
     calculateChartDimensions() {
@@ -123,9 +114,9 @@ export default class SleepOverTimeChart extends React.Component {
 
     calcMargins() {
         if (this.state.chartWidth < 500) {
-            return { top: 10, right: 60, bottom: 90, left: 45 };
+            return { top: 10, right: 60, bottom: 90, left: 95 };
         }
-        return { top: 10, right: 60, bottom: 120, left: 60 };
+        return { top: 10, right: 60, bottom: 120, left: 110 };
     }
 
     clearOldChart() {
@@ -155,22 +146,19 @@ export default class SleepOverTimeChart extends React.Component {
     }
 
     createXScale(data, chartDimensions) {
-        return d3.scaleBand()
-            .domain(d3.keys(data))
-            .range([0, chartDimensions.width])
-            .padding(0.1);
+        return d3.scaleTime()
+            .domain(d3.extent(data, function (d) { return d.SleepReportDate; }))
+            .range([0, chartDimensions.width]);
     }
 
     createYScale(data, chartDimensions) {
-        return d3.scaleLinear()
-            .domain([0, d3.max(d3.values(data)) + 1]).nice()
+        return d3.scaleBand()
+            .domain(["Below Average", "Average", "Above Average"])
             .range([chartDimensions.height, 0]);
     }
 
     createColorScale(data) {
-        return d3.scaleSequential()
-                    .domain([0, d3.keys(data).length])
-                    .interpolator(d3.interpolateViridis);
+        return;
     }
 
     createXAxis(chart, cumulativeEventsData, chartDimensions, xScale) {
@@ -200,13 +188,13 @@ export default class SleepOverTimeChart extends React.Component {
                 "translate(" + (chartDimensions.width / 2) + " ," +
                 (chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom - 24) + ")")
             .style("text-anchor", "middle")
-            .text("Reason")
+            .text("Date")
             .attr("font-size", this.calcLabelFontSize());
     }
 
     createYAxis(chart, chartData, chartDimensions, yScale) {
         chart.append("g")
-            .call(d3.axisLeft(yScale).ticks(d3.max(d3.values(chartData))+ 1))
+            .call(d3.axisLeft(yScale).ticks(d3.max(d3.values(chartData)) + 1))
 
         this.createYAxisLabel(chart, chartDimensions);
     }
@@ -218,7 +206,7 @@ export default class SleepOverTimeChart extends React.Component {
             .attr("x", 0 - (chartDimensions.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Occurences")
+            .text("Sleep Quality")
             .attr("font-size", this.calcLabelFontSize());
     }
 
@@ -226,25 +214,26 @@ export default class SleepOverTimeChart extends React.Component {
         if (this.state.chartWidth < 500) {
             return "10px";
         }
-        return "16px";
+        return "14px";
     }
 
-    createBars(chart, scales, data) {
-        chart.append("g")
-            .selectAll("rect")
-            .data(d3.entries(data))
-            .join("rect")
-            .attr("x", (d, i) => scales.xScale(d.key))
-            .attr("y", d => scales.yScale(d.value))
-            .attr("height", d => scales.yScale(0) - scales.yScale(d.value))
-            .attr("width", scales.xScale.bandwidth())
-            .attr("fill", (d, i) => scales.colorScale(i));
+    createTrendLine(chart, scales, cumulativeEventsData) {
+        chart.append("path")
+            .datum(cumulativeEventsData)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 4)
+            .attr("d", d3.line()
+                .x(function (d) { return scales.xScale(d.SleepReportDate) })
+                .y(function (d) { return scales.yScale(d.SleepReportValue) + scales.yScale.bandwidth() / 2})
+                // .curve(d3.curveCardinal)
+            );
     }
 
     render() {
         return (
             <div ref={this.chartContainer} className="card-body">
-                <h5 className="card-title">Most Common Reasons for Failure</h5>
+                <h5 className="card-title">Sleep Over Time</h5>
                 <div className="d-flex justify-content-center" id="sleepChart"></div>
             </div>
         );

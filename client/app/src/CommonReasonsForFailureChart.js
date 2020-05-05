@@ -226,7 +226,7 @@ export default class CommonReasonsForFailureChart extends React.Component {
         if (this.state.chartWidth < 500) {
             return "10px";
         }
-        return "16px";
+        return "14px";
     }
 
     createBars(chart, scales, data) {
