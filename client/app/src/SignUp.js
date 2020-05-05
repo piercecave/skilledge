@@ -45,6 +45,7 @@ export class SignUp extends React.Component {
 
   displayError(error) {
     // Retrieve container for displaying error
+    alert("Invalid response(s) ")
     console.log(error);
     // const metaContainer = id('meta-container');
     // if (metaContainer.classList.contains("hidden")) {
@@ -102,7 +103,7 @@ export class SignUp extends React.Component {
             </div>
             <div className="form-group">
               <label htmlFor="Password">Password</label>
-              <input type="Password" className="form-control" id="Password" placeholder="Enter password" required />
+              <input type="Password" className="form-control" id="Password" placeholder="Enter a password of at least 6 characters" required />
             </div>
             <div className="form-group">
               <label htmlFor="PasswordConf">Password Confirmation</label>
