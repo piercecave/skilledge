@@ -1,233 +1,178 @@
-
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Ethan Toth, Matthew Cho, Roy Mosby, Pierce Cave">
+    <meta name="description" content="Main page of the website">
+    <meta name="keywords" comntent="skills,productivity">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SkillEdge LandingPage</title>
+
+    <!---Favicon-->
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+
+    <!-- bootstrap css  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
 
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SkillEdge &mdash; Landing Page</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
-	<meta name="author" content="FreeHTML5.co" />
-	<script src="https://kit.fontawesome.com/44fee36732.js" crossorigin="anonymous"></script>
 
-  	<!-- 
-	//////////////////////////////////////////////////////
+<div class="nav justify-content-center bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-	FREE HTML5 TEMPLATE 
-	DESIGNED & DEVELOPED by FreeHTML5.co
-		
-	Website: 		http://freehtml5.co/
-	Email: 			info@freehtml5.co
-	Twitter: 		http://twitter.com/fh5co
-	Facebook: 		https://www.facebook.com/fh5co
+        <button class="nav-link" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <a href="#"><img id="logo" src="img/favicon.ico"></a>
+        </button>
 
-	//////////////////////////////////////////////////////
-	-->
+        <div class="collapse navbar-collapse bg-light " id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#about">About <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#teams">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://skilledge.site">Website</a>
+                </li>
+        </div>
+</div>
+</nav>
 
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+<body>
+    <div class=container>
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content ">
+                <div class="title text-center">
+                    <h1 class="skilledge">SkillEdge</h1>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        </br />
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+        <div class="container center" id="about">
+            <div class="row ">
+                <div class="col">
+                    <img class="imgResponsive" src="./img/feelings.png" alt="confused/stressed face">
+                    <!-- <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+                    <br />
+                    <p style="text-align: center; font-size: 20px"> In a world with infinite demand, it can be diffcult to commit time to learn something new. Our attention gets scattered and diffused.
+                    </p>
+                </div>
+                <div class="col">
+                    <img class="imgResponsive" src="./img/happy.png" alt="happy face">
+                    <!-- Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+                    <br />
+                    <p style="text-align: center; font-size: 20px"><b>SkillEdge!</b> solves this issue by combining industry research and organizational techniques to make learning your new skill
+                    achievable,productive, and fun. </p>
+                </div>
+            </div>
+        </div>
 
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="css/flexslider.css">
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
-	</head>
-	<body>
-	<div id="fh5co-page">
-		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-
-			<h1 id="fh5co-logo"><a href="index.html">SkillEdge</a></h1>
-			<nav id="fh5co-main-menu" role="navigation">
-				<ul>
-					<li class="fh5co-active"><a href="index.html">Home</a></li>
-				</ul>
-			</nav>
-
-			<div class="fh5co-footer">
-				<p><small>&copy; This project is a part of the Capstone Project course at the University of Washington Information School </span> <span>Designed by <a href="https://ischool.uw.edu/capstone" target="_blank">iSchool Capstone Page</a> </span></small></p>
-				<ul>
-					<li><a href="#"><i class="icon-facebook2"></i></a></li>
-					<li><a href="#"><i class="icon-twitter2"></i></a></li>
-					<li><a href="#"><i class="icon-instagram"></i></a></li>
-					<li><a href="#"><i class="icon-linkedin2"></i></a></li>
-				</ul>
-			</div>
-
-		</aside>
-
-		<div id="fh5co-main">
-			<aside id="fh5co-hero" class="js-fullheight" style="background-color: whitesmoke; background-image: url(assets/background.jpg); background-repeat: no-repeat;
-			background-size: contain;">
-				
-			</aside>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
 
 
-			<div id="get-in-touch">
-				<div class="fh5co-narrow-content">
-					<div class="row">
-						<div class="col-md-4 animate-box" data-animate-effect="fadeInLeft">
-							<h1 class="fh5co-heading-colored">Project Description</h1>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
-							<p class="fh5co-lead"> Learning new skills is hard, we are here to help you out. In a world where everyone has something more important to do than learn something new, it can be hard to commit time to build up a trait you don’t have a particular need for. People who use our platform will better themselves by understanding how, why and when they decide to dedicate time to gain expertise in a new hobby. </p>
+    <div class="features-container">
+        <h1 class="features" id="features"> Features</h1>
 
-							<p class="fh5co-lead">People care about our product because we are helping better themselves. By understanding motivations behind how communities organize their time for practicing a hobby we can reach conclusions on how to improve their personal growth. We do this by effectively curating an experience that compiles and displays user learning behavior over the course of a month. 
-								</p>
+        <br />
 
-						</div>
-						
-					</div>
-				</div>
-			</div>
-			
-			<div class="fh5co-narrow-content">
-				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Services</h2>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="fas fa-mountain"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Rock Climbing</h3>
-								<p>Learn aout Rock climbing in 6 weeks . </p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="fas fa-swimmer"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Swimming</h3>
-								<p>Learn how to be a experience swimmer in 10 weeks  </p>
-							</div>
-						</div>
-					</div>
-  
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="fas fa-guitar"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Guitar</h3>
-								<p>Learn to play guitar in 4 weeks! </p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="fas fa-biking"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Biking</h3>
-								<p>Learn essential biking skills in 3 weeks </p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
- 
- 
-			
-			<div class="fh5co-narrow-content">
-				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">About Us</h2>
-				<div class="row row-bottom-padded-md">
-					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="assets/ethan.PNG" class="img-responsive" alt="Image of Ethan Toth"></a>
-							<div class="desc">
-								<h3><a href="#">Ethan Toth</a></h3>
-								<span><small>Data Analyst and Project Managmenet </small> / <small> ethan.toth.al@gmail.com </small> </span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="assets/matthew.JPG" class="img-responsive" alt="Image of Matthew Cho"></a>
-							<div class="desc">
-								<h3><a href="#">Matthew Cho</a></h3>
-								<span><small>Project Managment and Front-End Developer</small> / <small> jcho95@uw.edu </small> </span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="assets/roy.jpg" class="img-responsive" alt="Image of Roy Mosby"></a>
-							<div class="desc">
-								<h3><a href="#">Roy Mosby</a></h3>
-								<span><small>Data Analyst and Front-End Developer </small> / <small> mosbyroy@uw.edu </small> </span>			
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="assets/pierce.png" class="img-responsive" alt="Image of Pierce Cave"></a>
-							<div class="desc">
-								<h3><a href="#">Pierce Cave</a></h3>
-								<span><small>Full-stack Software Engineer </small> / <small> pcave@uw.edu </small> / <small> </span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <img class="imgResponsive-features" src="./img/calendar.png" alt="calendar">
+                    <br />
+                    <h4 class="subtitle">Calendar</h4>
+                    <p style="font-size: 20px">Allows you to quickly see your progress over time."You can click on it!" </p>
+                </div>
+                <div class="col-sm">
+                    <img class="imgResponsive-features" src="./img/line-chart.png" alt="Charts">
+                    <br />
+                    <h4 class="subtitle">Charts</h4>
+                    <p style="font-size: 20px"> Personalized visualizations to track your progress and learn from your mistakes and sucesses! </p>
+                </div>
+                <div class="col-sm"> 
+                    <img class="imgResponsive-features" src="./img/Walk (5).png" alt="Avatars">
+                    <br />
+                    <h4 class="subtitle">Avatars</h4>
+                    <p style="font-size: 20px"> Helpful animals to help cheer you along!</p>
+                </div>
+            </div>
+        </div>
 
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Flexslider -->
-	<script src="js/jquery.flexslider-min.js"></script>
-	
-	
-	<!-- MAIN JS -->
-	<script src="js/main.js"></script>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-	</body>
+    </div>
+    <div class="team-container">
+        <h1 class="theteam" id="teams"> The Team</h1>
+        <br />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img class="imgResponsive" src="./assets2/ethan.PNG" alt="Ethan Toth photo">
+                <br />
+                <h4 class="subname">Ethan Toth <a href="https://www.linkedin.com/in/ethan-toth1/"><img class="linkedin" src = "./img/LinkedIn-Logo.png"></a></h4>
+                <p class="info"> <b>Role:</b>Data Analyst and Project Management
+                    <br><b>Email: </b>ethan.toth.al@gmail.com</p>
+            </div>
+            <div class="col-sm">
+                <img class="imgResponsive" src="./assets2/matthew.JPG" alt="Matthew Cho photo">
+                <br />
+                <h4 class="subname">Matthew Cho <a href="https://www.linkedin.com/in/jung-cho/"><img class="linkedin" src = "./img/LinkedIn-Logo.png"></a></h4>
+                <p class="info"> <b>Role:</b>Project Management and Front-End-Developer<br><b>Email: </b>jcho95@uw.edu
+                </p>
+            </div>
+            <div class="col-sm">
+                <img class="imgResponsive" src="./assets2/roy.jpg" alt="Roy Mosby Photo">
+                <br />
+                <h4 class="subname">Roy Mosby  <a href="https://www.linkedin.com/in/roymosby/"><img class="linkedin" src = "./img/LinkedIn-Logo.png"></a></h4>
+                <p class="info"> <b>Role:</b>Data Analyst and Front-End-Developer<br><b>Email: </b>mosbyroy@gmail.com</p>
+            </div>
+            <div class="col-sm">
+                <img class="imgResponsive" src="./assets2/pierce.png" alt="Pierce Cave Photo">
+                <br />
+                <h4 class="subname">Pierce Cave  <a href="https://www.linkedin.com/in/pierce-cave-226308170/"><img class="linkedin" src = "./img/LinkedIn-Logo.png"></a></h4>
+                <p class="info"> <b>Role:</b>Full-Stack Software <br><b>Email: </b>pcave@uw.edu</p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <footer>
+        <p style="text-align: center;">Copyright © 2020 All rights reserved.</p>
+      </footer>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
 </html>
-
