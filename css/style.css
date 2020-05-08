@@ -17,19 +17,30 @@ button {
 
 /* code for body portion */
 body{
-    background-image: linear-gradient(#55CBD3,#C7DAC7,#FFB68C,#FE8E7B,#FF6787)
+    background-image: linear-gradient(#55CBD3,white)
 }
 
 .skilledge{
-    font-size: 20vw;
+    font-size: 14vw;
     text-align: center;  
 }
 
 .imgResponsive{
-    width: 50%;
+    width: 20%;
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.signup-button{
+    margin:auto;
+    width: 200px;
+    height: 80px;
+    display:block;
+    color: white;
+    padding: 20px 0px;
+    font-size: 24px;
+
 }
 
 /* #about p{
@@ -55,10 +66,15 @@ body{
     text-align: center;
 }
 
+.imgResponsive-team{
+    width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 
 /* footer */
-
-
 
 
 
