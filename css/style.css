@@ -17,7 +17,8 @@ button {
 
 /* code for body portion */
 body{
-    background-image: linear-gradient(#55CBD3,white)
+    background-image: linear-gradient(#6fa8dcff,white);
+    font-family: Helvetica;
 }
 
 .skilledge{
