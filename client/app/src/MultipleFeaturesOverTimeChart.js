@@ -1,24 +1,27 @@
 import React from 'react';
 import * as d3 from "d3";
 
-export default class SleepOverTimeChart extends React.Component {
+export default class MultipleFeaturesOverTimeChart extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
-        this.GET_SLEEP_REPORTS_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports/";
+        this.GET_MOOD_REPORTS_URL = process.env.REACT_APP_BACKEND_URL + "/users/mood-reports/";
 
         this.chartContainer = React.createRef();
 
         this.state = {
-            sleepReports: [],
+            eventsData: [],
+            moodReports: [],
             chartWidth: 400
         }
     }
 
     componentDidMount() {
-        this.loadSleepReports();
+        this.loadMoodReports();
+        this.loadEvents();
+
         window.addEventListener("resize", this.updateDimensions.bind(this));
 
         this.setState({
@@ -41,8 +44,8 @@ export default class SleepOverTimeChart extends React.Component {
         });
     }
 
-    loadSleepReports() {
-        fetch(this.GET_SLEEP_REPORTS_URL, {
+    loadEvents() {
+        fetch(this.GET_EVENTS_FOR_USER_URL, {
             credentials: 'include'
         })
             .then(this.checkStatus)
@@ -51,48 +54,131 @@ export default class SleepOverTimeChart extends React.Component {
             })
             .then((responseJSON) => {
                 this.setState({
-                    sleepReports: responseJSON
+                    eventsData: responseJSON
+                });
+            })
+            .catch(this.displayError);
+    }
+
+    loadMoodReports() {
+        fetch(this.GET_MOOD_REPORTS_URL, {
+            credentials: 'include'
+        })
+            .then(this.checkStatus)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJSON) => {
+                this.setState({
+                    moodReports: responseJSON
                 })
             })
             .catch(this.displayError);
     }
 
+
+
     createChart() {
-        let chartData = this.parseSleepReports();
+        // let eventsData = this.parseEventsData();
+        let moodData = this.parseMoodReports();
+        // let chartData = this.parseChartData(eventsData, moodData);
         let chartDimensions = this.calculateChartDimensions();
         let chart = this.createChartElement(chartDimensions);
-        let scales = this.calculateScales(chartData, chartDimensions);
+        let scales = this.calculateScales(moodData, chartDimensions);
 
-        this.createXAxis(chart, chartData, chartDimensions, scales.xScale);
-        this.createYAxis(chart, chartData, chartDimensions, scales.yScale);
-        this.createTrendLine(chart, scales, chartData);
+        this.createXAxis(chart, moodData, chartDimensions, scales.xScale);
+        this.createYAxis(chart, moodData, chartDimensions, scales.yScale);
+        this.createTrendLine(chart, scales, moodData);
     }
 
-    parseSleepReports() {
-        let sleepReports = this.state.sleepReports;
-        sleepReports = this.orderReportsByDate(sleepReports);
+    parseChartData(eventsData, moodData) {
+        console.log(eventsData)
+        console.log(moodData)
 
-        sleepReports = sleepReports.map(report => {
+        let dataByDate = [];
+
+        for (const event of eventsData) {
+            for (const moodReport of moodData) {
+                if (event.EventDate.toLocaleString() === moodReport.MoodReportDate.toLocaleString()) {
+                    console.log(event.EventDate.toISOString())
+                    console.log("true")
+                    let newDatePoint = {
+                        PointDate: event.EventDate.toISOString(),
+                        SuccessRate: event.SuccessRate,
+                        MoodValue: moodReport.MoodReportValue
+                    };
+                    dataByDate.push(newDatePoint);
+                }
+            }
+        }
+
+        console.log(dataByDate)
+        return dataByDate;
+    }
+
+    parseEventsData() {
+        let eventsData = this.getEventsWithResults();
+        eventsData = this.orderEventsByDate(eventsData);
+        eventsData = this.calculateRollingTotalSuccessRate(eventsData);
+
+        return eventsData;
+    }
+
+    getEventsWithResults() {
+        return this.state.eventsData.filter(event => event.ResultName !== "Pending");
+    }
+
+    orderEventsByDate(eventsData) {
+        eventsData = eventsData.map(event => {
+            event.EventDate = new Date(event.EventDate);
+            return event;
+        });
+
+        eventsData.sort((a, b) => a.EventDate - b.EventDate);
+
+        return eventsData;
+    }
+
+    calculateRollingTotalSuccessRate(eventsData) {
+        var totalSuccesses = 0, totalEvents = 0;
+
+        var cumulativeEventsData = eventsData.map(event => {
+            if (event.ResultName === "Success") {
+                totalSuccesses++;
+            }
+            totalEvents++;
+            event.SuccessRate = totalSuccesses / totalEvents * 100;
+            return event;
+        });
+
+        return cumulativeEventsData;
+    }
+
+    parseMoodReports() {
+        let moodReports = this.state.moodReports;
+        moodReports = this.orderReportsByDate(moodReports);
+
+        moodReports = moodReports.map(report => {
             let newReport = {
-                SleepReportDate: report.SleepReportDate,
-                SleepReportValue: report.SleepValueName
+                MoodReportDate: report.MoodReportDate,
+                MoodReportValue: report.MoodValueName
             };
             report = newReport;
             return report;
         });
 
-        return sleepReports;
+        return moodReports;
     }
 
-    orderReportsByDate(sleepReports) {
-        sleepReports = sleepReports.map(report => {
-            report.SleepReportDate = new Date(report.SleepReportDate);
+    orderReportsByDate(moodReports) {
+        moodReports = moodReports.map(report => {
+            report.MoodReportDate = new Date(report.MoodReportDate);
             return report;
         });
 
-        sleepReports.sort((a, b) => a.SleepReportDate - b.SleepReportDate);
+        moodReports.sort((a, b) => a.MoodReportDate - b.MoodReportDate);
 
-        return sleepReports;
+        return moodReports;
     }
 
     calculateChartDimensions() {
@@ -119,11 +205,11 @@ export default class SleepOverTimeChart extends React.Component {
     }
 
     clearOldChart() {
-        d3.select("#sleepChart").html("");
+        d3.select("#featuresChart").html("");
     }
 
     createChartElement(chartDimensions) {
-        return d3.select("#sleepChart")
+        return d3.select("#featuresChart")
             .append("svg")
             .attr("width", chartDimensions.width + chartDimensions.margin.left + chartDimensions.margin.right)
             .attr("height", chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom)
@@ -132,10 +218,10 @@ export default class SleepOverTimeChart extends React.Component {
                 "translate(" + chartDimensions.margin.left + "," + chartDimensions.margin.top + ")");
     }
 
-    calculateScales(chartData, chartDimensions) {
-        let xScale = this.createXScale(chartData, chartDimensions);
-        let yScale = this.createYScale(chartData, chartDimensions);
-        let colorScale = this.createColorScale(chartData);
+    calculateScales(moodData, chartDimensions) {
+        let xScale = this.createXScale(moodData, chartDimensions);
+        let yScale = this.createYScale(moodData, chartDimensions);
+        let colorScale = this.createColorScale(moodData);
 
         return {
             xScale: xScale,
@@ -146,7 +232,7 @@ export default class SleepOverTimeChart extends React.Component {
 
     createXScale(data, chartDimensions) {
         return d3.scaleTime()
-            .domain(d3.extent(data, function (d) { return d.SleepReportDate; }))
+            .domain(d3.extent(data, function (d) { return d.MoodReportDate; }))
             .range([0, chartDimensions.width]);
     }
 
@@ -191,9 +277,9 @@ export default class SleepOverTimeChart extends React.Component {
             .attr("font-size", this.calcLabelFontSize());
     }
 
-    createYAxis(chart, chartData, chartDimensions, yScale) {
+    createYAxis(chart, moodData, chartDimensions, yScale) {
         chart.append("g")
-            .call(d3.axisLeft(yScale).ticks(d3.max(d3.values(chartData)) + 1))
+            .call(d3.axisLeft(yScale).ticks(d3.max(d3.values(moodData)) + 1))
 
         this.createYAxisLabel(chart, chartDimensions);
     }
@@ -205,7 +291,7 @@ export default class SleepOverTimeChart extends React.Component {
             .attr("x", 0 - (chartDimensions.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Sleep Quality")
+            .text("Mood Quality")
             .attr("font-size", this.calcLabelFontSize());
     }
 
@@ -223,8 +309,8 @@ export default class SleepOverTimeChart extends React.Component {
             .attr("stroke", "steelblue")
             .attr("stroke-width", 4)
             .attr("d", d3.line()
-                .x(function (d) { return scales.xScale(d.SleepReportDate) })
-                .y(function (d) { return scales.yScale(d.SleepReportValue) + scales.yScale.bandwidth() / 2})
+                .x(function (d) { return scales.xScale(d.MoodReportDate) })
+                .y(function (d) { return scales.yScale(d.MoodReportValue) + scales.yScale.bandwidth() / 2 })
                 // .curve(d3.curveCardinal)
             );
     }
@@ -232,8 +318,8 @@ export default class SleepOverTimeChart extends React.Component {
     render() {
         return (
             <div ref={this.chartContainer} className="card-body">
-                <h5 className="card-title">Sleep Over Time</h5>
-                <div className="d-flex justify-content-center" id="sleepChart"></div>
+                <h5 className="card-title">Success, Mood, and Sleep Over Time</h5>
+                <div className="d-flex justify-content-center" id="featuresChart"></div>
             </div>
         );
     }

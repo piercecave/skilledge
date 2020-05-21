@@ -4,6 +4,8 @@ import { Header } from './Header';
 import SuccessRateVsTimeChart from './SuccessRateVsTimeChart';
 import CommonReasonsForFailureChart from './CommonReasonsForFailureChart';
 import SleepOverTimeChart from './SleepOverTimeChart';
+import MoodOverTimeChart from './MoodOverTimeChart';
+// import MultipleFeaturesOverTimeChart from './MultipleFeaturesOverTimeChart';
 
 export class ChartsPage extends React.Component {
 
@@ -89,6 +91,12 @@ export class ChartsPage extends React.Component {
                     <div className="card  my-3">
                         <SleepOverTimeChart />
                     </div>
+                    <div className="card  my-3">
+                        <MoodOverTimeChart />
+                    </div>
+                    {/* <div className="card  my-3">
+                        <MultipleFeaturesOverTimeChart />
+                    </div> */}
                 </div>
             </div>
         );

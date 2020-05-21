@@ -1,24 +1,23 @@
 import React from 'react';
 import * as d3 from "d3";
 
-export default class SleepOverTimeChart extends React.Component {
+export default class MoodOverTimeChart extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.GET_EVENTS_FOR_USER_URL = process.env.REACT_APP_BACKEND_URL + "/users/events";
-        this.GET_SLEEP_REPORTS_URL = process.env.REACT_APP_BACKEND_URL + "/users/sleep-reports/";
+        this.GET_MOOD_REPORTS_URL = process.env.REACT_APP_BACKEND_URL + "/users/mood-reports/";
 
         this.chartContainer = React.createRef();
 
         this.state = {
-            sleepReports: [],
+            moodReports: [],
             chartWidth: 400
         }
     }
 
     componentDidMount() {
-        this.loadSleepReports();
+        this.loadMoodReports();
         window.addEventListener("resize", this.updateDimensions.bind(this));
 
         this.setState({
@@ -41,8 +40,8 @@ export default class SleepOverTimeChart extends React.Component {
         });
     }
 
-    loadSleepReports() {
-        fetch(this.GET_SLEEP_REPORTS_URL, {
+    loadMoodReports() {
+        fetch(this.GET_MOOD_REPORTS_URL, {
             credentials: 'include'
         })
             .then(this.checkStatus)
@@ -51,14 +50,14 @@ export default class SleepOverTimeChart extends React.Component {
             })
             .then((responseJSON) => {
                 this.setState({
-                    sleepReports: responseJSON
+                    moodReports: responseJSON
                 })
             })
             .catch(this.displayError);
     }
 
     createChart() {
-        let chartData = this.parseSleepReports();
+        let chartData = this.parseMoodReports();
         let chartDimensions = this.calculateChartDimensions();
         let chart = this.createChartElement(chartDimensions);
         let scales = this.calculateScales(chartData, chartDimensions);
@@ -68,31 +67,31 @@ export default class SleepOverTimeChart extends React.Component {
         this.createTrendLine(chart, scales, chartData);
     }
 
-    parseSleepReports() {
-        let sleepReports = this.state.sleepReports;
-        sleepReports = this.orderReportsByDate(sleepReports);
+    parseMoodReports() {
+        let moodReports = this.state.moodReports;
+        moodReports = this.orderReportsByDate(moodReports);
 
-        sleepReports = sleepReports.map(report => {
+        moodReports = moodReports.map(report => {
             let newReport = {
-                SleepReportDate: report.SleepReportDate,
-                SleepReportValue: report.SleepValueName
+                MoodReportDate: report.MoodReportDate,
+                MoodReportValue: report.MoodValueName
             };
             report = newReport;
             return report;
         });
 
-        return sleepReports;
+        return moodReports;
     }
 
-    orderReportsByDate(sleepReports) {
-        sleepReports = sleepReports.map(report => {
-            report.SleepReportDate = new Date(report.SleepReportDate);
+    orderReportsByDate(moodReports) {
+        moodReports = moodReports.map(report => {
+            report.MoodReportDate = new Date(report.MoodReportDate);
             return report;
         });
 
-        sleepReports.sort((a, b) => a.SleepReportDate - b.SleepReportDate);
+        moodReports.sort((a, b) => a.MoodReportDate - b.MoodReportDate);
 
-        return sleepReports;
+        return moodReports;
     }
 
     calculateChartDimensions() {
@@ -119,11 +118,11 @@ export default class SleepOverTimeChart extends React.Component {
     }
 
     clearOldChart() {
-        d3.select("#sleepChart").html("");
+        d3.select("#moodChart").html("");
     }
 
     createChartElement(chartDimensions) {
-        return d3.select("#sleepChart")
+        return d3.select("#moodChart")
             .append("svg")
             .attr("width", chartDimensions.width + chartDimensions.margin.left + chartDimensions.margin.right)
             .attr("height", chartDimensions.height + chartDimensions.margin.top + chartDimensions.margin.bottom)
@@ -146,7 +145,7 @@ export default class SleepOverTimeChart extends React.Component {
 
     createXScale(data, chartDimensions) {
         return d3.scaleTime()
-            .domain(d3.extent(data, function (d) { return d.SleepReportDate; }))
+            .domain(d3.extent(data, function (d) { return d.MoodReportDate; }))
             .range([0, chartDimensions.width]);
     }
 
@@ -205,7 +204,7 @@ export default class SleepOverTimeChart extends React.Component {
             .attr("x", 0 - (chartDimensions.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Sleep Quality")
+            .text("Mood Quality")
             .attr("font-size", this.calcLabelFontSize());
     }
 
@@ -223,8 +222,8 @@ export default class SleepOverTimeChart extends React.Component {
             .attr("stroke", "steelblue")
             .attr("stroke-width", 4)
             .attr("d", d3.line()
-                .x(function (d) { return scales.xScale(d.SleepReportDate) })
-                .y(function (d) { return scales.yScale(d.SleepReportValue) + scales.yScale.bandwidth() / 2})
+                .x(function (d) { return scales.xScale(d.MoodReportDate) })
+                .y(function (d) { return scales.yScale(d.MoodReportValue) + scales.yScale.bandwidth() / 2})
                 // .curve(d3.curveCardinal)
             );
     }
@@ -232,8 +231,8 @@ export default class SleepOverTimeChart extends React.Component {
     render() {
         return (
             <div ref={this.chartContainer} className="card-body">
-                <h5 className="card-title">Sleep Over Time</h5>
-                <div className="d-flex justify-content-center" id="sleepChart"></div>
+                <h5 className="card-title">Mood Over Time</h5>
+                <div className="d-flex justify-content-center" id="moodChart"></div>
             </div>
         );
     }
